@@ -1,0 +1,7 @@
+.header {
+    text-align: center;
+    font-family: Arial, sans-serif; /* Change font family */
+    color: #064a27; /* Change font color */
+    margin-bottom: 20px; /* Add margin bottom to separate header from blocks */
+    margin-top: 20px; /* Add margin top to space it from the blocks */
+  }
