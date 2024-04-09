@@ -1,10 +1,19 @@
 import './App.css';
+import { CustomPlaylist } from './CustomPlaylist/CustomPlaylist.tsx';
 import * as React from 'react';
+import ReactDOM from 'react-dom/client';
 
 function App() {
 
   const CustomPlaylistClick = () => {
-    alert("custom playlist");
+    const custom_playlist_root = ReactDOM.createRoot(document.getElementById("custom_playlist"));
+    custom_playlist_root.render(
+      <React.StrictMode>
+        <CustomPlaylist 
+          root = {custom_playlist_root}
+        />
+      </React.StrictMode>
+    );
   }
 
   const SongMatchClick = () => {
