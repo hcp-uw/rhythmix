@@ -1,5 +1,6 @@
 import './App.css';
 import { CustomPlaylist } from './CustomPlaylist/CustomPlaylist.tsx';
+import { SongMatch } from './SongMatch/SongMatch.tsx'
 import * as React from 'react';
 import ReactDOM from 'react-dom/client';
 
@@ -17,7 +18,7 @@ function App() {
   }
 
   const SongMatchClick = () => {
-    alert("song match");
+    
   };
 
   return (
