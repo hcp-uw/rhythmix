@@ -24,7 +24,7 @@ function App() {
   return (
     <div className="App">
       <header class="header">
-        <h1> SpotiBlend </h1>
+        <h1> we love vani %lt3 </h1>
       </header>
       <div class="container">
         <button class="button" type="button"> </button>
