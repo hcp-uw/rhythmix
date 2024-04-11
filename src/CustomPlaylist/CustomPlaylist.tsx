@@ -36,12 +36,15 @@ export class CustomPlaylist extends Component<CustomPlaylistProps, CustomPlaylis
       return <div className="background">
         <h1>custom playlist</h1>
         <button type="button" onClick={this.doResultClick}>create playlist</button>
+        <button type="button" onClick={this.doAllSlidersClick}>more options</button>
         {this.renderSliders()}
         <button type="button" onClick={this.doBackClick}>back</button>
       </div>;
     } else if (this.state.page.kind === "all_sliders") {
       return <div className="background">
-        <h1>Hi</h1>
+        <button type="button" onClick={this.doResultClick}>create playlist</button>
+        <button type="button" onClick={this.doBasicSlidersClick}>fewer options</button>
+        {this.renderSliders()}
         <button type="button" onClick={this.doBackClick}>back</button>
       </div>;
     } else {
@@ -99,13 +102,19 @@ export class CustomPlaylist extends Component<CustomPlaylistProps, CustomPlaylis
     this.setState({page: {kind: "result"}});
   }
 
+  doAllSlidersClick = () : void => {
+    this.setState({page: {kind: "all_sliders"}});
+  }
+
+  doBasicSlidersClick = () : void => {
+    this.setState({page: {kind: "basic_sliders"}});
+  }
+
   /**
    * FUNCTIONS:
    * 
    * - some general interaction function with spotify api
-   * - click to change page state to result
    * - each slider - modify corresponding value in map
-   * - click to change to basic sliders
-   * - click to change to all sliders
+   * - preserve slider states between more/fewer sliders
    */
 }
