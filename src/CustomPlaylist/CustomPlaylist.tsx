@@ -1,11 +1,4 @@
-/**
- * TODO:
- * 
- * - figure out slider ranges?? weird
- * 
- */
-
-import React, { Component } from "react";
+import React, { Component, ChangeEvent } from "react";
 import { Root } from "react-dom/client";
 import "./index.css";
 
@@ -14,7 +7,7 @@ type Page = {kind: "basic_sliders"} | {kind: "all_sliders"} | {kind: "result"};
 type CustomPlaylistState = {
   root: Root;
   page: Page;
-  attributes: Map<string, BigInt>;
+  attributes: Map<string, number>;
 };
 
 type CustomPlaylistProps = {
@@ -28,7 +21,10 @@ const playlist_size : bigint = 25n;
 export class CustomPlaylist extends Component<CustomPlaylistProps, CustomPlaylistState> {
   constructor(props: CustomPlaylistProps) {
     super(props);
-    this.state = {root: props.root, page: {kind: "basic_sliders"}, attributes: new Map<string, BigInt>()};
+    this.state = {root: props.root, page: {kind: "basic_sliders"}, attributes: new Map<string, number>()};
+    for (let i = 0; i < all_attributes.length; i++) {
+      this.state.attributes.set(all_attributes[i], 1);
+    }
   };
 
   render = () : JSX.Element => {
@@ -71,21 +67,21 @@ export class CustomPlaylist extends Component<CustomPlaylistProps, CustomPlaylis
         slider_render.push(
           <div>
             <label htmlFor={curr_attribute}>{curr_attribute}</label>
-            <input type="range" min="1" max="11" id={curr_attribute}></input>
+            <input type="range" min="1" max="11" id={curr_attribute} onChange={this.doAttributeChange}></input>
           </div>
         )
       } else if (curr_attribute === "popularity") {
         slider_render.push(
           <div>
             <label htmlFor={curr_attribute}>{curr_attribute}</label>
-            <input type="range" min="1" max="100" id={curr_attribute}></input>
+            <input type="range" min="1" max="100" id={curr_attribute} onChange={this.doAttributeChange}></input>
           </div>
         )
       } else {
         slider_render.push(
           <div>
             <label htmlFor={curr_attribute}>{curr_attribute}</label>
-            <input type="range" min="0" max="1" step="0.01" id={curr_attribute}></input>
+            <input type="range" min="0" max="1" step="0.01" id={curr_attribute} onChange={this.doAttributeChange}></input>
           </div>
         )
       }
@@ -110,11 +106,14 @@ export class CustomPlaylist extends Component<CustomPlaylistProps, CustomPlaylis
     this.setState({page: {kind: "basic_sliders"}});
   }
 
+  doAttributeChange = (_evt: ChangeEvent<HTMLInputElement>) : void => {
+    this.state.attributes.set(_evt.target.id, parseFloat(_evt.target.value));
+  }
+
   /**
    * FUNCTIONS:
    * 
    * - some general interaction function with spotify api
-   * - each slider - modify corresponding value in map
    * - preserve slider states between more/fewer sliders
    */
 }
