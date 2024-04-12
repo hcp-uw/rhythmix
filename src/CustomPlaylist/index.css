@@ -30,7 +30,7 @@ input[type="range"] {
 
 /* Removes default focus */
 input[type="range"]:focus {
- outline: none;
+  outline: none;
 }
 
 /***** Chrome, Safari, Opera and Edge Chromium styles *****/
