@@ -19,7 +19,7 @@ function App() {
         />
       </React.StrictMode>
     );
-  }
+  };
 
   const SongMatchClick = () => {
   };
