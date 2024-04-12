@@ -24,12 +24,15 @@ function App() {
   return (
     <div className="App">
       <header class="header">
-        <h1> we love vani &lt;3 </h1>
+        <h1> SpotiBlend </h1>
       </header>
       <div class="container">
-        <button class="button" type="button"> </button>
-        <button class="button" type="button" onClick={CustomPlaylistClick}> </button>
-        <button class="button" type="button" onClick={SongMatchClick}> </button>
+        <iframe title="custom_playlist" class="block" src="https://open.spotify.com/embed/playlist/4OQzKelZB82tcTuGLTZFuY?utm_source=generator"
+        width="100%" allowfullscreen="" 
+        allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" 
+        loading="lazy"> </iframe>
+        <button class="block" type="button" onClick={CustomPlaylistClick}> </button>
+        <button class="block" type="button" onClick={SongMatchClick}> </button>
       </div>
     </div>
   );

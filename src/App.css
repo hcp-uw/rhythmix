@@ -15,10 +15,10 @@
     height: calc(100% - 40px); /* Adjust container height to fit header and blocks */
 }
   
-.button {
+.block {
     width: 300px; /* Adjust as needed */
     height: 400px; /* Adjust as needed */
-    background-color: #ccc; /* Adjust as needed */
-    border-radius: 5px; /* Rounded edges */
+    background-color: #b2c2bb; /* Adjust as needed */
+    border-radius: 20px; /* Rounded edges */
     margin: 0 10px; /* Adjust as needed */
 }
