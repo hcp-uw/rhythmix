@@ -1,6 +1,7 @@
 import React, { Component, ChangeEvent } from "react";
 import { Root } from "react-dom/client";
 import "./index.css";
+import { access_token } from "../auth.js";
 
 type Page = {kind: "basic_sliders"} | {kind: "all_sliders"} | {kind: "result"};
 
@@ -96,6 +97,7 @@ export class CustomPlaylist extends Component<CustomPlaylistProps, CustomPlaylis
 
   doResultClick = () : void => {
     this.setState({page: {kind: "result"}});
+    this.doSpotifyFetch();
   }
 
   doAllSlidersClick = () : void => {
@@ -108,6 +110,18 @@ export class CustomPlaylist extends Component<CustomPlaylistProps, CustomPlaylis
 
   doAttributeChange = (_evt: ChangeEvent<HTMLInputElement>) : void => {
     this.state.attributes.set(_evt.target.id, parseFloat(_evt.target.value));
+  }
+
+
+  doSpotifyFetch = () : void => {
+    let fetch_url = "https://api.spotify.com/v1/recommendations?limit=" + playlist_size
+                  + "&seed_genres=classical&2Ccountry";
+    const res = fetch(fetch_url, {
+      headers: {
+        Authorization: "Bearer ${access_token}",
+      },
+      method: "GET",
+    })
   }
 
   /**
