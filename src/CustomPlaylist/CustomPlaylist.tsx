@@ -117,10 +117,11 @@ export class CustomPlaylist extends Component<CustomPlaylistProps, CustomPlaylis
     //const fetch_url = "https://api.spotify.com/v1/recommendations?limit=" + playlist_size
     //              + "&seed_genres=classical&2Ccountry";
     const fetch_url = "https://api.spotify.com/v1/recommendations?seed_artists=3qm84nBOXUEQ2vnTfUTTFC&min_tempo=170&max_tempo=180";
-    const res = fetch(fetch_url, {
+    const auth = "Bearer " + access_token;
+    fetch(fetch_url, {
       method: "GET",
       headers: {
-        Authorization: "Bearer ${access_token}",
+        Authorization: auth,
       }
     }).then(this.doSpotifyFetch)
       .catch(() => this.doGeneralError("Failed to connect to server on doSpotifyFetch"));

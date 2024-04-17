@@ -1,3 +1,5 @@
+// start code challenge generation
+
 const generateRandomString = (length) => {
     const possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
     const values = crypto.getRandomValues(new Uint8Array(length));
@@ -21,6 +23,12 @@ const base64encode = (input) => {
 
 const hashed = await sha256(codeVerifier)
 const codeChallenge = base64encode(hashed);
+
+// end code challenge generation
+
+
+
+// start request user authorization
 
 const clientId = 'e910cd42af954cd39b2e04cb4a1a43c3';
 const redirectUri = 'http://localhost:3000';
