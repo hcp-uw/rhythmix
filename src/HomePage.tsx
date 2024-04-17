@@ -5,6 +5,7 @@ import { SongMatch } from './SongMatch/SongMatch.tsx'
 import ReactDOM from 'react-dom/client';
 import { UpdatePlaylists, GenreToPlaylistMap } from './DiscoverDaily/DiscoverDaily.tsx';
 import { render } from '@testing-library/react';
+import logo from "./spotiblend_logo.png";
  
 type HomePageState = {
     genre: string;
@@ -23,13 +24,14 @@ export class HomePage extends Component<HomePageProps, HomePageState> {
     /* TODO:
         1. Add spacing between embedded playlist and background
         2. Place genre selector closer to embedded playlist, make it look better
+        3. Align logo with header
     */
     render = () : JSX.Element => {
         UpdatePlaylists();
         return (
         <div className="App">
         <header className="header">
-          <h1> SpotiBlend </h1>
+          <h1> <img src={logo} alt="" width="80" height="80"/> SpotiBlend </h1>
         </header>
         
         <div className="container">
