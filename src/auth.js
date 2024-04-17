@@ -22,8 +22,9 @@ const base64encode = (input) => {
 const hashed = await sha256(codeVerifier)
 const codeChallenge = base64encode(hashed);
 
-const clientId = 'YOUR_CLIENT_ID';
-const redirectUri = 'http://localhost:8080';
+const clientId = 'e910cd42af954cd39b2e04cb4a1a43c3';
+const redirectUri = 'http://localhost:3000';
+//const redirectUri = 'http://127.0.0.1:5500/index.html';
 
 const scope = 'user-read-private user-read-email';
 const authUrl = new URL("https://accounts.spotify.com/authorize")

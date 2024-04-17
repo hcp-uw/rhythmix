@@ -97,7 +97,7 @@ export class CustomPlaylist extends Component<CustomPlaylistProps, CustomPlaylis
 
   doResultClick = () : void => {
     this.setState({page: {kind: "result"}});
-    this.doSpotifyFetch();
+    this.doSpotifyFetchClick();
   }
 
   doAllSlidersClick = () : void => {
@@ -113,15 +113,31 @@ export class CustomPlaylist extends Component<CustomPlaylistProps, CustomPlaylis
   }
 
 
-  doSpotifyFetch = () : void => {
-    let fetch_url = "https://api.spotify.com/v1/recommendations?limit=" + playlist_size
-                  + "&seed_genres=classical&2Ccountry";
+  doSpotifyFetchClick = () : void => {
+    //const fetch_url = "https://api.spotify.com/v1/recommendations?limit=" + playlist_size
+    //              + "&seed_genres=classical&2Ccountry";
+    const fetch_url = "https://api.spotify.com/v1/recommendations?seed_artists=3qm84nBOXUEQ2vnTfUTTFC&min_tempo=170&max_tempo=180";
     const res = fetch(fetch_url, {
+      method: "GET",
       headers: {
         Authorization: "Bearer ${access_token}",
-      },
-      method: "GET",
-    })
+      }
+    }).then(this.doSpotifyFetch)
+      .catch(() => this.doGeneralError("Failed to connect to server on doSpotifyFetch"));
+  }
+
+  doSpotifyFetch = (res: Response) : void => {
+    res.json().then(this.doSpotifyFetchJson)
+              .catch(() => this.doGeneralError("Error fetching JSON on Spotify API call"));
+  }
+
+  doSpotifyFetchJson = (obj: string) : void => {
+    const JSONresponse = JSON.parse(obj);
+    console.log(JSONresponse);
+  }
+
+  doGeneralError = (msg: string) : void => {
+    console.error(msg);
   }
 
   /**
