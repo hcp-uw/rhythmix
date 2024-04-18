@@ -3,8 +3,8 @@ import { Container, InputGroup, FormControl, Button, Row, Card } from 'react-boo
 import { useState, useEffect } from 'react';
 
 
-const CLIENT_ID = "480147515df24893adcee4024dc1bb2f";
-const CLIENT_SECRET = "4bb2669b4bfa466ab8e7a7d01bc52623";
+const CLIENT_ID = "e910cd42af954cd39b2e04cb4a1a43c3";
+const CLIENT_SECRET = "2e5b8f0e3f464084bd3546d5dad312c5";
 
 function SearchBar() {
   // the input in the search bar, and the function to update the search bar
