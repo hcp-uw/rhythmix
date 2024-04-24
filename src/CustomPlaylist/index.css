@@ -16,6 +16,11 @@ code {
   background-color: rgb(255, 0, 0, 0.5);
   width: 1024px;
   height: 1024px;
+    display: flex;            /* Establishes this element as a flex container */
+    flex-direction: column;   /* Stacks children vertically */
+    align-items: center;      /* Centers children horizontally */
+    justify-content: start;   /* Aligns children to the start of the vertical axis */
+    overflow-y: auto;
 }
 
 /********** Range Input Styles **********/
@@ -25,7 +30,7 @@ input[type="range"] {
    appearance: none;
    background: transparent;
    cursor: pointer;
-   width: 15rem;
+   width: 50rem;
 }
 
 /* Removes default focus */
@@ -36,9 +41,9 @@ input[type="range"]:focus {
 /***** Chrome, Safari, Opera and Edge Chromium styles *****/
 /* slider track */
 input[type="range"]::-webkit-slider-runnable-track {
-  background-color: #053a5f;
+  background-color: #04080a;
   border-radius: 0.5rem;
-  height: 0.5rem;  
+  height: 0.5rem;
 }
 
 /* slider thumb */
@@ -48,21 +53,21 @@ input[type="range"]::-webkit-slider-thumb {
   margin-top: -12px; /* Centers thumb on the track */
 
   /*custom styles*/
-  background-color: #5cd5eb;
+  background-color: #1ed760;
   height: 2rem;
-  width: 1rem;
+  width: 0.75rem;
 }
 
-input[type="range"]:focus::-webkit-slider-thumb {   
- border: 1px solid #053a5f;
- outline: 3px solid #053a5f;
- outline-offset: 0.125rem; 
+input[type="range"]:focus::-webkit-slider-thumb {
+ border: 1px solid #030c11;
+ outline: 3px solid #150808;
+ outline-offset: 0.125rem;
 }
 
 /******** Firefox styles ********/
 /* slider track */
 input[type="range"]::-moz-range-track {
-  background-color: #053a5f;
+  background-color: #070f15;
   border-radius: 0.5rem;
   height: 0.5rem;
 }
@@ -74,12 +79,12 @@ input[type="range"]::-moz-range-thumb {
 
   /*custom styles*/
   background-color: #5cd5eb;
-  height: 2rem;
-  width: 1rem;
+  height: 1rem;
+  width: 0.5rem;
 }
 
 input[type="range"]:focus::-moz-range-thumb {
- border: 1px solid #053a5f;
- outline: 3px solid #053a5f;
+ border: 1px solid #000305;
+ outline: 3px solid #05090c;
  outline-offset: 0.125rem; 
 }
