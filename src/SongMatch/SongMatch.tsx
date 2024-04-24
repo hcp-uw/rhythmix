@@ -1,25 +1,27 @@
 import React, { Component, ChangeEvent, MouseEvent } from "react";
+import { Root } from "react-dom/client";
+import './index.css';
+import SearchBar from "./SearchBar";
 
 
 // const CLIENT_ID = "e910cd42af954cd39b2e04cb4a1a43c3";
 // const CLIENT_SECRET = "2e5b8f0e3f464084bd3546d5dad312c5";
 
-// // access token, and the function to update the token
-// const [ accessToken, setAccessToken ] = useState("");
-// // stores current list of albums
-// const [ albums, setSongs ] = useState([]);
-
 type SongMatchProps = {
-    // default values
+    // Initial State of the File (props we are passing into this component)
+   
 
-    
+    // Callback buttons to pass back information as props
+    onBack: () => void;
 }
 
 
 type SongMatchState = {
     // search bar content
     currentSearch: string;
-    currentPage: "home" | "songlist" | "recommendations" | "playlist";
+    currentPage: "home" | "searchbar" | "songlist" | "recommendations" | "playlist";
+    errorMessage: string;
+    song: string;
 
     // match pool content
     
@@ -33,30 +35,16 @@ export class SongMatch extends Component<SongMatchProps, SongMatchState> {
         super(props);
 
         this.state = {
-            currentSearch: "",
-            currentPage: "home"
+            currentSearch: "test",
+            currentPage: "home",
+            errorMessage: "",
+            song: ""
+            
             
             
         }
     }
     
-    
-    // // how we run initializing of spotify api
-    // // runs once when starting react app
-    // useEffect(() => {
-    //     // API Access Token
-    //     var authParameters = {
-    //         method: 'POST',
-    //         headers: {
-    //             'Content-Type': 'application/x-www-form-urlencoded'
-    //         },
-    //         body: 'grant_type=client_credentials&client_id=' + CLIENT_ID + '&client_secret=' + CLIENT_SECRET
-    //     }
-    //     // call to get token, and update value
-    //     fetch('https://accounts.spotify.com/api/token', authParameters)
-    //         .then(result => result.json())
-    //         .then(data => setAccessToken(data.access_token))
-    // }, [])
 
 
     render = (): JSX.Element => {
@@ -66,18 +54,26 @@ export class SongMatch extends Component<SongMatchProps, SongMatchState> {
         if (this.state.currentPage === "home") {
             // render start page
             return (
-                this.renderHomePage()
+                <div className="background">
+                    {this.renderStartPage()}
+                </div>
             );
+        } else if (this.state.currentPage === "searchbar") {
+            return (
+                <SearchBar/>
+            )
+
         } else {
             return (
                 <div>other page</div>
             );
         }
 
+
     }
 
 
-    renderHomePage = (): JSX.Element => {
+    renderStartPage = (): JSX.Element => {
         return (
             <div>
                 <label>
@@ -85,11 +81,29 @@ export class SongMatch extends Component<SongMatchProps, SongMatchState> {
                 <input type="text" value={this.state.currentSearch} onChange={this.doSearchChange}></input>
                 </label>
                 <button onClick={this.doSearchClick}>Search</button>
+                
+                <button onClick={this.doSearchBarClick}>SEARCH BAR TYPE SHIT</button>
+
+                <br/>
+                <button onClick={this.doBackClick}>Back</button>
             </div>
         );
     }
 
 
+    /**
+     * SEARCH BAR TESTING
+     */
+    doSearchBarClick = (_evt: MouseEvent<HTMLButtonElement>): void => {
+        this.setState({currentPage: "searchbar"})
+    }
+
+    /**
+     * BACK BUTTON HANDLER FUNCTIONS
+     */
+    doBackClick = (_evt: MouseEvent<HTMLButtonElement>): void => {
+        return this.props.onBack();
+    }
 
 
 
@@ -99,16 +113,24 @@ export class SongMatch extends Component<SongMatchProps, SongMatchState> {
 
     // updates search value
     doSearchChange = (evt: ChangeEvent<HTMLInputElement>): void => {
-        const search = evt.target.value;
-        this.setState( {currentSearch: search})
+        this.setState( {currentSearch: evt.target.value});
     }
 
     // searchs song (calls sppotify api to find songs)
     doSearchClick = (_evt: MouseEvent<HTMLButtonElement>): void => {
-        
+        // if the search bar is empty
+        if (this.state.currentSearch === undefined || this.state.currentSearch === "") {
+            //show error message saying they need to type something in the search bar
+            this.setState({errorMessage: "Please enter a Song in the Search Bar"});
 
+        } else {    // searchbar is not empty, SEARCH
+
+
+
+        }
 
     }
+
 
 }
 
