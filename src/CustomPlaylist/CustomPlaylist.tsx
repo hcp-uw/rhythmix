@@ -1,7 +1,7 @@
 import React, { Component, ChangeEvent } from "react";
 import { Root } from "react-dom/client";
 import "./index.css";
-import { access_token } from "../auth.js";
+import { auth_pkce } from "../auth.js";
 
 type Page = {kind: "basic_sliders"} | {kind: "all_sliders"} | {kind: "result"};
 
@@ -9,6 +9,7 @@ type CustomPlaylistState = {
   root: Root;
   page: Page;
   attributes: Map<string, number>;
+  access_token: string | null;
 };
 
 type CustomPlaylistProps = {
@@ -22,7 +23,7 @@ const playlist_size : bigint = 25n;
 export class CustomPlaylist extends Component<CustomPlaylistProps, CustomPlaylistState> {
   constructor(props: CustomPlaylistProps) {
     super(props);
-    this.state = {root: props.root, page: {kind: "basic_sliders"}, attributes: new Map<string, number>()};
+    this.state = {root: props.root, page: {kind: "basic_sliders"}, attributes: new Map<string, number>(), access_token: null};
     for (let i = 0; i < all_attributes.length; i++) {
       this.state.attributes.set(all_attributes[i], 1);
     }
@@ -117,7 +118,9 @@ export class CustomPlaylist extends Component<CustomPlaylistProps, CustomPlaylis
     //const fetch_url = "https://api.spotify.com/v1/recommendations?limit=" + playlist_size
     //              + "&seed_genres=classical&2Ccountry";
     const fetch_url = "https://api.spotify.com/v1/recommendations?seed_artists=3qm84nBOXUEQ2vnTfUTTFC&min_tempo=170&max_tempo=180";
-    const auth = "Bearer " + access_token;
+    auth_pkce();
+    this.setState({access_token: localStorage.getItem("access_token")});
+    const auth = "Bearer " + this.state.access_token;
     fetch(fetch_url, {
       method: "GET",
       headers: {
