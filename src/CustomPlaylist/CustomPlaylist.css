@@ -32,7 +32,6 @@ code {
     height: 800px; /* Adjust height as needed */
     display: flex; /* Add this if you want to center content horizontally */
     flex-direction: column;
-    align-items: center;
     justify-content: center; /* Add this if you want to center content horizontally */
     align-items: center; /* Add this if you want to center content vertically */
 }
