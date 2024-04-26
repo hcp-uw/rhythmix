@@ -1,6 +1,6 @@
 import React, { Component, ChangeEvent } from "react";
 import { Root } from "react-dom/client";
-import "./index.css";
+import "./CustomPlaylist.css";
 import { auth_pkce } from "../auth.js";
 
 type Page = {kind: "basic_sliders"} | {kind: "all_sliders"} | {kind: "result"};
@@ -31,7 +31,7 @@ export class CustomPlaylist extends Component<CustomPlaylistProps, CustomPlaylis
 
   render = () : JSX.Element => {
     if (this.state.page.kind === "basic_sliders") {
-      return <div className="background">
+      return <div className="CPG-background">
         <h1>custom playlist</h1>
         <button type="button" onClick={this.doResultClick}>create playlist</button>
         <button type="button" onClick={this.doAllSlidersClick}>more options</button>
@@ -39,14 +39,14 @@ export class CustomPlaylist extends Component<CustomPlaylistProps, CustomPlaylis
         <button type="button" onClick={this.doBackClick}>back</button>
       </div>;
     } else if (this.state.page.kind === "all_sliders") {
-      return <div className="background">
+      return <div className="CPG-background">
         <button type="button" onClick={this.doResultClick}>create playlist</button>
         <button type="button" onClick={this.doBasicSlidersClick}>fewer options</button>
         {this.renderSliders()}
         <button type="button" onClick={this.doBackClick}>back</button>
       </div>;
     } else {
-      return <div className="background">
+      return <div className="CPG-background">
         <h1>your custom playlist</h1>
         <button type="button" onClick={this.doBackClick}>back</button>
       </div>;
