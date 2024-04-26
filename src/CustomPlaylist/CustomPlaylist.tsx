@@ -67,22 +67,22 @@ export class CustomPlaylist extends Component<CustomPlaylistProps, CustomPlaylis
 
       if (curr_attribute === "time signature" || curr_attribute === "key") {
         slider_render.push(
-          <div>
-            <label htmlFor={curr_attribute}>{curr_attribute}</label>
+          <div className="slider-container">
+            <label htmlFor={curr_attribute} className="slider-label">{curr_attribute}</label>
             <input type="range" min="1" max="11" id={curr_attribute} onChange={this.doAttributeChange}></input>
           </div>
         )
       } else if (curr_attribute === "popularity") {
         slider_render.push(
-          <div>
-            <label htmlFor={curr_attribute}>{curr_attribute}</label>
+          <div className="slider-container">
+            <label htmlFor={curr_attribute} className="slider-label">{curr_attribute}</label>
             <input type="range" min="1" max="100" id={curr_attribute} onChange={this.doAttributeChange}></input>
           </div>
         )
       } else {
         slider_render.push(
-          <div>
-            <label htmlFor={curr_attribute}>{curr_attribute}</label>
+          <div className="slider-container">
+            <label htmlFor={curr_attribute} className="slider-label">{curr_attribute}</label>
             <input type="range" min="0" max="1" step="0.01" id={curr_attribute} onChange={this.doAttributeChange}></input>
           </div>
         )

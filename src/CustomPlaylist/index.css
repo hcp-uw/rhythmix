@@ -23,6 +23,15 @@ code {
     overflow-y: auto;
 }
 
+
+.slider-container {
+    margin-bottom: 15px;  /*Height between sliders*/
+}
+
+.slider-label {
+    margin-right: 10px;  /*Space between slider label and slider edge*/
+}
+
 /********** Range Input Styles **********/
 /*Range Reset*/
 input[type="range"] {
