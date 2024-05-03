@@ -99,9 +99,7 @@ export class SongMatch extends Component<SongMatchProps, SongMatchState> {
                         Search
                     </Button>
 
-                    <Button onClick={() => this.doBackClick}>
-                        Back
-                    </Button>
+                    <button onClick={this.doBackClick}>Back</button>
                     </InputGroup>
                 </Container>
 
