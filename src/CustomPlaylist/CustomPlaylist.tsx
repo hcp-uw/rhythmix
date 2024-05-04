@@ -109,9 +109,12 @@ export class CustomPlaylist extends Component<CustomPlaylistProps, CustomPlaylis
     this.setState({page: {kind: "basic_sliders"}});
   }
 
-  doAttributeChange = (_evt: ChangeEvent<HTMLInputElement>) : void => {
-    this.state.attributes.set(_evt.target.id, parseFloat(_evt.target.value));
-  }
+  doAttributeChange = (evt: ChangeEvent<HTMLInputElement>): void => {
+    //Creates new map so react recognizes change
+    const newAttributes = new Map(this.state.attributes);
+    newAttributes.set(evt.target.id, parseFloat(evt.target.value));
+    this.setState({ attributes: newAttributes });
+  };
 
 
   doSpotifyFetchClick = async () : Promise<void> => {
@@ -153,8 +156,9 @@ export class CustomPlaylist extends Component<CustomPlaylistProps, CustomPlaylis
 
   /**
    * FUNCTIONS:
-   * 
+   * - prompt users for 1-5 genres before slider selection begins.
    * - some general interaction function with spotify api
    * - preserve slider states between more/fewer sliders
+   *
    */
 }
