@@ -114,12 +114,12 @@ export class CustomPlaylist extends Component<CustomPlaylistProps, CustomPlaylis
   }
 
 
-  doSpotifyFetchClick = () : void => {
+  doSpotifyFetchClick = async () : Promise<void> => {
     //const fetch_url = "https://api.spotify.com/v1/recommendations?limit=" + playlist_size
     //              + "&seed_genres=classical&2Ccountry";
     const fetch_url = "https://api.spotify.com/v1/recommendations?seed_artists=3qm84nBOXUEQ2vnTfUTTFC&min_tempo=170&max_tempo=180";
-    auth_pkce();
-    this.setState({access_token: localStorage.getItem("access_token")});
+    const access_token = await auth_pkce();
+    //this.setState({access_token: access_token});
     const auth = "Bearer " + this.state.access_token;
     fetch(fetch_url, {
       method: "GET",
@@ -131,17 +131,24 @@ export class CustomPlaylist extends Component<CustomPlaylistProps, CustomPlaylis
   }
 
   doSpotifyFetch = (res: Response) : void => {
-    res.json().then(this.doSpotifyFetchJson)
-              .catch(() => this.doGeneralError("Error fetching JSON on Spotify API call"));
-  }
+    if (res.status === 200) {
+      res.json().then(this.doSpotifyFetchJson)
+              .catch(() => this.doGeneralError("200 response is not valid JSON"));
+    } else if (res.status === 401 || res.status === 403) {
+      res.text().then(this.doGeneralError)
+              .catch(() => this.doGeneralError(res.status + " response is not text"));
+    } else {
+      this.doGeneralError("Bad status code: " + res.status);
+    }
+  };
 
   doSpotifyFetchJson = (obj: string) : void => {
     const JSONresponse = JSON.parse(obj);
-    console.log(JSONresponse);
+    //alert(JSONresponse.tracks);
   }
 
   doGeneralError = (msg: string) : void => {
-    console.error(msg);
+    //alert(msg);
   }
 
   /**

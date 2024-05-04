@@ -7,7 +7,7 @@ export const auth_pkce = async () => {
       return values.reduce((acc, x) => acc + possible[x % possible.length], "");
   }
 
-  const codeVerifier  = generateRandomString(64);
+  const codeVerifier = generateRandomString(64);
 
   const sha256 = async (plain) => {
       const encoder = new TextEncoder()
@@ -31,7 +31,7 @@ export const auth_pkce = async () => {
 
   // start request user authorization
 
-  const clientId = 'e910cd42af954cd39b2e04cb4a1a43c3';
+  const clientId = "e910cd42af954cd39b2e04cb4a1a43c3";
   const redirectUri = 'http://localhost:3000';
   //const redirectUri = 'http://127.0.0.1:5500/index.html';
 
@@ -44,7 +44,7 @@ export const auth_pkce = async () => {
   const params =  {
     response_type: 'code',
     client_id: clientId,
-    scope,
+    scope: scope,
     code_challenge_method: 'S256',
     code_challenge: codeChallenge,
     redirect_uri: redirectUri,
@@ -54,9 +54,9 @@ export const auth_pkce = async () => {
   window.location.href = authUrl.toString();
 
   const urlParams = new URLSearchParams(window.location.search);
-  let code = urlParams.get('code');
+  let code = await urlParams.get('code');
 
-  const getToken = async code => {
+  const getToken = async (code) => {
 
       // stored in the previous step
       let codeVerifier = localStorage.getItem('code_verifier');
@@ -69,7 +69,7 @@ export const auth_pkce = async () => {
         body: new URLSearchParams({
           client_id: clientId,
           grant_type: 'authorization_code',
-          code,
+          code: code,
           redirect_uri: redirectUri,
           code_verifier: codeVerifier,
         }),
@@ -77,7 +77,12 @@ export const auth_pkce = async () => {
     
       const body = await fetch("https://accounts.spotify.com/api/token", payload);
       const response = await body.json();
-    
-      localStorage.setItem('access_token', response.access_token);
+
+      return response.access_token;
+
   }
+
+  const access_token = await getToken(code);
+
+  return access_token;
 }
