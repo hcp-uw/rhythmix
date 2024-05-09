@@ -121,8 +121,9 @@ export class CustomPlaylist extends Component<CustomPlaylistProps, CustomPlaylis
     //const fetch_url = "https://api.spotify.com/v1/recommendations?limit=" + playlist_size
     //              + "&seed_genres=classical&2Ccountry";
     const fetch_url = "https://api.spotify.com/v1/recommendations?seed_artists=3qm84nBOXUEQ2vnTfUTTFC&min_tempo=170&max_tempo=180";
-    auth_pkce();
-    this.setState({access_token: localStorage.getItem('access_token')});
+    if (this.state.access_token === null) {
+      this.doSpotifyAuthClick();
+    }
     
     const auth = "Bearer " + this.state.access_token;
     fetch(fetch_url, {
@@ -132,6 +133,11 @@ export class CustomPlaylist extends Component<CustomPlaylistProps, CustomPlaylis
       }
     }).then(this.doSpotifyFetch)
       .catch(() => this.doGeneralError("Failed to connect to server on doSpotifyFetch"));
+  }
+
+  doSpotifyAuthClick = () : void => {
+    this.setState({access_token: auth_pkce()});
+    console.log(this.state.access_token);
   }
 
   doSpotifyFetch = (res: Response) : void => {
@@ -148,11 +154,11 @@ export class CustomPlaylist extends Component<CustomPlaylistProps, CustomPlaylis
 
   doSpotifyFetchJson = (obj: string) : void => {
     const JSONresponse = JSON.parse(obj);
-    //alert(JSONresponse.tracks);
+    console.log(JSONresponse.tracks);
   }
 
   doGeneralError = (msg: string) : void => {
-    //alert(msg);
+    alert(msg);
   }
 
   /**
