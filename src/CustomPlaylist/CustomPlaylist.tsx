@@ -117,17 +117,12 @@ export class CustomPlaylist extends Component<CustomPlaylistProps, CustomPlaylis
   };
 
 
-  doSpotifyFetchClick = async () : Promise<void> => {
+  doSpotifyFetchClick = () : void => {
     //const fetch_url = "https://api.spotify.com/v1/recommendations?limit=" + playlist_size
     //              + "&seed_genres=classical&2Ccountry";
     const fetch_url = "https://api.spotify.com/v1/recommendations?seed_artists=3qm84nBOXUEQ2vnTfUTTFC&min_tempo=170&max_tempo=180";
-    auth_pkce()
-      .then((accessToken) => {
-          this.setState({access_token: accessToken});
-      })
-      .catch((error) => {
-          console.error('Error:', error);
-      });
+    auth_pkce();
+    this.setState({access_token: localStorage.getItem('access_token')});
     
     const auth = "Bearer " + this.state.access_token;
     fetch(fetch_url, {

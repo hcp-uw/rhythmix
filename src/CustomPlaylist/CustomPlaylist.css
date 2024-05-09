@@ -27,7 +27,7 @@ code {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    background-color: #1ed760;
+    background-image: linear-gradient(rgba(90, 189, 136, 1.0), rgba(222, 255, 89, 0.0));
     width: 1600px; /* Adjust width as needed */
     height: 800px; /* Adjust height as needed */
     display: flex; /* Add this if you want to center content horizontally */
