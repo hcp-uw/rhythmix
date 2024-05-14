@@ -138,7 +138,7 @@ export class SongMatch extends Component<SongMatchProps, SongMatchState> {
                             <Card.Img src={song.album.images[0].url}/>
                             <Card.Body>
                             <Card.Title>{song.name}</Card.Title>
-                            <button onClick={() => this.doAddSong(song)}> + </button>
+                            <button onClick={() => this.doAddSong(song.name, song.album.images[0].url, song.id)}> + </button>
                             </Card.Body>
                         </Card>
                         )
@@ -196,11 +196,11 @@ export class SongMatch extends Component<SongMatchProps, SongMatchState> {
      * Song List Management
      */
 
-    doAddSong = (song: Song): void => {
+    doAddSong = (name: string, image: string, id: string ): void => {
         // add song to state array (songMatchList)
         
         const currList = this.state.songMatchList;
-        currList.push(song);
+        currList.push({name: name, image: image, id: id});
         this.setState({songMatchList: currList});
     }
 
