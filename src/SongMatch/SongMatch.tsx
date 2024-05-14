@@ -8,6 +8,14 @@ import SearchBar from "./SearchBar";
 // const CLIENT_ID = "e910cd42af954cd39b2e04cb4a1a43c3";
 // const CLIENT_SECRET = "2e5b8f0e3f464084bd3546d5dad312c5";
 
+
+// INTERFACES
+type Song = {
+    name: string,
+    image: any,
+    id: string
+}
+
 type SongMatchProps = {
     // Initial State of the File (props we are passing into this component)
    
@@ -23,6 +31,8 @@ type SongMatchState = {
     currentPage: "home" | "searchbar" | "songlist" | "recommendations" | "playlist";
     errorMessage: string;
     songResults: any[]; // current list of diplayed songs
+    // songMatchList: {name: string, image: any, id: string}; // list of song IDs
+    songMatchList: Song[];
 
     // match pool content
     
@@ -40,8 +50,7 @@ export class SongMatch extends Component<SongMatchProps, SongMatchState> {
             currentPage: "home",
             errorMessage: "",
             songResults: [],
-            
-            
+            songMatchList: []
             
         }
     }
@@ -129,6 +138,7 @@ export class SongMatch extends Component<SongMatchProps, SongMatchState> {
                             <Card.Img src={song.album.images[0].url}/>
                             <Card.Body>
                             <Card.Title>{song.name}</Card.Title>
+                            <button onClick={() => this.doAddSong(song)}> + </button>
                             </Card.Body>
                         </Card>
                         )
@@ -181,6 +191,26 @@ export class SongMatch extends Component<SongMatchProps, SongMatchState> {
         }
 
     }
+
+    /**
+     * Song List Management
+     */
+
+    doAddSong = (song: Song): void => {
+        // add song to state array (songMatchList)
+        
+        const currList = this.state.songMatchList;
+        currList.push(song);
+        this.setState({songMatchList: currList});
+    }
+
+
+
+
+
+
+
+
 
 
     // searchSong = async (): Promise<void> => {
