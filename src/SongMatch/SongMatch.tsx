@@ -1,5 +1,5 @@
 import React, { Component, ChangeEvent, MouseEvent } from "react";
-import { Container, InputGroup, FormControl, Button, Row, Card } from 'react-bootstrap';
+import { Container, InputGroup, FormControl, Button, Row, Col, Card } from 'react-bootstrap';
 import { Root } from "react-dom/client";
 import './index.css';
 import SearchBar from "./SearchBar";
@@ -132,18 +132,35 @@ export class SongMatch extends Component<SongMatchProps, SongMatchState> {
                 <Container>
                     <Row className="mx-2 row row-cols-6">
                     
-                    {this.state.songResults.map( (song, i) => {
-                        return (
-                        <Card>
-                            <Card.Img src={song.album.images[0].url}/>
-                            <Card.Body>
-                            <Card.Title>{song.name}</Card.Title>
-                            <button onClick={() => this.doAddSong(song.name, song.album.images[0].url, song.id)}> + </button>
-                            </Card.Body>
-                        </Card>
-                        )
-                    })}
-            
+                        {this.state.songResults.map( (song, i) => {
+                            return (
+                            <Card>
+                                <Card.Img src={song.album.images[0].url}/>
+                                <Card.Body>
+                                <Card.Title>{song.name}</Card.Title>
+                                <button onClick={() => this.doAddSong(song.name, song.album.images[0].url, song.id)}> + </button>
+                                </Card.Body>
+                            </Card>
+                            )
+                        })}
+                    </Row>
+                </Container>
+
+
+                <Container className="mt-3">
+                    <Row>
+                        {this.state.songMatchList.map( (song, i) => {
+                            return (
+                            <Col md={2}>
+                                <Card className="small-card">
+                                    <Card.Img src={song.image}/>
+                                    <Card.Body>
+                                    <Card.Title>{song.name}</Card.Title>
+                                    </Card.Body>
+                                </Card>
+                            </Col>
+                            )
+                        })}
                     </Row>
                 </Container>
 
@@ -196,7 +213,7 @@ export class SongMatch extends Component<SongMatchProps, SongMatchState> {
      * Song List Management
      */
 
-    doAddSong = (name: string, image: string, id: string ): void => {
+    doAddSong = (name: string, image: any, id: string ): void => {
         // add song to state array (songMatchList)
         
         const currList = this.state.songMatchList;

@@ -23,3 +23,25 @@ body {
     align-items: center; /* Add this if you want to center content vertically */
   }
 
+
+
+.small-container {
+    position: fixed;
+    bottom: 0;
+    width: 100%; /* Make it span the full width */
+    max-height: 150px; /* Set a maximum height */
+    overflow-x: auto; /* Enable horizontal scrolling */
+    overflow-y: hidden; /* Hide vertical overflow */
+    white-space: nowrap; /* Prevent items from wrapping */
+    background-color: rgba(255, 255, 255, 0.9); /* Optional: background color with transparency */
+    border-top: 1px solid #ddd; /* Optional: top border */
+    padding: 10px; /* Optional: padding */
+}
+
+.small-card {
+    display: inline-block; /* Make cards inline */
+    width: 100px; /* Adjust as needed */
+    margin-right: 10px; /* Space between cards */
+}
+  
+
