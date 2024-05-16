@@ -120,12 +120,12 @@ export class CustomPlaylist extends Component<CustomPlaylistProps, CustomPlaylis
   doSpotifyFetchClick = () : void => {
     //const fetch_url = "https://api.spotify.com/v1/recommendations?limit=" + playlist_size
     //              + "&seed_genres=classical&2Ccountry";
-    const fetch_url = "https://api.spotify.com/v1/recommendations?seed_artists=3qm84nBOXUEQ2vnTfUTTFC&min_tempo=170&max_tempo=180";
-    if (this.state.access_token === null) {
-      this.doSpotifyAuthClick();
-    }
     
+    auth_pkce();
+    this.setState({access_token: localStorage.getItem('access_token')});
+    const fetch_url = "https://api.spotify.com/v1/recommendations?seed_artists=3qm84nBOXUEQ2vnTfUTTFC&min_tempo=170&max_tempo=180";
     const auth = "Bearer " + this.state.access_token;
+    //alert(auth)
     fetch(fetch_url, {
       method: "GET",
       headers: {
@@ -133,11 +133,6 @@ export class CustomPlaylist extends Component<CustomPlaylistProps, CustomPlaylis
       }
     }).then(this.doSpotifyFetch)
       .catch(() => this.doGeneralError("Failed to connect to server on doSpotifyFetch"));
-  }
-
-  doSpotifyAuthClick = () : void => {
-    this.setState({access_token: auth_pkce()});
-    console.log(this.state.access_token);
   }
 
   doSpotifyFetch = (res: Response) : void => {
@@ -158,7 +153,7 @@ export class CustomPlaylist extends Component<CustomPlaylistProps, CustomPlaylis
   }
 
   doGeneralError = (msg: string) : void => {
-    alert(msg);
+    //alert(msg);
   }
 
   /**
