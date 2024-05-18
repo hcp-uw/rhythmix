@@ -106,46 +106,45 @@ export class CustomPlaylist extends Component<CustomPlaylistProps, CustomPlaylis
   }
 
   renderGenres = () : JSX.Element[] => {
-    // have to add checked genres to set
     const genre_render : JSX.Element[] = [];
     for (let i = 0; i < all_genres.length; i += 9) {
       genre_render.push(
         <div>
           <tr>
             <td>
-              <input type="checkbox" id={all_genres[i]} name={all_genres[i]} value={all_genres[i]} />
+              <input type="checkbox" onChange={this.doGenreClick} id={all_genres[i]} name={all_genres[i]} value={all_genres[i]} />
               <label htmlFor={all_genres[i]}>{all_genres[i]}</label>
             </td>
             <td>
-              <input type="checkbox" id={all_genres[i + 1]} name={all_genres[i + 1]} value={all_genres[i + 1]} />
+              <input type="checkbox" onChange={this.doGenreClick} id={all_genres[i + 1]} name={all_genres[i + 1]} value={all_genres[i + 1]} />
               <label htmlFor={all_genres[i + 1]}>{all_genres[i + 1]}</label>
             </td>
             <td>
-              <input type="checkbox" id={all_genres[i + 2]} name={all_genres[i + 2]} value={all_genres[i + 2]} />
+              <input type="checkbox" onChange={this.doGenreClick} id={all_genres[i + 2]} name={all_genres[i + 2]} value={all_genres[i + 2]} />
               <label htmlFor={all_genres[i + 2]}>{all_genres[i + 2]}</label>
             </td>
             <td>
-              <input type="checkbox" id={all_genres[i + 3]} name={all_genres[i + 3]} value={all_genres[i + 3]} />
+              <input type="checkbox" onChange={this.doGenreClick} id={all_genres[i + 3]} name={all_genres[i + 3]} value={all_genres[i + 3]} />
               <label htmlFor={all_genres[i + 3]}>{all_genres[i + 3]}</label>
             </td>
             <td>
-              <input type="checkbox" id={all_genres[i + 4]} name={all_genres[i + 4]} value={all_genres[i + 4]} />
+              <input type="checkbox" onChange={this.doGenreClick} id={all_genres[i + 4]} name={all_genres[i + 4]} value={all_genres[i + 4]} />
               <label htmlFor={all_genres[i + 4]}>{all_genres[i + 4]}</label>
             </td>
             <td>
-              <input type="checkbox" id={all_genres[i + 5]} name={all_genres[i + 5]} value={all_genres[i + 5]} />
+              <input type="checkbox" onChange={this.doGenreClick} id={all_genres[i + 5]} name={all_genres[i + 5]} value={all_genres[i + 5]} />
               <label htmlFor={all_genres[i + 5]}>{all_genres[i + 5]}</label>
             </td>
             <td>
-              <input type="checkbox" id={all_genres[i + 6]} name={all_genres[i + 6]} value={all_genres[i + 6]} />
+              <input type="checkbox" onChange={this.doGenreClick} id={all_genres[i + 6]} name={all_genres[i + 6]} value={all_genres[i + 6]} />
               <label htmlFor={all_genres[i + 6]}>{all_genres[i + 6]}</label>
             </td>
             <td>
-              <input type="checkbox" id={all_genres[i + 7]} name={all_genres[i + 7]} value={all_genres[i + 7]} />
+              <input type="checkbox" onChange={this.doGenreClick} id={all_genres[i + 7]} name={all_genres[i + 7]} value={all_genres[i + 7]} />
               <label htmlFor={all_genres[i + 7]}>{all_genres[i + 7]}</label>
             </td>
             <td>
-              <input type="checkbox" id={all_genres[i + 8]} name={all_genres[i + 8]} value={all_genres[i + 8]} />
+              <input type="checkbox" onChange={this.doGenreClick} id={all_genres[i + 8]} name={all_genres[i + 8]} value={all_genres[i + 8]} />
               <label htmlFor={all_genres[i + 8]}>{all_genres[i + 8]}</label>
             </td>
           </tr>
@@ -153,6 +152,20 @@ export class CustomPlaylist extends Component<CustomPlaylistProps, CustomPlaylis
       )
     }
     return genre_render;
+  }
+
+  doGenreClick = (evt: ChangeEvent<HTMLInputElement>) : void => {
+    if (this.state.genres.has(evt.target.id)) {
+      this.state.genres.delete(evt.target.id);
+    } else {
+      if (this.state.genres.size >= 5) {
+        alert("Cannot select more than 5 seed genres");
+        const checkbox = document.getElementById(evt.target.id) as HTMLInputElement;
+        checkbox.checked = false;        
+      } else {
+        this.state.genres.add(evt.target.id);
+      }
+    }
   }
 
   doHomeClick = () : void => {
@@ -173,7 +186,11 @@ export class CustomPlaylist extends Component<CustomPlaylistProps, CustomPlaylis
   }
 
   doBasicSlidersClick = () : void => {
-    this.setState({page: {kind: "basic_sliders"}});
+    if (this.state.genres.size === 0) {
+      alert("Must select at least 1 seed genre.");
+    } else {
+      this.setState({page: {kind: "basic_sliders"}});
+    }
   }
 
   doAttributeChange = (evt: ChangeEvent<HTMLInputElement>): void => {
