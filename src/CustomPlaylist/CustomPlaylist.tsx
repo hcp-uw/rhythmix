@@ -3,12 +3,13 @@ import { Root } from "react-dom/client";
 import "./CustomPlaylist.css";
 import { auth_pkce } from "../auth.js";
 
-type Page = {kind: "basic_sliders"} | {kind: "all_sliders"} | {kind: "result"};
+type Page = {kind: "genres"} | {kind: "basic_sliders"} | {kind: "all_sliders"} | {kind: "result"};
 
 type CustomPlaylistState = {
   root: Root;
   page: Page;
   attributes: Map<string, number>;
+  genres: Set<string>;
   access_token: string | null;
 };
 
@@ -18,18 +19,28 @@ type CustomPlaylistProps = {
 
 const all_attributes : Array<string> = ["tempo", "energy", "popularity", "loudness", "acousticness", "danceability", "duration", "instrumentalness", "key", "liveness", "mode", "speechiness", "time signature", "valence"];
 
+const all_genres : Array<string> = ["acoustic", "afrobeat", "alt-rock", "alternative", "ambient", "anime", "black-metal", "bluegrass", "blues", "bossanova", "brazil", "breakbeat", "british", "cantopop", "chicago-house", "children", "chill", "classical", "club", "comedy", "country", "dance", "dancehall", "death-metal", "deep-house", "detroit-techno", "disco", "disney", "drum-and-bass", "dub", "dubstep", "edm", "electro", "electronic", "emo", "folk", "forro", "french", "funk", "garage", "german", "gospel", "goth", "grindcore", "groove", "grunge", "guitar", "happy", "hard-rock", "hardcore", "hardstyle", "heavy-metal", "hip-hop", "holidays", "honky-tonk", "house", "idm", "indian", "indie", "indie-pop", "industrial", "iranian", "j-dance", "j-idol", "j-pop", "j-rock", "jazz", "k-pop", "kids", "latin", "latino", "malay", "mandopop", "metal", "metal-misc", "metalcore", "minimal-techno", "movies", "mpb", "new-age", "new-release", "opera", "pagode", "party", "philippines-opm", "piano", "pop", "pop-film", "post-dubstep", "power-pop", "progressive-house", "psych-rock", "punk", "punk-rock", "r-n-b", "rainy-day", "reggae", "reggaeton", "road-trip", "rock", "rock-n-roll", "rockabilly", "romance", "sad", "salsa", "samba", "sertanejo", "show-tunes", "singer-songwriter", "ska", "sleep", "songwriter", "soul", "soundtracks", "spanish", "study", "summer", "swedish", "synth-pop", "tango", "techno", "trance", "trip-hop", "turkish", "work-out", "world-music"];
+
 const playlist_size : bigint = 25n;
 
 export class CustomPlaylist extends Component<CustomPlaylistProps, CustomPlaylistState> {
   constructor(props: CustomPlaylistProps) {
     super(props);
-    this.state = {root: props.root, page: {kind: "basic_sliders"}, attributes: new Map<string, number>(), access_token: null};
+    this.state = {root: props.root, page: {kind: "genres"}, attributes: new Map<string, number>(), genres: new Set<string>(), access_token: null};
     for (let i = 0; i < all_attributes.length; i++) {
       this.state.attributes.set(all_attributes[i], 1);
     }
   };
 
   render = () : JSX.Element => {
+    if (this.state.page.kind === "genres") {
+      return <div className="CPG-background">
+        <h1>custom playlist</h1>
+        {this.renderGenres()}
+        <button type="button" onClick={this.doBasicSlidersClick}>next</button>
+        <button type="button" onClick={this.doHomeClick}>home</button>
+      </div>;
+    }
     if (this.state.page.kind === "basic_sliders") {
       return <div className="CPG-background">
         <h1>custom playlist</h1>
@@ -37,6 +48,7 @@ export class CustomPlaylist extends Component<CustomPlaylistProps, CustomPlaylis
         <button type="button" onClick={this.doAllSlidersClick}>more options</button>
         {this.renderSliders()}
         <button type="button" onClick={this.doBackClick}>back</button>
+        <button type="button" onClick={this.doHomeClick}>home</button>
       </div>;
     } else if (this.state.page.kind === "all_sliders") {
       return <div className="CPG-background">
@@ -44,11 +56,12 @@ export class CustomPlaylist extends Component<CustomPlaylistProps, CustomPlaylis
         <button type="button" onClick={this.doBasicSlidersClick}>fewer options</button>
         {this.renderSliders()}
         <button type="button" onClick={this.doBackClick}>back</button>
+        <button type="button" onClick={this.doHomeClick}>home</button>
       </div>;
     } else {
       return <div className="CPG-background">
         <h1>your custom playlist</h1>
-        <button type="button" onClick={this.doBackClick}>back</button>
+        <button type="button" onClick={this.doHomeClick}>home</button>
       </div>;
     }
   };
@@ -92,9 +105,63 @@ export class CustomPlaylist extends Component<CustomPlaylistProps, CustomPlaylis
     return slider_render;
   }
 
-  doBackClick = () : void => {
+  renderGenres = () : JSX.Element[] => {
+    // have to add checked genres to set
+    const genre_render : JSX.Element[] = [];
+    for (let i = 0; i < all_genres.length; i += 9) {
+      genre_render.push(
+        <div>
+          <tr>
+            <td>
+              <input type="checkbox" id={all_genres[i]} name={all_genres[i]} value={all_genres[i]} />
+              <label htmlFor={all_genres[i]}>{all_genres[i]}</label>
+            </td>
+            <td>
+              <input type="checkbox" id={all_genres[i + 1]} name={all_genres[i + 1]} value={all_genres[i + 1]} />
+              <label htmlFor={all_genres[i + 1]}>{all_genres[i + 1]}</label>
+            </td>
+            <td>
+              <input type="checkbox" id={all_genres[i + 2]} name={all_genres[i + 2]} value={all_genres[i + 2]} />
+              <label htmlFor={all_genres[i + 2]}>{all_genres[i + 2]}</label>
+            </td>
+            <td>
+              <input type="checkbox" id={all_genres[i + 3]} name={all_genres[i + 3]} value={all_genres[i + 3]} />
+              <label htmlFor={all_genres[i + 3]}>{all_genres[i + 3]}</label>
+            </td>
+            <td>
+              <input type="checkbox" id={all_genres[i + 4]} name={all_genres[i + 4]} value={all_genres[i + 4]} />
+              <label htmlFor={all_genres[i + 4]}>{all_genres[i + 4]}</label>
+            </td>
+            <td>
+              <input type="checkbox" id={all_genres[i + 5]} name={all_genres[i + 5]} value={all_genres[i + 5]} />
+              <label htmlFor={all_genres[i + 5]}>{all_genres[i + 5]}</label>
+            </td>
+            <td>
+              <input type="checkbox" id={all_genres[i + 6]} name={all_genres[i + 6]} value={all_genres[i + 6]} />
+              <label htmlFor={all_genres[i + 6]}>{all_genres[i + 6]}</label>
+            </td>
+            <td>
+              <input type="checkbox" id={all_genres[i + 7]} name={all_genres[i + 7]} value={all_genres[i + 7]} />
+              <label htmlFor={all_genres[i + 7]}>{all_genres[i + 7]}</label>
+            </td>
+            <td>
+              <input type="checkbox" id={all_genres[i + 8]} name={all_genres[i + 8]} value={all_genres[i + 8]} />
+              <label htmlFor={all_genres[i + 8]}>{all_genres[i + 8]}</label>
+            </td>
+          </tr>
+        </div>
+      )
+    }
+    return genre_render;
+  }
+
+  doHomeClick = () : void => {
     this.state.root.unmount();
   };
+
+  doBackClick = () : void => {
+    this.setState({page: {kind: "genres"}});
+  }
 
   doResultClick = () : void => {
     this.setState({page: {kind: "result"}});

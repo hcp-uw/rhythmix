@@ -28,14 +28,24 @@ code {
     left: 50%;
     transform: translate(-50%, -50%);
     background-image: linear-gradient(rgba(90, 189, 136, 1.0), rgba(222, 255, 89, 0.0));
-    width: 1600px; /* Adjust width as needed */
-    height: 800px; /* Adjust height as needed */
+    width: 100vw; /* Adjust width as needed */
+    height: 100vh; /* Adjust height as needed */
     display: flex; /* Add this if you want to center content horizontally */
     flex-direction: column;
     justify-content: center; /* Add this if you want to center content horizontally */
     align-items: center; /* Add this if you want to center content vertically */
 }
 
+td {
+    padding: 0px;
+    width: 12vw;
+    font-size: 12px;
+}
+
+table {
+    width: 90vw;
+    table-layout: fixed;
+}
 
 .slider-container {
     margin-bottom: 15px;  /*Height between sliders*/
