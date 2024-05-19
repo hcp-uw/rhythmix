@@ -1,55 +1,92 @@
-/*
-.header {
-    text-align: center;
-    font-family: Arial, sans-serif;
-    color: #064a27;
-    margin-bottom: 20px;
-    margin-top: 20px;
-  }
-*/
-
-@font-face {
-    font-family: 'Futura PT Medium';
-    font-style: normal;
-    font-weight: normal;
-    src: local('Futura PT Medium'), url('../FuturaCyrillicMedium.woff') format('woff');
+.CPG-header {
+    background-color: rgb(90, 189, 136);
+    padding: 1vh 8vh;
+    position: fixed;
+    top: 6%;
+    border-radius: 10vh;
+    font-size: 5vh;
+    letter-spacing: 0.1rem;
+    border-style: none;
 }
-
-body, html {
-    font-family: 'Futura PT Medium', 'Oxygen', sans-serif !important;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-}
-
-code {
-    font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
-}
-
 
 .CPG-background {
     position: fixed; /* or absolute */
     top: 50%;
     left: 50%;
-    transform: translate(-50%, -50%);
-    background-image: linear-gradient(rgba(90, 189, 136, 1.0), rgba(222, 255, 89, 0.0));
-    width: 100vw; /* Adjust width as needed */
-    height: 100vh; /* Adjust height as needed */
+    transform: translate(-50%, -40%);
+    background: linear-gradient(rgba(90, 189, 136, 1.0), rgba(222, 255, 89, 0.2));
+    background-repeat: no-repeat;
+    background-size: cover;
+    border-radius: 3vh;
+    width: 95vw;
+    height: 78vh;
     display: flex; /* Add this if you want to center content horizontally */
     flex-direction: column;
     justify-content: center; /* Add this if you want to center content horizontally */
     align-items: center; /* Add this if you want to center content vertically */
 }
 
-td {
-    padding: 0px;
-    width: 12vw;
-    font-size: 12px;
+.CPG-base {
+    position: fixed; /* or absolute */
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: rgb(33, 33, 33);
+    background-repeat: no-repeat;
+    background-size: cover;
+    width: 100vw;
+    height: 100vh;
+    display: flex; /* Add this if you want to center content horizontally */
+    flex-direction: column;
+    justify-content: center; /* Add this if you want to center content horizontally */
+    align-items: center; /* Add this if you want to center content vertically */
 }
 
-table {
-    width: 90vw;
-    table-layout: fixed;
+.genres {
+    font-size: 2.3vh;
+}
+
+.checkboxes {
+    margin-right: 2vh;
+}
+
+.create-playlist-button {
+    background-color: rgb(192, 231, 179);
+    padding: 1vh 8vh;
+    position: fixed;
+    top: 6%;
+    border-radius: 10vh;
+    font-size: 5vh;
+    letter-spacing: 0.1rem;
+    border-style: none;
+}
+
+.home-button {
+    transform: translate(42vw, -85vh);
+    background-color: rgb(90, 189, 136);
+    padding: 1vh 3vh;
+    border-radius: 10vh;
+    font-size: 3vh;
+    letter-spacing: 0.1rem;
+    border-style: none;
+}
+
+.next-button {
+    transform: translateY(5vh);
+    background-color: rgb(192, 231, 179);
+    padding: 0.5vh 4vh;
+    margin-top: 1vh;
+    border-radius: 10vh;
+    font-size: 3vh;
+    letter-spacing: 0.1rem;
+    border-style: none;
+}
+
+td {
+    padding: 0.1vh 0 0.1vh 0;
+    width: 13vw;
+    letter-spacing: 0.05rem;
+    transform: translateY(5vh);
 }
 
 .slider-container {

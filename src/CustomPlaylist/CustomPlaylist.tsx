@@ -34,34 +34,42 @@ export class CustomPlaylist extends Component<CustomPlaylistProps, CustomPlaylis
 
   render = () : JSX.Element => {
     if (this.state.page.kind === "genres") {
-      return <div className="CPG-background">
-        <h1>custom playlist</h1>
-        {this.renderGenres()}
-        <button type="button" onClick={this.doBasicSlidersClick}>next</button>
-        <button type="button" onClick={this.doHomeClick}>home</button>
+      return <div className="CPG-base">
+        <h1 className="CPG-header">custom playlist</h1>
+        <div className="CPG-background">
+          {this.renderGenres()}
+          <button className="next-button" type="button" onClick={this.doBasicSlidersClick}>next</button>
+          <button className="home-button" type="button" onClick={this.doHomeClick}>home</button>
+        </div>
       </div>;
     }
     if (this.state.page.kind === "basic_sliders") {
-      return <div className="CPG-background">
-        <h1>custom playlist</h1>
-        <button type="button" onClick={this.doResultClick}>create playlist</button>
-        <button type="button" onClick={this.doAllSlidersClick}>more options</button>
-        {this.renderSliders()}
-        <button type="button" onClick={this.doBackClick}>back</button>
-        <button type="button" onClick={this.doHomeClick}>home</button>
+      return <div className="CPG-base">
+        <h1 className="CPG-header">custom playlist</h1>
+        <div className="CPG-background">
+          <button className="create-playlist-button" type="button" onClick={this.doResultClick}>create playlist</button>
+          <button type="button" onClick={this.doAllSlidersClick}>more options</button>
+          {this.renderSliders()}
+          <button type="button" onClick={this.doBackClick}>back</button>
+          <button className="home-button" type="button" onClick={this.doHomeClick}>home</button>
+        </div>
       </div>;
     } else if (this.state.page.kind === "all_sliders") {
-      return <div className="CPG-background">
-        <button type="button" onClick={this.doResultClick}>create playlist</button>
-        <button type="button" onClick={this.doBasicSlidersClick}>fewer options</button>
-        {this.renderSliders()}
-        <button type="button" onClick={this.doBackClick}>back</button>
-        <button type="button" onClick={this.doHomeClick}>home</button>
+      return <div className="CPG-base">
+        <div className="CPG-background">
+          <button className="create-playlist-button" type="button" onClick={this.doResultClick}>create playlist</button>
+          <button type="button" onClick={this.doBasicSlidersClick}>fewer options</button>
+          {this.renderSliders()}
+          <button type="button" onClick={this.doBackClick}>back</button>
+          <button className="home-button" type="button" onClick={this.doHomeClick}>home</button>
+        </div>
       </div>;
     } else {
-      return <div className="CPG-background">
-        <h1>your custom playlist</h1>
-        <button type="button" onClick={this.doHomeClick}>home</button>
+      return <div className="CPG-base">
+        <h1 className="CPG-header">your custom playlist</h1>
+        <div className="CPG-background">
+          <button className="home-button" type="button" onClick={this.doHomeClick}>home</button>
+        </div>
       </div>;
     }
   };
@@ -107,49 +115,43 @@ export class CustomPlaylist extends Component<CustomPlaylistProps, CustomPlaylis
 
   renderGenres = () : JSX.Element[] => {
     const genre_render : JSX.Element[] = [];
-    for (let i = 0; i < all_genres.length; i += 9) {
+    for (let i = 0; i < all_genres.length; i += 7) {
       genre_render.push(
-        <div>
-          <tr>
-            <td>
-              <input type="checkbox" onChange={this.doGenreClick} id={all_genres[i]} name={all_genres[i]} value={all_genres[i]} />
-              <label htmlFor={all_genres[i]}>{all_genres[i]}</label>
-            </td>
-            <td>
-              <input type="checkbox" onChange={this.doGenreClick} id={all_genres[i + 1]} name={all_genres[i + 1]} value={all_genres[i + 1]} />
-              <label htmlFor={all_genres[i + 1]}>{all_genres[i + 1]}</label>
-            </td>
-            <td>
-              <input type="checkbox" onChange={this.doGenreClick} id={all_genres[i + 2]} name={all_genres[i + 2]} value={all_genres[i + 2]} />
-              <label htmlFor={all_genres[i + 2]}>{all_genres[i + 2]}</label>
-            </td>
-            <td>
-              <input type="checkbox" onChange={this.doGenreClick} id={all_genres[i + 3]} name={all_genres[i + 3]} value={all_genres[i + 3]} />
-              <label htmlFor={all_genres[i + 3]}>{all_genres[i + 3]}</label>
-            </td>
-            <td>
-              <input type="checkbox" onChange={this.doGenreClick} id={all_genres[i + 4]} name={all_genres[i + 4]} value={all_genres[i + 4]} />
-              <label htmlFor={all_genres[i + 4]}>{all_genres[i + 4]}</label>
-            </td>
-            <td>
-              <input type="checkbox" onChange={this.doGenreClick} id={all_genres[i + 5]} name={all_genres[i + 5]} value={all_genres[i + 5]} />
-              <label htmlFor={all_genres[i + 5]}>{all_genres[i + 5]}</label>
-            </td>
-            <td>
-              <input type="checkbox" onChange={this.doGenreClick} id={all_genres[i + 6]} name={all_genres[i + 6]} value={all_genres[i + 6]} />
-              <label htmlFor={all_genres[i + 6]}>{all_genres[i + 6]}</label>
-            </td>
-            <td>
-              <input type="checkbox" onChange={this.doGenreClick} id={all_genres[i + 7]} name={all_genres[i + 7]} value={all_genres[i + 7]} />
-              <label htmlFor={all_genres[i + 7]}>{all_genres[i + 7]}</label>
-            </td>
-            <td>
-              <input type="checkbox" onChange={this.doGenreClick} id={all_genres[i + 8]} name={all_genres[i + 8]} value={all_genres[i + 8]} />
-              <label htmlFor={all_genres[i + 8]}>{all_genres[i + 8]}</label>
-            </td>
-          </tr>
-        </div>
-      )
+        <React.Fragment>
+          <div className="genres">
+            <tr>
+              <td>
+                <input className="checkboxes" type="checkbox" onChange={this.doGenreClick} id={all_genres[i]} name={all_genres[i]} value={all_genres[i]} />
+                <label htmlFor={all_genres[i]}>{all_genres[i]}</label>
+              </td>
+              <td>
+                <input className="checkboxes" type="checkbox" onChange={this.doGenreClick} id={all_genres[i + 1]} name={all_genres[i + 1]} value={all_genres[i + 1]} />
+                <label htmlFor={all_genres[i + 1]}>{all_genres[i + 1]}</label>
+              </td>
+              <td>
+                <input className="checkboxes" type="checkbox" onChange={this.doGenreClick} id={all_genres[i + 2]} name={all_genres[i + 2]} value={all_genres[i + 2]} />
+                <label htmlFor={all_genres[i + 2]}>{all_genres[i + 2]}</label>
+              </td>
+              <td>
+                <input className="checkboxes" type="checkbox" onChange={this.doGenreClick} id={all_genres[i + 3]} name={all_genres[i + 3]} value={all_genres[i + 3]} />
+                <label htmlFor={all_genres[i + 3]}>{all_genres[i + 3]}</label>
+              </td>
+              <td>
+                <input className="checkboxes" type="checkbox" onChange={this.doGenreClick} id={all_genres[i + 4]} name={all_genres[i + 4]} value={all_genres[i + 4]} />
+                <label htmlFor={all_genres[i + 4]}>{all_genres[i + 4]}</label>
+              </td>
+              <td>
+                <input className="checkboxes" type="checkbox" onChange={this.doGenreClick} id={all_genres[i + 5]} name={all_genres[i + 5]} value={all_genres[i + 5]} />
+                <label htmlFor={all_genres[i + 5]}>{all_genres[i + 5]}</label>
+              </td>
+              <td>
+                <input className="checkboxes" type="checkbox" onChange={this.doGenreClick} id={all_genres[i + 6]} name={all_genres[i + 6]} value={all_genres[i + 6]} />
+                <label htmlFor={all_genres[i + 6]}>{all_genres[i + 6]}</label>
+              </td>
+            </tr>
+          </div>
+        </ React.Fragment>
+      );
     }
     return genre_render;
   }
