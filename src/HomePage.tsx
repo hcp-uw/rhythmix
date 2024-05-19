@@ -36,7 +36,7 @@ export class HomePage extends Component<HomePageProps, HomePageState> {
           return (
           <div className="App">
           <header className="header">
-            <h1> <img src={logo} alt="" width="80" height="80"/> SpotiBlend </h1>
+            <h1> <img src={logo} alt="" width="80" height="80"/> spotiblend </h1>
           </header>
           
           <div className="container">
