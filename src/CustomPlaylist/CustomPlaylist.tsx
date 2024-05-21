@@ -47,10 +47,12 @@ export class CustomPlaylist extends Component<CustomPlaylistProps, CustomPlaylis
       return <div className="CPG-base">
         <h1 className="CPG-header">custom playlist</h1>
         <div className="CPG-background">
-          <button className="create-playlist-button" type="button" onClick={this.doResultClick}>create playlist</button>
+          <div className="slider-background">
+            {this.renderSliders()}
+            <button className="create-playlist-button" type="button" onClick={this.doResultClick}>create playlist</button>
+          </div>
           <button type="button" onClick={this.doAllSlidersClick}>more options</button>
-          {this.renderSliders()}
-          <button type="button" onClick={this.doBackClick}>back</button>
+          <button className="back-button" type="button" onClick={this.doBackClick}>back</button>
           <button className="home-button" type="button" onClick={this.doHomeClick}>home</button>
         </div>
       </div>;
@@ -59,7 +61,9 @@ export class CustomPlaylist extends Component<CustomPlaylistProps, CustomPlaylis
         <div className="CPG-background">
           <button className="create-playlist-button" type="button" onClick={this.doResultClick}>create playlist</button>
           <button type="button" onClick={this.doBasicSlidersClick}>fewer options</button>
-          {this.renderSliders()}
+          <div className="slider-background">
+            {this.renderSliders()}
+          </div>
           <button type="button" onClick={this.doBackClick}>back</button>
           <button className="home-button" type="button" onClick={this.doHomeClick}>home</button>
         </div>
@@ -89,21 +93,21 @@ export class CustomPlaylist extends Component<CustomPlaylistProps, CustomPlaylis
       if (curr_attribute === "time signature" || curr_attribute === "key") {
         slider_render.push(
           <div className="slider-container">
-            <label htmlFor={curr_attribute} className="slider-label">{curr_attribute}</label>
+            <label htmlFor={curr_attribute} className="slider-label">{curr_attribute}</label><br />
             <input type="range" min="1" max="11" id={curr_attribute} onChange={this.doAttributeChange}></input>
           </div>
         )
       } else if (curr_attribute === "popularity") {
         slider_render.push(
           <div className="slider-container">
-            <label htmlFor={curr_attribute} className="slider-label">{curr_attribute}</label>
+            <label htmlFor={curr_attribute} className="slider-label">{curr_attribute}</label><br />
             <input type="range" min="1" max="100" id={curr_attribute} onChange={this.doAttributeChange}></input>
           </div>
         )
       } else {
         slider_render.push(
           <div className="slider-container">
-            <label htmlFor={curr_attribute} className="slider-label">{curr_attribute}</label>
+            <label htmlFor={curr_attribute} className="slider-label">{curr_attribute}</label><br />
             <input type="range" min="0" max="1" step="0.01" id={curr_attribute} onChange={this.doAttributeChange}></input>
           </div>
         )

@@ -1,3 +1,9 @@
+* {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
 .CPG-header {
     background-color: rgb(90, 189, 136);
     padding: 1vh 8vh;
@@ -14,7 +20,7 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, -40%);
-    background: linear-gradient(rgba(90, 189, 136, 1.0), rgba(222, 255, 89, 0.2));
+    background: linear-gradient(rgba(90, 189, 136, 0.8), rgba(222, 255, 89, 0.2));
     background-repeat: no-repeat;
     background-size: cover;
     border-radius: 3vh;
@@ -52,18 +58,31 @@
 
 .create-playlist-button {
     background-color: rgb(192, 231, 179);
-    padding: 1vh 8vh;
-    position: fixed;
-    top: 6%;
+    padding: 1vh 4vw;
+    position: relative;
     border-radius: 10vh;
-    font-size: 5vh;
+    font-size: 4vh;
+    letter-spacing: 0.1rem;
+    border-style: none;
+    display: block;
+    margin: auto;
+}
+
+.home-button {
+    transform: translate(44vw, -48vh);
+    background-color: rgb(90, 189, 136);
+    position: absolute;
+    padding: 1vh 3vh;
+    border-radius: 10vh;
+    font-size: 3vh;
     letter-spacing: 0.1rem;
     border-style: none;
 }
 
-.home-button {
-    transform: translate(42vw, -85vh);
+.back-button {
+    transform: translate(-44vw, -48vh);
     background-color: rgb(90, 189, 136);
+    position: absolute;
     padding: 1vh 3vh;
     border-radius: 10vh;
     font-size: 3vh;
@@ -72,10 +91,9 @@
 }
 
 .next-button {
-    transform: translateY(5vh);
     background-color: rgb(192, 231, 179);
     padding: 0.5vh 4vh;
-    margin-top: 1vh;
+    margin-top: 2vh;
     border-radius: 10vh;
     font-size: 3vh;
     letter-spacing: 0.1rem;
@@ -86,15 +104,28 @@ td {
     padding: 0.1vh 0 0.1vh 0;
     width: 13vw;
     letter-spacing: 0.05rem;
-    transform: translateY(5vh);
 }
 
 .slider-container {
-    margin-bottom: 15px;  /*Height between sliders*/
+    width: 90%;
+    margin: 2vh auto 2vh auto;
 }
 
 .slider-label {
-    margin-right: 10px;  /*Space between slider label and slider edge*/
+    margin-bottom: 1vh;
+    margin-top: 1.8vh;
+    font-size: 3vh;
+    color: rgba(223, 240, 203, 0.9);
+    letter-spacing: 0.1em;
+}
+
+.slider-background {
+    background-color: rgba(212, 241, 176, 0.25);
+    border-radius: 3vh;
+    width: 97%;
+    height: 75%;
+    position: relative;
+    top: -5%;
 }
 
 /********** Range Input Styles **********/
@@ -104,7 +135,7 @@ input[type="range"] {
     appearance: none;
     background: transparent;
     cursor: pointer;
-    width: 50rem;
+    width: 100%;
 }
 
 /* Removes default focus */
@@ -115,21 +146,21 @@ input[type="range"]:focus {
 /***** Chrome, Safari, Opera and Edge Chromium styles *****/
 /* slider track */
 input[type="range"]::-webkit-slider-runnable-track {
-    background-color: #04080a;
-    border-radius: 0.5rem;
-    height: 0.5rem;
+    background-color: rgba(212, 241, 176, 0.7);
+    height: 0.3vh;
 }
 
 /* slider thumb */
 input[type="range"]::-webkit-slider-thumb {
     -webkit-appearance: none; /* Override default look */
     appearance: none;
-    margin-top: -12px; /* Centers thumb on the track */
+    margin-top: -2.5vh; /* Centers thumb on the track */
 
     /*custom styles*/
-    background-color: #ffffff;
-    height: 2rem;
-    width: 0.75rem;
+    background-color: rgb(218, 239, 211);
+    height: 5vh;
+    width: 1.2vw;
+    border-radius: 0.3vw;
 }
 
 input[type="range"]:focus::-webkit-slider-thumb {
