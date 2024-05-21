@@ -1,3 +1,7 @@
+:root {
+    --body-font-size: 3vh;
+}
+
 * {
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
@@ -20,7 +24,7 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, -40%);
-    background: linear-gradient(rgba(90, 189, 136, 0.8), rgba(222, 255, 89, 0.2));
+    background: linear-gradient(rgba(90, 189, 136, 0.9), rgba(191, 255, 89, 0.3), rgba(222, 255, 89, 0));
     background-repeat: no-repeat;
     background-size: cover;
     border-radius: 3vh;
@@ -59,33 +63,35 @@
 .create-playlist-button {
     background-color: rgb(192, 231, 179);
     padding: 1vh 4vw;
-    position: relative;
+    position: absolute;
     border-radius: 10vh;
-    font-size: 4vh;
+    font-size: var(--body-font-size);
     letter-spacing: 0.1rem;
     border-style: none;
     display: block;
     margin: auto;
+    transform: translateY(23vh);
+    z-index: 1;
 }
 
 .home-button {
-    transform: translate(44vw, -48vh);
+    transform: translate(44vw, -40vh);
     background-color: rgb(90, 189, 136);
     position: absolute;
     padding: 1vh 3vh;
     border-radius: 10vh;
-    font-size: 3vh;
+    font-size: var(--body-font-size);
     letter-spacing: 0.1rem;
     border-style: none;
 }
 
 .back-button {
-    transform: translate(-44vw, -48vh);
+    transform: translate(-44vw, -40vh);
     background-color: rgb(90, 189, 136);
     position: absolute;
     padding: 1vh 3vh;
     border-radius: 10vh;
-    font-size: 3vh;
+    font-size: var(--body-font-size);
     letter-spacing: 0.1rem;
     border-style: none;
 }
@@ -95,15 +101,36 @@
     padding: 0.5vh 4vh;
     margin-top: 2vh;
     border-radius: 10vh;
-    font-size: 3vh;
+    font-size: var(--body-font-size);
     letter-spacing: 0.1rem;
     border-style: none;
+}
+
+.more-options-button {
+    background-color: transparent;
+    text-decoration: underline;
+    border: none;
+    font-size: var(--body-font-size);
+    letter-spacing: 0.1rem;
+    color: rgb(192, 231, 179);
+    margin-left: 4vw;
+    margin-top: 3vh;
+}
+
+.more-options-background {
+    background-color: rgba(212, 241, 176, 0.25);
+    border-radius: 3vh;
+    margin: 0.5% auto;
+    width: 97%;
+    height: 19%;
+    position: relative;
 }
 
 td {
     padding: 0.1vh 0 0.1vh 0;
     width: 13vw;
     letter-spacing: 0.05rem;
+    color: rgba(223, 240, 203, 1);
 }
 
 .slider-container {
@@ -125,7 +152,7 @@ td {
     width: 97%;
     height: 75%;
     position: relative;
-    top: -5%;
+    margin-bottom: 0;
 }
 
 /********** Range Input Styles **********/

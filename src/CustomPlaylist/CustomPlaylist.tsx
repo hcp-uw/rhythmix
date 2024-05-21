@@ -39,8 +39,8 @@ export class CustomPlaylist extends Component<CustomPlaylistProps, CustomPlaylis
         <div className="CPG-background">
           {this.renderGenres()}
           <button className="next-button" type="button" onClick={this.doBasicSlidersClick}>next</button>
-          <button className="home-button" type="button" onClick={this.doHomeClick}>home</button>
         </div>
+        <button className="home-button" type="button" onClick={this.doHomeClick}>home</button>
       </div>;
     }
     if (this.state.page.kind === "basic_sliders") {
@@ -49,12 +49,14 @@ export class CustomPlaylist extends Component<CustomPlaylistProps, CustomPlaylis
         <div className="CPG-background">
           <div className="slider-background">
             {this.renderSliders()}
-            <button className="create-playlist-button" type="button" onClick={this.doResultClick}>create playlist</button>
           </div>
-          <button type="button" onClick={this.doAllSlidersClick}>more options</button>
-          <button className="back-button" type="button" onClick={this.doBackClick}>back</button>
-          <button className="home-button" type="button" onClick={this.doHomeClick}>home</button>
+          <button className="create-playlist-button" type="button" onClick={this.doResultClick}>create playlist</button>
+          <div className="more-options-background">
+            <button className="more-options-button" type="button" onClick={this.doAllSlidersClick}>more options</button>
+          </div>
         </div>
+        <button className="back-button" type="button" onClick={this.doBackClick}>back</button>
+        <button className="home-button" type="button" onClick={this.doHomeClick}>home</button>
       </div>;
     } else if (this.state.page.kind === "all_sliders") {
       return <div className="CPG-base">
@@ -64,9 +66,9 @@ export class CustomPlaylist extends Component<CustomPlaylistProps, CustomPlaylis
           <div className="slider-background">
             {this.renderSliders()}
           </div>
-          <button type="button" onClick={this.doBackClick}>back</button>
-          <button className="home-button" type="button" onClick={this.doHomeClick}>home</button>
         </div>
+        <button className="back-button" type="button" onClick={this.doBackClick}>back</button>
+        <button className="home-button" type="button" onClick={this.doHomeClick}>home</button>
       </div>;
     } else {
       return <div className="CPG-base">
