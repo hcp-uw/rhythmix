@@ -177,9 +177,7 @@ export function auth_pkce() {
 
     authUrl.search = new URLSearchParams(params).toString();
 
-    setTimeout(function() {
-        window.location.href = authUrl.toString();
-    }, 5000);
+    window.location.href = authUrl.toString();
     
     let urlParams = new URLSearchParams(window.location.search);
     let code = urlParams.get("code");
@@ -204,6 +202,8 @@ export function auth_pkce() {
             redirect_uri: redirect_uri,
         }),
     };
+
+    alert(code);
 
     fetch(tokenEndpoint, payload).then(res => res.json())
                                  .then(res => {
