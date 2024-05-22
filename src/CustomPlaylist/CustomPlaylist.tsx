@@ -1,7 +1,6 @@
 import React, { Component, ChangeEvent } from "react";
 import { Root } from "react-dom/client";
 import "./CustomPlaylist.css";
-import { auth_pkce } from "../auth.js";
 
 type Page = {kind: "genres"} | {kind: "basic_sliders"} | {kind: "all_sliders"} | {kind: "result"};
 
@@ -50,7 +49,7 @@ export class CustomPlaylist extends Component<CustomPlaylistProps, CustomPlaylis
           <div className="slider-background">
             {this.renderSliders()}
           </div>
-          <button className="create-playlist-button" type="button" onClick={this.doResultClick}>create playlist</button>
+          <button className="create-playlist-button" type="button" onClick={this.doSpotifyFetchClick}>create playlist</button>
           <div className="more-options-background">
             <button className="more-options-button" type="button" onClick={this.doAllSlidersClick}>more options</button>
           </div>
@@ -61,7 +60,7 @@ export class CustomPlaylist extends Component<CustomPlaylistProps, CustomPlaylis
     } else if (this.state.page.kind === "all_sliders") {
       return <div className="CPG-base">
         <div className="CPG-background">
-          <button className="create-playlist-button" type="button" onClick={this.doResultClick}>create playlist</button>
+          <button className="create-playlist-button" type="button" onClick={this.doSpotifyFetchClick}>create playlist</button>
           <button type="button" onClick={this.doBasicSlidersClick}>fewer options</button>
           <div className="slider-background">
             {this.renderSliders()}
@@ -184,11 +183,6 @@ export class CustomPlaylist extends Component<CustomPlaylistProps, CustomPlaylis
     this.setState({page: {kind: "genres"}});
   }
 
-  doResultClick = () : void => {
-    this.setState({page: {kind: "result"}});
-    this.doSpotifyFetchClick();
-  }
-
   doAllSlidersClick = () : void => {
     this.setState({page: {kind: "all_sliders"}});
   }
@@ -212,19 +206,22 @@ export class CustomPlaylist extends Component<CustomPlaylistProps, CustomPlaylis
   doSpotifyFetchClick = () : void => {
     //const fetch_url = "https://api.spotify.com/v1/recommendations?limit=" + playlist_size
     //              + "&seed_genres=classical&2Ccountry";
-    
-    auth_pkce();
-    this.setState({access_token: localStorage.getItem('access_token')});
-    const fetch_url = "https://api.spotify.com/v1/recommendations?seed_artists=3qm84nBOXUEQ2vnTfUTTFC&min_tempo=170&max_tempo=180";
-    const auth = "Bearer " + this.state.access_token;
-    //alert(auth)
-    fetch(fetch_url, {
-      method: "GET",
-      headers: {
-        Authorization: auth,
-      }
-    }).then(this.doSpotifyFetch)
-      .catch(() => this.doGeneralError("Failed to connect to server on doSpotifyFetch"));
+    const access_token = localStorage.getItem('spotifyAccessToken');
+    if (access_token === undefined || access_token === null) {
+      alert("Please login to use Custom Playlist Generator!");
+    } else {
+      const fetch_url = "https://api.spotify.com/v1/recommendations?seed_artists=3qm84nBOXUEQ2vnTfUTTFC&min_tempo=170&max_tempo=180";
+      const auth = "Bearer " + access_token;
+      //alert(auth)
+      fetch(fetch_url, {
+        method: "GET",
+        headers: {
+          Authorization: auth,
+        }
+      }).then(this.doSpotifyFetch)
+        .catch(() => this.doGeneralError("Failed to connect to server on doSpotifyFetch"));
+        this.setState({page: {kind: "result"}});
+    }
   }
 
   doSpotifyFetch = (res: Response) : void => {

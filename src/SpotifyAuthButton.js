@@ -13,7 +13,7 @@ const SpotifyAuthButton = () => {
 
     return (
         <button onClick={handleLogin}>
-            Create playlist
+            Login
         </button>
     );
 };
