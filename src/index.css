@@ -15,3 +15,10 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+iframe {
+  height: 300px;
+  width: 300px;
+  resize: both;
+  overflow: auto;
+}
