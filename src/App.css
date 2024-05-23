@@ -1,11 +1,19 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Teachers:ital,wght@0,400..800;1,400..800&display=swap');
+
 .header {
     text-align: center;
     font-weight: 700;
     font-size: large;
-    font-family: Arial, sans-serif; /* Change font family */
+    font-family: "Teachers", sans-serif;
+    font-weight: 300;
     color: #07532e; /* Change font color */
     margin-bottom: 20px; /* Add margin bottom to separate header from blocks */
     margin-top: 20px; /* Add margin top to space it from the blocks */
+}
+
+.App {
+    background-color: black;
 }
 
 .container {
@@ -18,7 +26,26 @@
 .block {
     width: 300px; /* Adjust as needed */
     height: 400px; /* Adjust as needed */
-    background-color: #b2c2bb; /* Adjust as needed */
+    background-color: darkgreen; /* Adjust as needed */
     border-radius: 20px; /* Rounded edges */
     margin: 0 10px; /* Adjust as needed */
+    border-color: black;
+}
+
+.block1 {
+    width: 300px; /* Adjust as needed */
+    height: 400px; /* Adjust as needed */
+    background-image: linear-gradient(#A788DA, #C7794C); /* Adjust as needed */
+    border-radius: 20px; /* Rounded edges */
+    margin: 0 10px; /* Adjust as needed */
+    border-color: black;
+}
+
+.block2 {
+    width: 300px; /* Adjust as needed */
+    height: 400px; /* Adjust as needed */
+    background-image: linear-gradient(#79A4E4, #C7794C); /* Adjust as needed */
+    border-radius: 20px; /* Rounded edges */
+    margin: 0 10px; /* Adjust as needed */
+    border-color: black;
 }

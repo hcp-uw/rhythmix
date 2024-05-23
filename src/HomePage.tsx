@@ -6,6 +6,7 @@ import ReactDOM from 'react-dom/client';
 import { UpdatePlaylists, GenreToPlaylistMap } from './DiscoverDaily/DiscoverDaily.tsx';
 import { render } from '@testing-library/react';
 import logo from "./spotiblend_logo.png";
+
  
 type HomePageState = {
     genre: string;
@@ -39,13 +40,13 @@ export class HomePage extends Component<HomePageProps, HomePageState> {
             <h1> <img src={logo} alt="" width="80" height="80"/> spotiblend </h1>
           </header>
           
-          <div className="container">
+        <div className="container">
             <iframe title="custom_playlist" className="block" src={GenreToPlaylistMap.get(this.state.genre)}
               width="100%"
               allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" 
               loading="lazy"> </iframe>
-            <button className="block" type="button" onClick={CustomPlaylistClick}> </button>
-            <button className="block" type="button" onClick={this.doSongMatchClick}> </button>
+            <button className="block1" type="button" onClick={CustomPlaylistClick}> </button>
+            <button className="block2" type="button" onClick={this.doSongMatchClick}> </button>
           </div>
           
           <label htmlFor="Genre"> Genre: </label>
@@ -55,7 +56,7 @@ export class HomePage extends Component<HomePageProps, HomePageState> {
                 <option value="Indie"> Indie </option>
                 <option value="R&B"> R&B </option>
               </select>
-        </div>);
+          </div>);
       } else {
         return (
           <SongMatch
