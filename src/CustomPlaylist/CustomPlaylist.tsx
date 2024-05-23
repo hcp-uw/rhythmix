@@ -73,8 +73,9 @@ export class CustomPlaylist extends Component<CustomPlaylistProps, CustomPlaylis
       return <div className="CPG-base">
         <h1 className="CPG-header">your custom playlist</h1>
         <div className="CPG-background">
-          <button className="home-button" type="button" onClick={this.doHomeClick}>home</button>
+          
         </div>
+        <button className="home-button" type="button" onClick={this.doHomeClick}>home</button>
       </div>;
     }
   };
@@ -119,6 +120,7 @@ export class CustomPlaylist extends Component<CustomPlaylistProps, CustomPlaylis
   }
 
   renderGenres = () : JSX.Element[] => {
+    // Fix duration slider
     const genre_render : JSX.Element[] = [];
     for (let i = 0; i < all_genres.length; i += 7) {
       genre_render.push(
@@ -204,15 +206,29 @@ export class CustomPlaylist extends Component<CustomPlaylistProps, CustomPlaylis
 
 
   doSpotifyFetchClick = () : void => {
-    //const fetch_url = "https://api.spotify.com/v1/recommendations?limit=" + playlist_size
-    //              + "&seed_genres=classical&2Ccountry";
     const access_token = localStorage.getItem('spotifyAccessToken');
+    // Ideally don't send all the attributes to spotify
     if (access_token === undefined || access_token === null) {
       alert("Please login to use Custom Playlist Generator!");
+      this.state.root.unmount();
     } else {
-      const fetch_url = "https://api.spotify.com/v1/recommendations?seed_artists=3qm84nBOXUEQ2vnTfUTTFC&min_tempo=170&max_tempo=180";
+      var fetch_url = "https://api.spotify.com/v1/recommendations?seed_genres=";
+      // Append seed genres
+      for (var genre of this.state.genres.values()) {
+        fetch_url = fetch_url.concat(genre, "%2C");
+      }
+      // Remove trailing %2C
+      fetch_url = fetch_url.slice(0, fetch_url.length - 3);
+      // Append attributes
+      fetch_url = fetch_url.concat("&limit=", playlist_size.toString());
+      for (var i = 0; i < all_attributes.length; i++) {
+       if (all_attributes[i] === "duration") {
+          fetch_url = fetch_url.concat("&target_", all_attributes[i], "_ms=", this.state.attributes.get(all_attributes[i]).toString())
+        } else {
+          fetch_url = fetch_url.concat("&target_", all_attributes[i].replace(" ", "_"), "=", this.state.attributes.get(all_attributes[i]).toString())
+        }        
+      }
       const auth = "Bearer " + access_token;
-      //alert(auth)
       fetch(fetch_url, {
         method: "GET",
         headers: {
@@ -227,8 +243,11 @@ export class CustomPlaylist extends Component<CustomPlaylistProps, CustomPlaylis
   doSpotifyFetch = (res: Response) : void => {
     if (res.status === 200) {
       res.json().then(this.doSpotifyFetchJson)
-              .catch(() => this.doGeneralError("200 response is not valid JSON"));
-    } else if (res.status === 401 || res.status === 403) {
+              .catch((error) => this.doGeneralError(error));
+    } else if (res.status === 401) {
+      alert("Please login to use Custom Playlist Generator!");
+      this.state.root.unmount();
+    } else if (res.status === 403) {
       res.text().then(this.doGeneralError)
               .catch(() => this.doGeneralError(res.status + " response is not text"));
     } else {
@@ -236,13 +255,12 @@ export class CustomPlaylist extends Component<CustomPlaylistProps, CustomPlaylis
     }
   };
 
-  doSpotifyFetchJson = (obj: string) : void => {
-    const JSONresponse = JSON.parse(obj);
-    console.log(JSONresponse.tracks);
+  doSpotifyFetchJson = (obj: any) : void => {
+    console.log(obj);
   }
 
   doGeneralError = (msg: string) : void => {
-    //alert(msg);
+    alert(msg);
   }
 
   /**

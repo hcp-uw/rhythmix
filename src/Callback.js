@@ -8,7 +8,7 @@ const Callback = () => {
     useEffect(() => {
         const hash = new URLSearchParams(location.hash.substring(1));
         const token = hash.get('access_token');
-        console.log('Access token:', token);  // Debugging
+        console.log('Access token:', token);  // Debugging]
 
         if (token) {
             localStorage.setItem('spotifyAccessToken', token);
