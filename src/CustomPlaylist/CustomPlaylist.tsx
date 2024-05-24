@@ -10,6 +10,8 @@ type CustomPlaylistState = {
   attributes: Map<string, number>;
   genres: Set<string>;
   access_token: string | null;
+  tracks: Array<any>;
+  playlist_url: string;
 };
 
 type CustomPlaylistProps = {
@@ -25,7 +27,7 @@ const playlist_size : bigint = 25n;
 export class CustomPlaylist extends Component<CustomPlaylistProps, CustomPlaylistState> {
   constructor(props: CustomPlaylistProps) {
     super(props);
-    this.state = {root: props.root, page: {kind: "genres"}, attributes: new Map<string, number>(), genres: new Set<string>(), access_token: null};
+    this.state = {root: props.root, page: {kind: "genres"}, attributes: new Map<string, number>(), genres: new Set<string>(), access_token: null, tracks: [], playlist_url: ""};
     for (let i = 0; i < all_attributes.length; i++) {
       this.state.attributes.set(all_attributes[i], 1);
     }
@@ -73,7 +75,7 @@ export class CustomPlaylist extends Component<CustomPlaylistProps, CustomPlaylis
       return <div className="CPG-base">
         <h1 className="CPG-header">your custom playlist</h1>
         <div className="CPG-background">
-          
+          {this.state.playlist_url}
         </div>
         <button className="home-button" type="button" onClick={this.doHomeClick}>home</button>
       </div>;
@@ -236,7 +238,6 @@ export class CustomPlaylist extends Component<CustomPlaylistProps, CustomPlaylis
         }
       }).then(this.doSpotifyFetch)
         .catch(() => this.doGeneralError("Failed to connect to server on doSpotifyFetch"));
-        this.setState({page: {kind: "result"}});
     }
   }
 
@@ -256,7 +257,84 @@ export class CustomPlaylist extends Component<CustomPlaylistProps, CustomPlaylis
   };
 
   doSpotifyFetchJson = (obj: any) : void => {
-    console.log(obj);
+    const tracks = obj.tracks;
+    this.setState({tracks: tracks});
+    // Get user Spotify ID
+    const access_token = localStorage.getItem('spotifyAccessToken');
+    const auth = "Bearer " + access_token;
+    fetch("https://api.spotify.com/v1/me", {
+      method: "GET",
+        headers: {
+          Authorization: auth,
+        }
+    }).then(this.doGetId)
+      .catch((error) => this.doGeneralError(error));
+  }
+
+  doGetId = (res: any) : void => {
+    res.json().then(this.doCreateNewPlaylist);
+  }
+
+  doCreateNewPlaylist = (res: any) : void => {
+    const user_id = res.id;
+    if (user_id === undefined) {
+      this.doGeneralError("No user ID");
+    }
+    // Create empty playlist
+    const playlist_endpoint = "https://api.spotify.com/v1/users/" + user_id + "/playlists";
+    const access_token = localStorage.getItem('spotifyAccessToken');
+    const auth = "Bearer " + access_token;
+
+    const payload = {
+      method: "POST",
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': auth,
+      },
+      body: JSON.stringify({
+        'name': "Your New Custom Playlist",
+      }),
+    };
+    fetch(playlist_endpoint, payload).then(this.doGetPlaylistId);
+  }
+
+  doGetPlaylistId = (res: any) : void => {
+    res.json().then(this.doAddTracks);
+  }
+
+  doAddTracks = (playlist_res: any) : void => {
+    const playlist_id = playlist_res.id;
+    const playlist_url = playlist_res.href;
+    this.setState({playlist_url: playlist_url});
+    const track_uris : string[] = [];
+    for (var track of this.state.tracks) {
+      track_uris.push(track.uri);
+    }
+    const add_endpoint = "https://api.spotify.com/v1/playlists/" + playlist_id + "/tracks";
+    const access_token = localStorage.getItem('spotifyAccessToken');
+    const auth = "Bearer " + access_token;
+
+    const payload = {
+      method: "POST",
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': auth,
+      },
+      body: JSON.stringify({
+        'uris': track_uris,
+      }),
+    };
+
+    fetch(add_endpoint, payload).then(this.doAddResult);
+  }
+
+  doAddResult = (res: any) : void => {
+    res.json().then(this.doShowPlaylist);
+  }
+
+  doShowPlaylist = (playlist_json: any) : void => {
+    const snapshot_id = playlist_json.snapshot_id;
+    this.setState({page: {kind: "result"}});
   }
 
   doGeneralError = (msg: string) : void => {
