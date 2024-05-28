@@ -83,6 +83,8 @@
     font-size: var(--body-font-size);
     letter-spacing: 0.1rem;
     border-style: none;
+    width: 7vw;
+    height: 8vh;
 }
 
 .back-button {
@@ -153,6 +155,15 @@ td {
     height: 75%;
     position: relative;
     margin-bottom: 0;
+}
+
+.embed-playlist {
+    width: 90%;
+    height: 90%;
+}
+
+.home-image {
+    width: 80%;
 }
 
 /********** Range Input Styles **********/

@@ -1,6 +1,7 @@
 import React, { Component, ChangeEvent } from "react";
 import { Root } from "react-dom/client";
 import "./CustomPlaylist.css";
+import home_button from "./home-button.png";
 
 type Page = {kind: "genres"} | {kind: "basic_sliders"} | {kind: "all_sliders"} | {kind: "result"};
 
@@ -41,7 +42,7 @@ export class CustomPlaylist extends Component<CustomPlaylistProps, CustomPlaylis
           {this.renderGenres()}
           <button className="next-button" type="button" onClick={this.doBasicSlidersClick}>next</button>
         </div>
-        <button className="home-button" type="button" onClick={this.doHomeClick}>home</button>
+        <button className="home-button" type="button" onClick={this.doHomeClick}><img className="home-image" src={home_button} /></button>
       </div>;
     }
     if (this.state.page.kind === "basic_sliders") {
@@ -57,7 +58,7 @@ export class CustomPlaylist extends Component<CustomPlaylistProps, CustomPlaylis
           </div>
         </div>
         <button className="back-button" type="button" onClick={this.doBackClick}>back</button>
-        <button className="home-button" type="button" onClick={this.doHomeClick}>home</button>
+        <button className="home-button" type="button" onClick={this.doHomeClick}><img className="home-image" src={home_button} /></button>
       </div>;
     } else if (this.state.page.kind === "all_sliders") {
       return <div className="CPG-base">
@@ -69,15 +70,20 @@ export class CustomPlaylist extends Component<CustomPlaylistProps, CustomPlaylis
           </div>
         </div>
         <button className="back-button" type="button" onClick={this.doBackClick}>back</button>
-        <button className="home-button" type="button" onClick={this.doHomeClick}>home</button>
+        <button className="home-button" type="button" onClick={this.doHomeClick}><img className="home-image" src={home_button} /></button>
       </div>;
     } else {
+      console.log(this.state.playlist_url)
       return <div className="CPG-base">
         <h1 className="CPG-header">your custom playlist</h1>
         <div className="CPG-background">
-          {this.state.playlist_url}
+          <iframe className="embed-playlist" title="CPG-result" src={this.state.playlist_url}
+            width="100%"
+            allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" 
+            loading="lazy">
+          </iframe>
         </div>
-        <button className="home-button" type="button" onClick={this.doHomeClick}>home</button>
+        <button className="home-button" type="button" onClick={this.doHomeClick}><img className="home-image" src={home_button} /></button>
       </div>;
     }
   };
@@ -304,8 +310,7 @@ export class CustomPlaylist extends Component<CustomPlaylistProps, CustomPlaylis
 
   doAddTracks = (playlist_res: any) : void => {
     const playlist_id = playlist_res.id;
-    const playlist_url = playlist_res.href;
-    this.setState({playlist_url: playlist_url});
+    this.setState({playlist_url: "https://open.spotify.com/embed/playlist/" + playlist_id});
     const track_uris : string[] = [];
     for (var track of this.state.tracks) {
       track_uris.push(track.uri);
@@ -343,8 +348,6 @@ export class CustomPlaylist extends Component<CustomPlaylistProps, CustomPlaylis
 
   /**
    * FUNCTIONS:
-   * - prompt users for 1-5 genres before slider selection begins.
-   * - some general interaction function with spotify api
    * - preserve slider states between more/fewer sliders
    *
    */
