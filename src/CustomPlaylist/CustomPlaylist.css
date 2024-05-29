@@ -70,7 +70,7 @@
     border-style: none;
     display: block;
     margin: auto;
-    transform: translateY(23vh);
+    transform: translateY(22vh);
     z-index: 1;
 }
 
@@ -96,6 +96,8 @@
     font-size: var(--body-font-size);
     letter-spacing: 0.1rem;
     border-style: none;
+    width: 7vw;
+    height: 8vh;
 }
 
 .next-button {
@@ -162,8 +164,16 @@ td {
     height: 90%;
 }
 
-.home-image {
+.button-image {
     width: 80%;
+}
+
+.all-slider-container {
+    max-height: 85%;
+    width: 90%;
+    overflow-y: scroll;
+    scrollbar-color: rgba(223, 240, 203, 1) transparent;
+    margin-top: 10vh;
 }
 
 /********** Range Input Styles **********/

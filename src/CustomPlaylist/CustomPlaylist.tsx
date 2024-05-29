@@ -2,6 +2,7 @@ import React, { Component, ChangeEvent } from "react";
 import { Root } from "react-dom/client";
 import "./CustomPlaylist.css";
 import home_button from "./home-button.png";
+import back_button from "./back-button.png";
 
 type Page = {kind: "genres"} | {kind: "basic_sliders"} | {kind: "all_sliders"} | {kind: "result"};
 
@@ -42,7 +43,7 @@ export class CustomPlaylist extends Component<CustomPlaylistProps, CustomPlaylis
           {this.renderGenres()}
           <button className="next-button" type="button" onClick={this.doBasicSlidersClick}>next</button>
         </div>
-        <button className="home-button" type="button" onClick={this.doHomeClick}><img className="home-image" src={home_button} /></button>
+        <button className="home-button" type="button" onClick={this.doHomeClick}><img className="button-image" alt="home" src={home_button} /></button>
       </div>;
     }
     if (this.state.page.kind === "basic_sliders") {
@@ -54,23 +55,19 @@ export class CustomPlaylist extends Component<CustomPlaylistProps, CustomPlaylis
           </div>
           <button className="create-playlist-button" type="button" onClick={this.doSpotifyFetchClick}>create playlist</button>
           <div className="more-options-background">
-            <button className="more-options-button" type="button" onClick={this.doAllSlidersClick}>more options</button>
+            <button className="more-options-button" type="button" onClick={this.doAllSlidersClick}>see all</button>
           </div>
         </div>
-        <button className="back-button" type="button" onClick={this.doBackClick}>back</button>
-        <button className="home-button" type="button" onClick={this.doHomeClick}><img className="home-image" src={home_button} /></button>
+        <button className="back-button" type="button" onClick={this.doBackClick}><img className="button-image" alt="back" src={back_button} /></button>
+        <button className="home-button" type="button" onClick={this.doHomeClick}><img className="button-image" alt="home" src={home_button} /></button>
       </div>;
     } else if (this.state.page.kind === "all_sliders") {
       return <div className="CPG-base">
-        <div className="CPG-background">
-          <button className="create-playlist-button" type="button" onClick={this.doSpotifyFetchClick}>create playlist</button>
-          <button type="button" onClick={this.doBasicSlidersClick}>fewer options</button>
-          <div className="slider-background">
+          <div className="all-slider-container">
             {this.renderSliders()}
           </div>
-        </div>
-        <button className="back-button" type="button" onClick={this.doBackClick}>back</button>
-        <button className="home-button" type="button" onClick={this.doHomeClick}><img className="home-image" src={home_button} /></button>
+        <button className="back-button" type="button" onClick={this.doBasicSlidersClick}><img className="button-image" alt="back" src={back_button} /></button>
+        <button className="home-button" type="button" onClick={this.doHomeClick}><img className="button-image" alt="home" src={home_button} /></button>
       </div>;
     } else {
       console.log(this.state.playlist_url)
@@ -83,7 +80,7 @@ export class CustomPlaylist extends Component<CustomPlaylistProps, CustomPlaylis
             loading="lazy">
           </iframe>
         </div>
-        <button className="home-button" type="button" onClick={this.doHomeClick}><img className="home-image" src={home_button} /></button>
+        <button className="home-button" type="button" onClick={this.doHomeClick}><img className="button-image" alt="home" src={home_button} /></button>
       </div>;
     }
   };
@@ -104,21 +101,21 @@ export class CustomPlaylist extends Component<CustomPlaylistProps, CustomPlaylis
         slider_render.push(
           <div className="slider-container">
             <label htmlFor={curr_attribute} className="slider-label">{curr_attribute}</label><br />
-            <input type="range" min="1" max="11" id={curr_attribute} onChange={this.doAttributeChange}></input>
+            <input type="range" min="1" max="11" id={curr_attribute} onChange={this.doAttributeChange} defaultValue={this.state.attributes.get(curr_attribute)}></input>
           </div>
         )
       } else if (curr_attribute === "popularity") {
         slider_render.push(
           <div className="slider-container">
             <label htmlFor={curr_attribute} className="slider-label">{curr_attribute}</label><br />
-            <input type="range" min="1" max="100" id={curr_attribute} onChange={this.doAttributeChange}></input>
+            <input type="range" min="1" max="100" id={curr_attribute} onChange={this.doAttributeChange} defaultValue={this.state.attributes.get(curr_attribute)}></input>
           </div>
         )
       } else {
         slider_render.push(
           <div className="slider-container">
             <label htmlFor={curr_attribute} className="slider-label">{curr_attribute}</label><br />
-            <input type="range" min="0" max="1" step="0.01" id={curr_attribute} onChange={this.doAttributeChange}></input>
+            <input type="range" min="0" max="1" step="0.01" id={curr_attribute} onChange={this.doAttributeChange} defaultValue={this.state.attributes.get(curr_attribute)}></input>
           </div>
         )
       }
