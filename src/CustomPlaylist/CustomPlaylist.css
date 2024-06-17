@@ -60,6 +60,17 @@
     margin-right: 2vh;
 }
 
+.slider_checkboxes {
+    margin-right: 1vh;
+    margin-left: 2vh;
+}
+
+.checkbox-label {
+    font-size: 2.3vh;
+    letter-spacing: 0.05rem;
+    color: rgba(223, 240, 203, 1);
+}
+
 .create-playlist-button {
     background-color: rgb(192, 231, 179);
     padding: 1vh 4vw;

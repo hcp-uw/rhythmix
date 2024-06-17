@@ -10,6 +10,7 @@ type CustomPlaylistState = {
   root: Root;
   page: Page;
   attributes: Map<string, number>;
+  include: Set<string>;
   genres: Set<string>;
   access_token: string | null;
   tracks: Array<any>;
@@ -29,7 +30,7 @@ const playlist_size : bigint = 25n;
 export class CustomPlaylist extends Component<CustomPlaylistProps, CustomPlaylistState> {
   constructor(props: CustomPlaylistProps) {
     super(props);
-    this.state = {root: props.root, page: {kind: "genres"}, attributes: new Map<string, number>(), genres: new Set<string>(), access_token: null, tracks: [], playlist_url: ""};
+    this.state = {root: props.root, page: {kind: "genres"}, attributes: new Map<string, number>(), include: new Set<string>(), genres: new Set<string>(), access_token: null, tracks: [], playlist_url: ""};
     for (let i = 0; i < all_attributes.length; i++) {
       this.state.attributes.set(all_attributes[i], 1);
     }
@@ -70,7 +71,6 @@ export class CustomPlaylist extends Component<CustomPlaylistProps, CustomPlaylis
         <button className="home-button" type="button" onClick={this.doHomeClick}><img className="button-image" alt="home" src={home_button} /></button>
       </div>;
     } else {
-      console.log(this.state.playlist_url)
       return <div className="CPG-base">
         <h1 className="CPG-header">your custom playlist</h1>
         <div className="CPG-background">
@@ -100,21 +100,27 @@ export class CustomPlaylist extends Component<CustomPlaylistProps, CustomPlaylis
       if (curr_attribute === "time signature" || curr_attribute === "key") {
         slider_render.push(
           <div className="slider-container">
-            <label htmlFor={curr_attribute} className="slider-label">{curr_attribute}</label><br />
+            <label htmlFor={curr_attribute} className="slider-label">{curr_attribute}</label>
+            <input className="slider_checkboxes" type="checkbox" onChange={this.doIncludeClick} id={curr_attribute + "_include"} name={curr_attribute} value={curr_attribute} />
+            <label htmlFor={curr_attribute + "_include"} className="checkbox-label">include</label> <br />
             <input type="range" min="1" max="11" id={curr_attribute} onChange={this.doAttributeChange} defaultValue={this.state.attributes.get(curr_attribute)}></input>
           </div>
         )
       } else if (curr_attribute === "popularity") {
         slider_render.push(
           <div className="slider-container">
-            <label htmlFor={curr_attribute} className="slider-label">{curr_attribute}</label><br />
+            <label htmlFor={curr_attribute} className="slider-label">{curr_attribute}</label>
+            <input className="slider_checkboxes" type="checkbox" onChange={this.doIncludeClick} id={curr_attribute + "_include"} name={curr_attribute} value={curr_attribute} />
+            <label htmlFor={curr_attribute + "_include"} className="checkbox-label">include</label> <br />
             <input type="range" min="1" max="100" id={curr_attribute} onChange={this.doAttributeChange} defaultValue={this.state.attributes.get(curr_attribute)}></input>
           </div>
         )
       } else {
         slider_render.push(
           <div className="slider-container">
-            <label htmlFor={curr_attribute} className="slider-label">{curr_attribute}</label><br />
+            <label htmlFor={curr_attribute} className="slider-label">{curr_attribute}</label>
+            <input className="slider_checkboxes" type="checkbox" onChange={this.doIncludeClick} id={curr_attribute + "_include"} name={curr_attribute} value={curr_attribute}/>
+            <label htmlFor={curr_attribute + "_include"} className="checkbox-label">include</label> <br />
             <input type="range" min="0" max="1" step="0.01" id={curr_attribute} onChange={this.doAttributeChange} defaultValue={this.state.attributes.get(curr_attribute)}></input>
           </div>
         )
@@ -182,6 +188,19 @@ export class CustomPlaylist extends Component<CustomPlaylistProps, CustomPlaylis
     }
   }
 
+  doIncludeClick = (evt: ChangeEvent<HTMLInputElement>) : void => {
+    const attribute = evt.target.id.substring(0, evt.target.id.length - 8);
+    const checkbox : HTMLInputElement = document.getElementById(evt.target.id);
+    if (this.state.include.has(attribute)) {
+      this.state.include.delete(attribute);
+      checkbox.checked = false;
+    } else {
+      this.state.include.add(attribute);
+      checkbox.checked = true;
+    }
+    console.log(this.state.include);
+  }
+
   doHomeClick = () : void => {
     this.state.root.unmount();
   };
@@ -211,6 +230,11 @@ export class CustomPlaylist extends Component<CustomPlaylistProps, CustomPlaylis
 
 
   doSpotifyFetchClick = () : void => {
+    if (this.state.include.size === 0) {
+      alert("Please select at least 1 attribute!");
+      this.doBasicSlidersClick();
+      return;
+    }
     const access_token = localStorage.getItem('spotifyAccessToken');
     // Ideally don't send all the attributes to spotify
     if (access_token === undefined || access_token === null) {
@@ -226,11 +250,11 @@ export class CustomPlaylist extends Component<CustomPlaylistProps, CustomPlaylis
       fetch_url = fetch_url.slice(0, fetch_url.length - 3);
       // Append attributes
       fetch_url = fetch_url.concat("&limit=", playlist_size.toString());
-      for (var i = 0; i < all_attributes.length; i++) {
-       if (all_attributes[i] === "duration") {
-          fetch_url = fetch_url.concat("&target_", all_attributes[i], "_ms=", this.state.attributes.get(all_attributes[i]).toString())
+      for (var attribute of this.state.include) {
+       if (attribute === "duration") {
+          fetch_url = fetch_url.concat("&target_", attribute, "_ms=", this.state.attributes.get(attribute).toString())
         } else {
-          fetch_url = fetch_url.concat("&target_", all_attributes[i].replace(" ", "_"), "=", this.state.attributes.get(all_attributes[i]).toString())
+          fetch_url = fetch_url.concat("&target_", attribute.replace(" ", "_"), "=", this.state.attributes.get(attribute).toString())
         }        
       }
       const auth = "Bearer " + access_token;
