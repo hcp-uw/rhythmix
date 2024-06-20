@@ -1,10 +1,9 @@
 import React, { Component, ChangeEvent } from "react";
-import './App.css';
+import "./HomePage.css"
 import { CustomPlaylist } from './CustomPlaylist/CustomPlaylist.tsx';
-import {SongMatch} from './SongMatch/SongMatch.tsx'
+import { SongMatch } from './SongMatch/SongMatch.tsx'
 import ReactDOM from 'react-dom/client';
 import { UpdatePlaylists, GenreToPlaylistMap } from './DiscoverDaily/DiscoverDaily.tsx';
-import { render } from '@testing-library/react';
 import logo from "./spotiblend_logo.png";
 
  
