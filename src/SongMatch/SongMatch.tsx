@@ -162,7 +162,11 @@ export class SongMatch extends Component<SongMatchProps, SongMatchState> {
                             )
                         })}
                     </Row>
+
+                    {this.state.songMatchList.length > 0 && <Button>Search</Button>}
                 </Container>
+                
+                
 
 
                 </div>
