@@ -7,8 +7,9 @@ body {
     -moz-osx-font-smoothing: grayscale;
   }
 
-
-
+  /*.divider{
+    overflow-y: scroll;
+  }*/
 
   .background {
     position: fixed; /* or absolute */
@@ -16,14 +17,76 @@ body {
     left: 50%;
     transform: translate(-50%, -50%);
     background-color: rgb(137, 207, 240, 0.9);
-    width: 1600px; /* Adjust width as needed */
-    height: 800px; /* Adjust height as needed */
+    width: 100%; /* Adjust width as needed */
+    height: 100%; /* Adjust height as needed */
     display: flex; /* Add this if you want to center content horizontally */
     justify-content: center; /* Add this if you want to center content horizontally */
     align-items: center; /* Add this if you want to center content vertically */
+    overflow-y: scroll;
   }
 
+.large-container {
+  overflow-x: hidden;
+  max-height: 600px;
+  padding: 20px;
+}
 
+.row {
+  flex-wrap: wrap;
+}
+
+/*.album-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px; /* Space between cards
+  justify-content: center;
+  padding: 20px;
+  background-color: #ffffff; /* White background for cards
+  border-radius: 8px;
+}
+
+.album-card {
+  background-color: #ffffff;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  width: 200px; /* Fixed width for consistency 
+  margin-bottom: 20px;
+  text-align: center;
+  transition: transform 0.3s ease;
+}
+
+.album-card:hover {
+  transform: scale(1.05);
+}
+
+.album-card img {
+  width: 100%;
+  height: auto;
+  border-bottom: 1px solid #ddd;
+}
+
+.album-card .title {
+  padding: 10px;
+  font-weight: bold;
+}
+
+.album-card .add-button {
+  display: block;
+  margin: 10px auto;
+  padding: 5px 10px;
+  background-color: #007bff;
+  color: #ffffff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.album-card .add-button:hover {
+  background-color: #0056b3;
+}*/
 
 .small-container {
     position: fixed;
@@ -31,7 +94,7 @@ body {
     width: 100%; /* Make it span the full width */
     max-height: 150px; /* Set a maximum height */
     overflow-x: auto; /* Enable horizontal scrolling */
-    overflow-y: hidden; /* Hide vertical overflow */
+    overflow-y: auto; /* Hide vertical overflow */
     white-space: nowrap; /* Prevent items from wrapping */
     background-color: rgba(255, 255, 255, 0.9); /* Optional: background color with transparency */
     border-top: 1px solid #ddd; /* Optional: top border */
@@ -44,4 +107,10 @@ body {
     margin-right: 10px; /* Space between cards */
 }
   
+.large-container {
+  margin-bottom: 20px;
+}
 
+.full-container {
+  overflow-y: auto;
+}

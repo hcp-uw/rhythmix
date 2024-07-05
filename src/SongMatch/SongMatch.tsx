@@ -91,7 +91,7 @@ export class SongMatch extends Component<SongMatchProps, SongMatchState> {
 
     renderStartPage = (): JSX.Element => {
         return (
-            <div className="App">
+            <div className="divider">
                 <Container>
                     <InputGroup className="mb-3" size="lg">
                     <FormControl
@@ -129,12 +129,12 @@ export class SongMatch extends Component<SongMatchProps, SongMatchState> {
                     </Row>
                 </Container> */}
 
-                <Container>
+                <Container className="large-container">
                     <Row className="mx-2 row row-cols-6">
                     
                         {this.state.songResults.map( (song, i) => {
                             return (
-                            <Card>
+                            <Card className="large-card">
                                 <Card.Img src={song.album.images[0].url}/>
                                 <Card.Body>
                                 <Card.Title>{song.name}</Card.Title>
@@ -163,7 +163,6 @@ export class SongMatch extends Component<SongMatchProps, SongMatchState> {
                         })}
                     </Row>
                 </Container>
-
 
                 </div>
         )
@@ -295,7 +294,7 @@ export class SongMatch extends Component<SongMatchProps, SongMatchState> {
                 'Authorization': 'Bearer ' + accessToken
             }
         }
-        var songID = await fetch('https://api.spotify.com/v1/search?q=' + this.state.currentSearch + '&type=track&limit=10', searchParameters)
+        var songID = await fetch('https://api.spotify.com/v1/search?q=' + this.state.currentSearch + '&type=track&limit=50', searchParameters)
             .then(response => response.json())
             // .then(data => console.log(data))  // FOR QUERY TESTING
             .then(data => {this.setState({songResults: data.tracks.items})})
