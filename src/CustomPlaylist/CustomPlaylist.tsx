@@ -1,6 +1,8 @@
 import React, { Component, ChangeEvent } from "react";
 import { Root } from "react-dom/client";
 import "./CustomPlaylist.css";
+import home_button from "./home-button.png";
+import back_button from "./back-button.png";
 
 type Page = {kind: "genres"} | {kind: "basic_sliders"} | {kind: "all_sliders"} | {kind: "result"};
 
@@ -8,8 +10,11 @@ type CustomPlaylistState = {
   root: Root;
   page: Page;
   attributes: Map<string, number>;
+  include: Set<string>;
   genres: Set<string>;
   access_token: string | null;
+  tracks: Array<any>;
+  playlist_url: string;
 };
 
 type CustomPlaylistProps = {
@@ -25,7 +30,7 @@ const playlist_size : bigint = 25n;
 export class CustomPlaylist extends Component<CustomPlaylistProps, CustomPlaylistState> {
   constructor(props: CustomPlaylistProps) {
     super(props);
-    this.state = {root: props.root, page: {kind: "genres"}, attributes: new Map<string, number>(), genres: new Set<string>(), access_token: null};
+    this.state = {root: props.root, page: {kind: "genres"}, attributes: new Map<string, number>(), include: new Set<string>(), genres: new Set<string>(), access_token: null, tracks: [], playlist_url: ""};
     for (let i = 0; i < all_attributes.length; i++) {
       this.state.attributes.set(all_attributes[i], 1);
     }
@@ -39,7 +44,7 @@ export class CustomPlaylist extends Component<CustomPlaylistProps, CustomPlaylis
           {this.renderGenres()}
           <button className="next-button" type="button" onClick={this.doBasicSlidersClick}>next</button>
         </div>
-        <button className="home-button" type="button" onClick={this.doHomeClick}>home</button>
+        <button className="home-button" type="button" onClick={this.doHomeClick}><img className="button-image" alt="home" src={home_button} /></button>
       </div>;
     }
     if (this.state.page.kind === "basic_sliders") {
@@ -51,31 +56,31 @@ export class CustomPlaylist extends Component<CustomPlaylistProps, CustomPlaylis
           </div>
           <button className="create-playlist-button" type="button" onClick={this.doSpotifyFetchClick}>create playlist</button>
           <div className="more-options-background">
-            <button className="more-options-button" type="button" onClick={this.doAllSlidersClick}>more options</button>
+            <button className="more-options-button" type="button" onClick={this.doAllSlidersClick}>see all</button>
           </div>
         </div>
-        <button className="back-button" type="button" onClick={this.doBackClick}>back</button>
-        <button className="home-button" type="button" onClick={this.doHomeClick}>home</button>
+        <button className="back-button" type="button" onClick={this.doBackClick}><img className="button-image" alt="back" src={back_button} /></button>
+        <button className="home-button" type="button" onClick={this.doHomeClick}><img className="button-image" alt="home" src={home_button} /></button>
       </div>;
     } else if (this.state.page.kind === "all_sliders") {
       return <div className="CPG-base">
-        <div className="CPG-background">
-          <button className="create-playlist-button" type="button" onClick={this.doSpotifyFetchClick}>create playlist</button>
-          <button type="button" onClick={this.doBasicSlidersClick}>fewer options</button>
-          <div className="slider-background">
+          <div className="all-slider-container">
             {this.renderSliders()}
           </div>
-        </div>
-        <button className="back-button" type="button" onClick={this.doBackClick}>back</button>
-        <button className="home-button" type="button" onClick={this.doHomeClick}>home</button>
+        <button className="back-button" type="button" onClick={this.doBasicSlidersClick}><img className="button-image" alt="back" src={back_button} /></button>
+        <button className="home-button" type="button" onClick={this.doHomeClick}><img className="button-image" alt="home" src={home_button} /></button>
       </div>;
     } else {
       return <div className="CPG-base">
         <h1 className="CPG-header">your custom playlist</h1>
         <div className="CPG-background">
-          
+          <iframe className="embed-playlist" title="CPG-result" src={this.state.playlist_url}
+            width="100%"
+            allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" 
+            loading="lazy">
+          </iframe>
         </div>
-        <button className="home-button" type="button" onClick={this.doHomeClick}>home</button>
+        <button className="home-button" type="button" onClick={this.doHomeClick}><img className="button-image" alt="home" src={home_button} /></button>
       </div>;
     }
   };
@@ -95,22 +100,28 @@ export class CustomPlaylist extends Component<CustomPlaylistProps, CustomPlaylis
       if (curr_attribute === "time signature" || curr_attribute === "key") {
         slider_render.push(
           <div className="slider-container">
-            <label htmlFor={curr_attribute} className="slider-label">{curr_attribute}</label><br />
-            <input type="range" min="1" max="11" id={curr_attribute} onChange={this.doAttributeChange}></input>
+            <label htmlFor={curr_attribute} className="slider-label">{curr_attribute}</label>
+            <input className="slider_checkboxes" type="checkbox" onChange={this.doIncludeClick} id={curr_attribute + "_include"} name={curr_attribute} value={curr_attribute} />
+            <label htmlFor={curr_attribute + "_include"} className="checkbox-label">include</label> <br />
+            <input type="range" min="1" max="11" id={curr_attribute} onChange={this.doAttributeChange} defaultValue={this.state.attributes.get(curr_attribute)}></input>
           </div>
         )
       } else if (curr_attribute === "popularity") {
         slider_render.push(
           <div className="slider-container">
-            <label htmlFor={curr_attribute} className="slider-label">{curr_attribute}</label><br />
-            <input type="range" min="1" max="100" id={curr_attribute} onChange={this.doAttributeChange}></input>
+            <label htmlFor={curr_attribute} className="slider-label">{curr_attribute}</label>
+            <input className="slider_checkboxes" type="checkbox" onChange={this.doIncludeClick} id={curr_attribute + "_include"} name={curr_attribute} value={curr_attribute} />
+            <label htmlFor={curr_attribute + "_include"} className="checkbox-label">include</label> <br />
+            <input type="range" min="1" max="100" id={curr_attribute} onChange={this.doAttributeChange} defaultValue={this.state.attributes.get(curr_attribute)}></input>
           </div>
         )
       } else {
         slider_render.push(
           <div className="slider-container">
-            <label htmlFor={curr_attribute} className="slider-label">{curr_attribute}</label><br />
-            <input type="range" min="0" max="1" step="0.01" id={curr_attribute} onChange={this.doAttributeChange}></input>
+            <label htmlFor={curr_attribute} className="slider-label">{curr_attribute}</label>
+            <input className="slider_checkboxes" type="checkbox" onChange={this.doIncludeClick} id={curr_attribute + "_include"} name={curr_attribute} value={curr_attribute}/>
+            <label htmlFor={curr_attribute + "_include"} className="checkbox-label">include</label> <br />
+            <input type="range" min="0" max="1" step="0.01" id={curr_attribute} onChange={this.doAttributeChange} defaultValue={this.state.attributes.get(curr_attribute)}></input>
           </div>
         )
       }
@@ -177,6 +188,19 @@ export class CustomPlaylist extends Component<CustomPlaylistProps, CustomPlaylis
     }
   }
 
+  doIncludeClick = (evt: ChangeEvent<HTMLInputElement>) : void => {
+    const attribute = evt.target.id.substring(0, evt.target.id.length - 8);
+    const checkbox : HTMLInputElement = document.getElementById(evt.target.id);
+    if (this.state.include.has(attribute)) {
+      this.state.include.delete(attribute);
+      checkbox.checked = false;
+    } else {
+      this.state.include.add(attribute);
+      checkbox.checked = true;
+    }
+    console.log(this.state.include);
+  }
+
   doHomeClick = () : void => {
     this.state.root.unmount();
   };
@@ -206,6 +230,11 @@ export class CustomPlaylist extends Component<CustomPlaylistProps, CustomPlaylis
 
 
   doSpotifyFetchClick = () : void => {
+    if (this.state.include.size === 0) {
+      alert("Please select at least 1 attribute!");
+      this.doBasicSlidersClick();
+      return;
+    }
     const access_token = localStorage.getItem('spotifyAccessToken');
     // Ideally don't send all the attributes to spotify
     if (access_token === undefined || access_token === null) {
@@ -221,11 +250,11 @@ export class CustomPlaylist extends Component<CustomPlaylistProps, CustomPlaylis
       fetch_url = fetch_url.slice(0, fetch_url.length - 3);
       // Append attributes
       fetch_url = fetch_url.concat("&limit=", playlist_size.toString());
-      for (var i = 0; i < all_attributes.length; i++) {
-       if (all_attributes[i] === "duration") {
-          fetch_url = fetch_url.concat("&target_", all_attributes[i], "_ms=", this.state.attributes.get(all_attributes[i]).toString())
+      for (var attribute of this.state.include) {
+       if (attribute === "duration") {
+          fetch_url = fetch_url.concat("&target_", attribute, "_ms=", this.state.attributes.get(attribute).toString())
         } else {
-          fetch_url = fetch_url.concat("&target_", all_attributes[i].replace(" ", "_"), "=", this.state.attributes.get(all_attributes[i]).toString())
+          fetch_url = fetch_url.concat("&target_", attribute.replace(" ", "_"), "=", this.state.attributes.get(attribute).toString())
         }        
       }
       const auth = "Bearer " + access_token;
@@ -236,7 +265,6 @@ export class CustomPlaylist extends Component<CustomPlaylistProps, CustomPlaylis
         }
       }).then(this.doSpotifyFetch)
         .catch(() => this.doGeneralError("Failed to connect to server on doSpotifyFetch"));
-        this.setState({page: {kind: "result"}});
     }
   }
 
@@ -256,7 +284,83 @@ export class CustomPlaylist extends Component<CustomPlaylistProps, CustomPlaylis
   };
 
   doSpotifyFetchJson = (obj: any) : void => {
-    console.log(obj);
+    const tracks = obj.tracks;
+    this.setState({tracks: tracks});
+    // Get user Spotify ID
+    const access_token = localStorage.getItem('spotifyAccessToken');
+    const auth = "Bearer " + access_token;
+    fetch("https://api.spotify.com/v1/me", {
+      method: "GET",
+        headers: {
+          Authorization: auth,
+        }
+    }).then(this.doGetId)
+      .catch((error) => this.doGeneralError(error));
+  }
+
+  doGetId = (res: any) : void => {
+    res.json().then(this.doCreateNewPlaylist);
+  }
+
+  doCreateNewPlaylist = (res: any) : void => {
+    const user_id = res.id;
+    if (user_id === undefined) {
+      this.doGeneralError("No user ID");
+    }
+    // Create empty playlist
+    const playlist_endpoint = "https://api.spotify.com/v1/users/" + user_id + "/playlists";
+    const access_token = localStorage.getItem('spotifyAccessToken');
+    const auth = "Bearer " + access_token;
+
+    const payload = {
+      method: "POST",
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': auth,
+      },
+      body: JSON.stringify({
+        'name': "Your New Custom Playlist",
+      }),
+    };
+    fetch(playlist_endpoint, payload).then(this.doGetPlaylistId);
+  }
+
+  doGetPlaylistId = (res: any) : void => {
+    res.json().then(this.doAddTracks);
+  }
+
+  doAddTracks = (playlist_res: any) : void => {
+    const playlist_id = playlist_res.id;
+    this.setState({playlist_url: "https://open.spotify.com/embed/playlist/" + playlist_id});
+    const track_uris : string[] = [];
+    for (var track of this.state.tracks) {
+      track_uris.push(track.uri);
+    }
+    const add_endpoint = "https://api.spotify.com/v1/playlists/" + playlist_id + "/tracks";
+    const access_token = localStorage.getItem('spotifyAccessToken');
+    const auth = "Bearer " + access_token;
+
+    const payload = {
+      method: "POST",
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': auth,
+      },
+      body: JSON.stringify({
+        'uris': track_uris,
+      }),
+    };
+
+    fetch(add_endpoint, payload).then(this.doAddResult);
+  }
+
+  doAddResult = (res: any) : void => {
+    res.json().then(this.doShowPlaylist);
+  }
+
+  doShowPlaylist = (playlist_json: any) : void => {
+    const snapshot_id = playlist_json.snapshot_id;
+    this.setState({page: {kind: "result"}});
   }
 
   doGeneralError = (msg: string) : void => {
@@ -265,8 +369,6 @@ export class CustomPlaylist extends Component<CustomPlaylistProps, CustomPlaylis
 
   /**
    * FUNCTIONS:
-   * - prompt users for 1-5 genres before slider selection begins.
-   * - some general interaction function with spotify api
    * - preserve slider states between more/fewer sliders
    *
    */

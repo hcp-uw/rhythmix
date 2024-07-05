@@ -162,7 +162,11 @@ export class SongMatch extends Component<SongMatchProps, SongMatchState> {
                             )
                         })}
                     </Row>
+
+                    {this.state.songMatchList.length > 0 && <Button onClick={this.doSearchRecs}>Search</Button>}
                 </Container>
+                
+                
 
                 </div>
         )
@@ -221,54 +225,6 @@ export class SongMatch extends Component<SongMatchProps, SongMatchState> {
     }
 
 
-
-
-
-
-
-
-
-
-    // searchSong = async (): Promise<void> => {
-    //     const CLIENT_ID = "e910cd42af954cd39b2e04cb4a1a43c3";
-    //     const CLIENT_SECRET = "2e5b8f0e3f464084bd3546d5dad312c5";
-
-    //     // API Access Token
-    //     var authParameters = {
-    //         method: 'POST',
-    //         headers: {
-    //             'Content-Type': 'application/x-www-form-urlencoded'
-    //         },
-    //         body: 'grant_type=client_credentials&client_id=' + CLIENT_ID + '&client_secret=' + CLIENT_SECRET
-    //     }
-    //     // call to get token, and update value
-    //     const result = await fetch('https://accounts.spotify.com/api/token', authParameters);
-    //     const data = await result.json();
-    //     const accessToken = data.access_token;
-
-    //     // GET request using Search to get Artist ID
-    //     var searchParameters = {
-    //         method: 'GET',
-    //         headers: {
-    //             'Content-Type': 'application/json',
-    //             'Authorization': 'Bearer ' + accessToken
-    //         }
-    //     }
-    //     var artistID = await fetch('https://api.spotify.com/v1/search?q=' + this.state.currentSearch + '&type=artist', searchParameters)
-    //         .then(response => response.json())
-    //         .then(data => { return data.artists.items[0].id }); // saves artist id to artistID - gets most popular result
-
-    //     // GET request with Artist ID, grab all albums from artist
-    //     var returnedAlbums = await fetch('https://api.spotify.com/v1/artists/' + artistID + '/albums' + '?include_groups=album&market=US&limit=10', searchParameters)
-    //         .then(response => response.json())
-    //         .then(data => { 
-    //             console.log(data);
-    //             this.setState({songResults: data.items});  // stores the 50 albums as an array of records
-    //         });
-
-    // }
-
-
     searchSong = async (): Promise<void> => {
         const CLIENT_ID = "e910cd42af954cd39b2e04cb4a1a43c3";
         const CLIENT_SECRET = "2e5b8f0e3f464084bd3546d5dad312c5";
@@ -299,6 +255,41 @@ export class SongMatch extends Component<SongMatchProps, SongMatchState> {
             // .then(data => console.log(data))  // FOR QUERY TESTING
             .then(data => {this.setState({songResults: data.tracks.items})})
 
+    }
+
+
+
+
+
+    /**
+     * New Song Search
+     */
+    doSearchRecs = (): void => {
+
+        // call generation of recs (3-5?).
+
+
+        // store recs they chose
+
+
+
+    }
+
+
+
+    /**
+     * Search AFTER choosing Recs
+     */
+    doCreatePlaylist = (): void => {
+
+        // search for songs based on the recommendation(s) they chose
+
+
+        // create playlist
+
+
+
+        // auth + spotify login
     }
 
 

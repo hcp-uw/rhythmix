@@ -60,6 +60,17 @@
     margin-right: 2vh;
 }
 
+.slider_checkboxes {
+    margin-right: 1vh;
+    margin-left: 2vh;
+}
+
+.checkbox-label {
+    font-size: 2.3vh;
+    letter-spacing: 0.05rem;
+    color: rgba(223, 240, 203, 1);
+}
+
 .create-playlist-button {
     background-color: rgb(192, 231, 179);
     padding: 1vh 4vw;
@@ -70,7 +81,7 @@
     border-style: none;
     display: block;
     margin: auto;
-    transform: translateY(23vh);
+    transform: translateY(22vh);
     z-index: 1;
 }
 
@@ -83,6 +94,8 @@
     font-size: var(--body-font-size);
     letter-spacing: 0.1rem;
     border-style: none;
+    width: 7vw;
+    height: 8vh;
 }
 
 .back-button {
@@ -94,6 +107,8 @@
     font-size: var(--body-font-size);
     letter-spacing: 0.1rem;
     border-style: none;
+    width: 7vw;
+    height: 8vh;
 }
 
 .next-button {
@@ -153,6 +168,23 @@ td {
     height: 75%;
     position: relative;
     margin-bottom: 0;
+}
+
+.embed-playlist {
+    width: 90%;
+    height: 90%;
+}
+
+.button-image {
+    width: 80%;
+}
+
+.all-slider-container {
+    max-height: 85%;
+    width: 90%;
+    overflow-y: scroll;
+    scrollbar-color: rgba(223, 240, 203, 1) transparent;
+    margin-top: 10vh;
 }
 
 /********** Range Input Styles **********/

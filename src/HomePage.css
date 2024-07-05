@@ -1,19 +1,12 @@
-
-@import url('https://fonts.googleapis.com/css2?family=Teachers:ital,wght@0,400..800;1,400..800&display=swap');
-
 .header {
     text-align: center;
     font-weight: 700;
     font-size: large;
     font-family: "Teachers", sans-serif;
     font-weight: 300;
-    color: #07532e; /* Change font color */
+    color: #07532e;
     margin-bottom: 20px; /* Add margin bottom to separate header from blocks */
     margin-top: 20px; /* Add margin top to space it from the blocks */
-}
-
-.App {
-    background-color: black;
 }
 
 .container {
@@ -48,4 +41,23 @@
     border-radius: 20px; /* Rounded edges */
     margin: 0 10px; /* Adjust as needed */
     border-color: black;
+}
+
+@font-face {
+  font-family: 'Futura PT Medium';
+  font-style: normal;
+  font-weight: normal;
+  src: local('Futura PT Medium'), url('./FuturaCyrillicMedium.woff') format('woff');
+}
+  
+* {
+  font-family: 'Futura PT Medium', 'Oxygen', sans-serif !important;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+iframe {
+  height: 300px;
+  width: 300px;
+  overflow: auto;
 }
