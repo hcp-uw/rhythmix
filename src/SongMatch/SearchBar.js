@@ -53,11 +53,11 @@ function SearchBar() {
 
 
     // GET request with Artist ID, grab all albums from artist
-    var returnedAlbums = await fetch('https://api.spotify.com/v1/artists/' + artistID + '/albums' + '?include_groups=album&market=US&limit=50', searchParameters)
+    var returnedAlbums = await fetch('https://api.spotify.com/v1/artists/' + artistID + '/albums' + '?include_groups=album&market=US&limit=10', searchParameters)
       .then(response => response.json())
       .then(data => { 
         console.log(data);
-        setAlbums(data.items);  // stores the 50 albums as an array of records
+        setAlbums(data.items);  // stores the 10 albums as an array of records
       })
 
 

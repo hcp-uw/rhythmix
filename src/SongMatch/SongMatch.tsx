@@ -250,15 +250,12 @@ export class SongMatch extends Component<SongMatchProps, SongMatchState> {
                 'Authorization': 'Bearer ' + accessToken
             }
         }
-        var songID = await fetch('https://api.spotify.com/v1/search?q=' + this.state.currentSearch + '&type=track&limit=50', searchParameters)
+        var songID = await fetch('https://api.spotify.com/v1/search?q=' + this.state.currentSearch + '&type=track&limit=10', searchParameters)
             .then(response => response.json())
             // .then(data => console.log(data))  // FOR QUERY TESTING
             .then(data => {this.setState({songResults: data.tracks.items})})
 
     }
-
-
-
 
 
     /**
@@ -267,8 +264,21 @@ export class SongMatch extends Component<SongMatchProps, SongMatchState> {
     doSearchRecs = (): void => {
 
         // call generation of recs (3-5?).
+        /*
+        Initial reccomndations based on user selections
+        1. Create array of song recc seeds using artist, genre, tracks from the song data
+        2. API call for spotify reccomendations from the seeds 
+        3. Store the reccomended tracks as a list
+        4. display song reccomendations <- only difference between matchpool reccomendations and playlist creation
 
+        Creating playlist 
+        1. Create array of song recc seeds using artist, genre, tracks from the song data
+        2. API call for spotify reccomendations from the seeds 
+        3. Store the reccomended tracks as a list
+        */
 
+        // Note: add ability to play reccomended songs when they show up
+        
         // store recs they chose
 
 
@@ -282,8 +292,17 @@ export class SongMatch extends Component<SongMatchProps, SongMatchState> {
      */
     doCreatePlaylist = (): void => {
 
-        // search for songs based on the recommendation(s) they chose
+        /*
+        After the users clicked create playlist
+        1. call doSearchRecs to find more songs based on how many match pool songs there are and how large the playlist will be
+            2 in pool and 20 song playlist = 10 songs based on reccs from each song in pool
+        2. Create playlist api call
+            Spotify user authentication to create playlist for users account
+        3. Add all reccomended songs
+        */
 
+        // search for songs based on the recommendation(s) they chose
+        
 
         // create playlist
 
