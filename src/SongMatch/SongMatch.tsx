@@ -4,6 +4,13 @@ import { Root } from "react-dom/client";
 import './index.css';
 import SearchBar from "./SearchBar";
 
+// Specific Songs seedArtist, seedTrack, and seedGenre
+type recommendationSeed = {
+    seedArtist: string,
+    // genre: string,
+    seedTrack: string
+}
+
 
 // const CLIENT_ID = "e910cd42af954cd39b2e04cb4a1a43c3";
 // const CLIENT_SECRET = "2e5b8f0e3f464084bd3546d5dad312c5";
@@ -13,7 +20,9 @@ import SearchBar from "./SearchBar";
 type Song = {
     name: string,
     image: any,
-    id: string
+    id: string,
+    artists: string,
+    // genre: string
 }
 
 type SongMatchProps = {
@@ -31,9 +40,9 @@ type SongMatchState = {
     currentPage: "home" | "searchbar" | "songlist" | "recommendations" | "playlist";
     errorMessage: string;
     songResults: any[]; // current list of diplayed songs
-    // songMatchList: {name: string, image: any, id: string}; // list of song IDs
     songMatchList: Song[];
-
+    songRecommendations: string[];
+    
     // match pool content
     
 }
@@ -50,7 +59,8 @@ export class SongMatch extends Component<SongMatchProps, SongMatchState> {
             currentPage: "home",
             errorMessage: "",
             songResults: [],
-            songMatchList: []
+            songMatchList: [],
+            songRecommendations: []
             
         }
     }
@@ -138,7 +148,7 @@ export class SongMatch extends Component<SongMatchProps, SongMatchState> {
                                 <Card.Img src={song.album.images[0].url}/>
                                 <Card.Body>
                                 <Card.Title>{song.name}</Card.Title>
-                                <button onClick={() => this.doAddSong(song.name, song.album.images[0].url, song.id)}> + </button>
+                                <button onClick={() => this.doAddSong(song.name, song.album.images[0].url, song.id, song.artists)}> + </button>
                                 </Card.Body>
                             </Card>
                             )
@@ -216,11 +226,11 @@ export class SongMatch extends Component<SongMatchProps, SongMatchState> {
      * Song List Management
      */
 
-    doAddSong = (name: string, image: any, id: string ): void => {
+    doAddSong = (name: string, image: any, id: string, artists: string): void => {
         // add song to state array (songMatchList)
         
         const currList = this.state.songMatchList;
-        currList.push({name: name, image: image, id: id});
+        currList.push({name: name, image: image, id: id, artists: artists});
         this.setState({songMatchList: currList});
     }
 
@@ -254,7 +264,7 @@ export class SongMatch extends Component<SongMatchProps, SongMatchState> {
             .then(response => response.json())
             // .then(data => console.log(data))  // FOR QUERY TESTING
             .then(data => {this.setState({songResults: data.tracks.items})})
-
+        
     }
 
 
@@ -263,6 +273,40 @@ export class SongMatch extends Component<SongMatchProps, SongMatchState> {
      */
     doSearchRecs = (): void => {
 
+        var recs: recommendationSeed[] = [];
+
+        var reccTracks
+        
+        // create list of recs
+        for (var i = 0; i < this.state.songMatchList.length; i++) {
+            // stores current song
+            const currSong: Song = this.state.songMatchList[i];
+
+            // translate genre
+                // make api call to get list of genres
+                // iterate through genre list (take 3), from artist --- check ordering of genres from spotify
+                // create string (comma separate w/ no spaces)
+            
+            // translate artist + copy over
+            const recObj: recommendationSeed = {seedArtist: currSong.artists, seedTrack: currSong.id}
+            recs.push(recObj);
+            
+        }
+        
+        // calculate number of recommendations from each song
+
+        // loop through each song and call getRecommendation() 
+        this.getRecommendation()
+
+
+
+        
+
+
+
+
+        
+        
         // call generation of recs (3-5?).
         /*
         Initial reccomndations based on user selections
@@ -284,6 +328,51 @@ export class SongMatch extends Component<SongMatchProps, SongMatchState> {
 
 
     }
+
+
+
+    getRecommendation = async (seedArtist: string, seedTrack: string, numSongs: number): Promise<void> => {
+        const CLIENT_ID = "e910cd42af954cd39b2e04cb4a1a43c3";
+        const CLIENT_SECRET = "2e5b8f0e3f464084bd3546d5dad312c5";
+
+        // API Access Token
+        var authParameters = {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            },
+            body: 'grant_type=client_credentials&client_id=' + CLIENT_ID + '&client_secret=' + CLIENT_SECRET
+        }
+        // call to get token, and update value
+        const result = await fetch('https://accounts.spotify.com/api/token', authParameters);
+        const data = await result.json();
+        const accessToken = data.access_token;
+
+        // GET request using /reccomendation to get array of Tracks
+        var searchParameters = {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + accessToken
+            }
+        }
+        var recs = await fetch('https://api.spotify.com/v1/reccomendation?seed_artists=' + seedArtist + '&seed_tracks=' + seedTrack, searchParameters)
+            .then(response => response.json())
+            // .then(data => console.log(data))  // FOR QUERY TESTING
+            .then(data => {
+                // get list response
+                const recs = data.tracks
+                // get current array
+                const array = this.state.songRecommendations
+                
+                for (var i = 0; i < numSongs; i++ ){
+                    array.push(data.tracks[i])
+                }
+                this.setState.songRecommendations(array)}
+                
+        
+    }
+
 
 
 
