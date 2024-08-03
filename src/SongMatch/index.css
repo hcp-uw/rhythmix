@@ -35,13 +35,13 @@ body {
   flex-wrap: wrap;
 }
 
-/*.album-grid {
+.album-grid {
   display: flex;
   flex-wrap: wrap;
-  gap: 20px; /* Space between cards
+  gap: 20px; 
   justify-content: center;
   padding: 20px;
-  background-color: #ffffff; /* White background for cards
+  background-color: #ffffff;
   border-radius: 8px;
 }
 
@@ -51,7 +51,7 @@ body {
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   overflow: hidden;
-  width: 200px; /* Fixed width for consistency 
+  width: 200px; 
   margin-bottom: 20px;
   text-align: center;
   transition: transform 0.3s ease;
@@ -86,5 +86,5 @@ body {
 
 .album-card .add-button:hover {
   background-color: #0056b3;
-}*/
+}
 
