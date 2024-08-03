@@ -339,9 +339,11 @@ export class SongMatch extends Component<SongMatchProps, SongMatchState> {
         // DOING JUST track FOR NOW
         fiveRecs = "seed_tracks="
 
-        for (var i = 0; i < 5; i++) {
+        for (var i = 0; i < 4; i++) {
             fiveRecs += recs[i].seedTrack + ","
         }
+
+        fiveRecs += recs[4].seedTrack
 
         var seedTrack = fiveRecs;
         
@@ -367,7 +369,7 @@ export class SongMatch extends Component<SongMatchProps, SongMatchState> {
             }
         }
         //var recs = await fetch('https://api.spotify.com/v1/reccomendation?seed_artists=' + seedArtist + '&seed_tracks=' + seedTrack, searchParameters)    
-        var spotifyRecs = await fetch('https://api.spotify.com/v1/reccomendation?' + seedTrack, searchParameters)    
+        var spotifyRecs = await fetch('https://api.spotify.com/v1/reccomendation?' + seedTrack + '&limit=20', searchParameters)    
             .then(response => response.json())
             // .then(data => console.log(data))  // FOR QUERY TESTING
             .then(data => {
