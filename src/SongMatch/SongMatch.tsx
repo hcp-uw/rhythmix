@@ -37,7 +37,7 @@ type SongMatchProps = {
 type SongMatchState = {
     // search bar content
     currentSearch: string;
-    currentPage: "home" | "searchbar" | "songlist" | "recommendations" | "playlist";
+    currentPage: "home" | "searchbar" | "songlist" | "recommendations" | "playlist" | "getRecs";
     errorMessage: string;
     songResults: any[]; // current list of diplayed songs
     songMatchList: Song[];
@@ -78,15 +78,14 @@ export class SongMatch extends Component<SongMatchProps, SongMatchState> {
                     {this.renderStartPage()}
                 </div>
             );
-        } else if (this.state.currentPage === "searchbar") {
-            return (
-                <SearchBar/>
-            )
-
-        } else if (this.state.currentPage === "songlist") {
+        } else if (this.state.currentPage === "getRecs") {
             
             return(
-                <div/>
+                <div>
+                    {this.state.songRecommendations}
+                </div>
+
+
             )
             
         } else {
@@ -225,6 +224,7 @@ export class SongMatch extends Component<SongMatchProps, SongMatchState> {
     /**
      * Song List Management
      */
+    
 
     doAddSong = (name: string, image: any, id: string, artists: string): void => {
         // add song to state array (songMatchList)
@@ -275,8 +275,6 @@ export class SongMatch extends Component<SongMatchProps, SongMatchState> {
 
         var recs: recommendationSeed[] = [];
 
-        var reccTracks
-        
         // create list of recs
         for (var i = 0; i < this.state.songMatchList.length; i++) {
             // stores current song
@@ -296,7 +294,7 @@ export class SongMatch extends Component<SongMatchProps, SongMatchState> {
         // calculate number of recommendations from each song
 
         // loop through each song and call getRecommendation() 
-        this.getRecommendation()
+        this.getRecommendation(recs, 3);
 
 
 
@@ -330,11 +328,23 @@ export class SongMatch extends Component<SongMatchProps, SongMatchState> {
     }
 
 
-
-    getRecommendation = async (seedArtist: string, seedTrack: string, numSongs: number): Promise<void> => {
+    getRecommendation = async (recs: recommendationSeed[], numSongs: number): Promise<void> => {
+        this.setState({currentPage: "getRecs"})
+        
         const CLIENT_ID = "e910cd42af954cd39b2e04cb4a1a43c3";
         const CLIENT_SECRET = "2e5b8f0e3f464084bd3546d5dad312c5";
+        
+        var fiveRecs: string;
 
+        // DOING JUST track FOR NOW
+        fiveRecs = "seed_tracks="
+
+        for (var i = 0; i < 5; i++) {
+            fiveRecs += recs[i].seedTrack + ","
+        }
+
+        var seedTrack = fiveRecs;
+        
         // API Access Token
         var authParameters = {
             method: 'POST',
@@ -356,21 +366,21 @@ export class SongMatch extends Component<SongMatchProps, SongMatchState> {
                 'Authorization': 'Bearer ' + accessToken
             }
         }
-        var recs = await fetch('https://api.spotify.com/v1/reccomendation?seed_artists=' + seedArtist + '&seed_tracks=' + seedTrack, searchParameters)
+        //var recs = await fetch('https://api.spotify.com/v1/reccomendation?seed_artists=' + seedArtist + '&seed_tracks=' + seedTrack, searchParameters)    
+        var spotifyRecs = await fetch('https://api.spotify.com/v1/reccomendation?' + seedTrack, searchParameters)    
             .then(response => response.json())
             // .then(data => console.log(data))  // FOR QUERY TESTING
             .then(data => {
                 // get list response
-                const recs = data.tracks
+                const spotifyRecs = data.tracks
                 // get current array
                 const array = this.state.songRecommendations
                 
                 for (var i = 0; i < numSongs; i++ ){
                     array.push(data.tracks[i])
                 }
-                this.setState.songRecommendations(array)}
-                
-        
+                this.setState({songRecommendations: array})})
+    
     }
 
 
