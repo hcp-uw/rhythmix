@@ -41,7 +41,7 @@ type SongMatchState = {
     errorMessage: string;
     songResults: any[]; // current list of diplayed songs
     songMatchList: Song[];
-    songRecommendations: string[];
+    songRecommendations: any[];
     
     // match pool content
     
@@ -82,7 +82,22 @@ export class SongMatch extends Component<SongMatchProps, SongMatchState> {
             
             return(
                 <div>
-                    {this.state.songRecommendations}
+                    <Container className="large-container">
+                        <Row className="mx-2 row row-cols-6">
+                        
+                            {this.state.songRecommendations.map( (song, i) => {
+                                return (
+                                <Card className="large-card">
+                                    <Card.Img src={song.album.images[0].url}/>
+                                    <Card.Body>
+                                    <Card.Title>{song.name}</Card.Title>
+                                    <button onClick={() => this.doAddSong(song.name, song.album.images[0].url, song.id, song.artists)}> + </button>
+                                    </Card.Body>
+                                </Card>
+                                )
+                            })}
+                        </Row>
+                    </Container>
                 </div>
 
 
@@ -137,6 +152,7 @@ export class SongMatch extends Component<SongMatchProps, SongMatchState> {
             
                     </Row>
                 </Container> */}
+
 
                 <Container className="large-container">
                     <Row className="mx-2 row row-cols-6">
@@ -339,11 +355,11 @@ export class SongMatch extends Component<SongMatchProps, SongMatchState> {
         // DOING JUST track FOR NOW
         fiveRecs = "seed_tracks="
 
-        for (var i = 0; i < 4; i++) {
-            fiveRecs += recs[i].seedTrack + ","
-        }
+        // for (var i = 0; i < 2; i++) {
+        //     fiveRecs += recs[i].seedTrack + ","
+        // }
 
-        fiveRecs += recs[4].seedTrack
+        fiveRecs += recs[0].seedTrack
 
         var seedTrack = fiveRecs;
         
@@ -368,8 +384,8 @@ export class SongMatch extends Component<SongMatchProps, SongMatchState> {
                 'Authorization': 'Bearer ' + accessToken
             }
         }
-        //var recs = await fetch('https://api.spotify.com/v1/reccomendation?seed_artists=' + seedArtist + '&seed_tracks=' + seedTrack, searchParameters)    
-        var spotifyRecs = await fetch('https://api.spotify.com/v1/reccomendation?' + seedTrack + '&limit=20', searchParameters)    
+        // var recs = await fetch('https://api.spotify.com/v1/reccomendation?seed_artists=' + seedArtist + '&seed_tracks=' + seedTrack, searchParameters)    
+        var spotifyRecs = await fetch('https://api.spotify.com/v1/recommendations?' + seedTrack + '&limit=20', searchParameters)    
             .then(response => response.json())
             // .then(data => console.log(data))  // FOR QUERY TESTING
             .then(data => {
@@ -378,11 +394,12 @@ export class SongMatch extends Component<SongMatchProps, SongMatchState> {
                 // get current array
                 const array = this.state.songRecommendations
                 
-                for (var i = 0; i < numSongs; i++ ){
+                for (var i = 0; i < spotifyRecs.length; i++ ){
                     array.push(data.tracks[i])
+                    console.log(data.tracks[i].id + " success") // TEST
                 }
+
                 this.setState({songRecommendations: array})})
-    
     }
 
 
