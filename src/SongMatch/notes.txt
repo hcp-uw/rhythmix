@@ -1,0 +1,8 @@
+
+ToDo:
+
+- Fix Spotify API Call to get recommendations - DONE
+
+- Fix HTML sizing of Song Cards - Next
+
+- Display 3 songs to add - 
