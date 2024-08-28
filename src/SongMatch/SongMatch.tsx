@@ -153,13 +153,12 @@ export class SongMatch extends Component<SongMatchProps, SongMatchState> {
                     </Row>
                 </Container> */}
 
-
                 <Container className="large-container">
                     <Row className="mx-2 row row-cols-6">
                     
                         {this.state.songResults.map( (song, i) => {
                             return (
-                            <Card className="large-card">
+                            <Card className="album-card">
                                 <Card.Img src={song.album.images[0].url}/>
                                 <Card.Body>
                                 <Card.Title>{song.name}</Card.Title>
@@ -170,10 +169,11 @@ export class SongMatch extends Component<SongMatchProps, SongMatchState> {
                         })}
                     </Row>
                 </Container>
+                
 
-
+                <div  className="album-card">
                 <Container className="mt-3">
-                    <Row>
+                    <Row className="mx-2 row row-cols-4">
                         {this.state.songMatchList.map( (song, i) => {
                             return (
                             <Col md={2}>
@@ -190,6 +190,8 @@ export class SongMatch extends Component<SongMatchProps, SongMatchState> {
 
                     {this.state.songMatchList.length > 0 && <Button onClick={this.doSearchRecs}>Search</Button>}
                 </Container>
+                </div>
+                
                 
                 
 

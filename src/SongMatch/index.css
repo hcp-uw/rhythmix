@@ -19,11 +19,9 @@ body {
     background-color: rgb(137, 207, 240, 0.9);
     width: 100%; /* Adjust width as needed */
     height: 100%; /* Adjust height as needed */
-    display: flex; /* Add this if you want to center content horizontally */
     justify-content: center; /* Add this if you want to center content horizontally */
-    align-items: center; /* Add this if you want to center content vertically */
     overflow-y: scroll;
-  }
+  } 
 
 .large-container {
   overflow-x: hidden;
@@ -51,10 +49,11 @@ body {
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   overflow: hidden;
-  width: 200px; 
+  width: 100px; 
   margin-bottom: 20px;
   text-align: center;
   transition: transform 0.3s ease;
+  overflow-y: scroll;
 }
 
 .album-card:hover {
