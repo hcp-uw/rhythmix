@@ -393,7 +393,7 @@ export class SongMatch extends Component<SongMatchProps, SongMatchState> {
             }
         }
         // var recs = await fetch('https://api.spotify.com/v1/reccomendation?seed_artists=' + seedArtist + '&seed_tracks=' + seedTrack, searchParameters)    
-        var spotifyRecs = await fetch('https://api.spotify.com/v1/recommendations?' + seedTrack + '&limit=20', searchParameters)    
+        var spotifyRecs = await fetch('https://api.spotify.com/v1/recommendations?' + seedTrack + '&limit=3', searchParameters)    
             .then(response => response.json())
             // .then(data => console.log(data))  // FOR QUERY TESTING
             .then(data => {
