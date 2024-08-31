@@ -80,14 +80,15 @@ export class SongMatch extends Component<SongMatchProps, SongMatchState> {
             );
         } else if (this.state.currentPage === "getRecs") {
             
+
+            // CHANGE doAddSong to CREATE PLAYLIST
             return(
-                <div>
-                    <Container className="large-container">
-                        <Row className="mx-2 row row-cols-6">
+                <div className="background">
+                    <Container className="song-container">
                         
                             {this.state.songRecommendations.map( (song, i) => {
                                 return (
-                                <Card className="large-card">
+                                <Card className="album-card">
                                     <Card.Img src={song.album.images[0].url}/>
                                     <Card.Body>
                                     <Card.Title>{song.name}</Card.Title>
@@ -96,8 +97,20 @@ export class SongMatch extends Component<SongMatchProps, SongMatchState> {
                                 </Card>
                                 )
                             })}
-                        </Row>
                     </Container>
+
+                    <div className="song-container">
+                        {this.state.songMatchList.map( (song, i) => {
+                            return (
+                                <Card className="album-card">
+                                    <Card.Img src={song.image}/>
+                                    <Card.Body>
+                                    <Card.Title>{song.name}</Card.Title>
+                                    </Card.Body>
+                                </Card>
+                            )
+                        })}
+                    </div>
                 </div>
 
 
@@ -153,8 +166,7 @@ export class SongMatch extends Component<SongMatchProps, SongMatchState> {
                     </Row>
                 </Container> */}
 
-                <Container className="large-container">
-                    <Row className="mx-2 row row-cols-6">
+                <Container className="song-container">
                     
                         {this.state.songResults.map( (song, i) => {
                             return (
@@ -167,35 +179,25 @@ export class SongMatch extends Component<SongMatchProps, SongMatchState> {
                             </Card>
                             )
                         })}
-                    </Row>
+                
                 </Container>
                 
-
-                <div  className="album-card">
-                <Container className="mt-3">
-                    <Row className="mx-2 row row-cols-4">
+                <div className="song-container">
                         {this.state.songMatchList.map( (song, i) => {
                             return (
-                            <Col md={2}>
-                                <Card className="small-card">
+                                <Card className="album-card">
                                     <Card.Img src={song.image}/>
                                     <Card.Body>
                                     <Card.Title>{song.name}</Card.Title>
                                     </Card.Body>
                                 </Card>
-                            </Col>
                             )
                         })}
-                    </Row>
-
                     {this.state.songMatchList.length > 0 && <Button onClick={this.doSearchRecs}>Search</Button>}
-                </Container>
                 </div>
                 
                 
-                
-
-                </div>
+            </div>
         )
     }
 
@@ -246,10 +248,14 @@ export class SongMatch extends Component<SongMatchProps, SongMatchState> {
 
     doAddSong = (name: string, image: any, id: string, artists: string): void => {
         // add song to state array (songMatchList)
+        if (this.state.songMatchList.length < 5) {
+            const currList = this.state.songMatchList;
+            currList.push({name: name, image: image, id: id, artists: artists});
+            this.setState({songMatchList: currList});
+        } else {
+            console.log("too many songs")
+        }
         
-        const currList = this.state.songMatchList;
-        currList.push({name: name, image: image, id: id, artists: artists});
-        this.setState({songMatchList: currList});
     }
 
 
@@ -312,7 +318,7 @@ export class SongMatch extends Component<SongMatchProps, SongMatchState> {
         // calculate number of recommendations from each song
 
         // loop through each song and call getRecommendation() 
-        this.getRecommendation(recs, 3);
+        this.getRecommendation(recs);
 
 
 
@@ -346,7 +352,7 @@ export class SongMatch extends Component<SongMatchProps, SongMatchState> {
     }
 
 
-    getRecommendation = async (recs: recommendationSeed[], numSongs: number): Promise<void> => {
+    getRecommendation = async (recs: recommendationSeed[]): Promise<void> => {
         this.setState({currentPage: "getRecs"})
         
         const CLIENT_ID = "e910cd42af954cd39b2e04cb4a1a43c3";
@@ -357,11 +363,11 @@ export class SongMatch extends Component<SongMatchProps, SongMatchState> {
         // DOING JUST track FOR NOW
         fiveRecs = "seed_tracks="
 
-        // for (var i = 0; i < 2; i++) {
-        //     fiveRecs += recs[i].seedTrack + ","
-        // }
+        for (var i = 0; i < this.state.songMatchList.length - 1; i++) {
+            fiveRecs += recs[i].seedTrack + ","
+        }
 
-        fiveRecs += recs[0].seedTrack
+        fiveRecs += recs[this.state.songMatchList.length - 1].seedTrack
 
         var seedTrack = fiveRecs;
         

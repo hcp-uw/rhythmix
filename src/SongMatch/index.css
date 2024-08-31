@@ -87,3 +87,33 @@ body {
   background-color: #0056b3;
 }
 
+.song-container {
+  display: flex;
+  flex-wrap: wrap; /* Allows wrapping to the next row if there are more than 5 items */
+  gap: 16px; /* Space between cards, adjust as needed */
+}
+
+.album-card {
+  flex: 1 1 calc(10% - 16px); /* Adjust width to fit 5 cards per row (100% / 5 = 20%) */
+  box-sizing: border-box; /* Ensure padding and border are included in the width */
+  max-width: 10%; /* Ensure no more than 5 cards per row */
+  /* Optional: add additional styles for responsiveness */
+}
+
+/* Optional: Media query for responsiveness */
+@media (max-width: 768px) {
+  .album-card {
+    flex: 1 1 calc(50% - 16px); /* 2 cards per row on smaller screens */
+    max-width: 50%;
+  }
+}
+
+@media (max-width: 480px) {
+  .album-card {
+    flex: 1 1 100%; /* 1 card per row on very small screens */
+    max-width: 100%;
+  }
+}
+
+
+
