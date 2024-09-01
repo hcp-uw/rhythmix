@@ -2,7 +2,7 @@ export const UpdatePlaylists = () => {
     // Check when a playlist was last updated
     // If made 1 day ago (yesterday), loop through every playlist, remove every song
     // Find 25 songs for each playlist, algo needed:
-    console.log(Date());
+    // console.log(Date());
 }
 
 export const GenreToPlaylistMap = new Map<string, string>([
