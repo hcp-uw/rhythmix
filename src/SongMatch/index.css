@@ -93,6 +93,16 @@ body {
   gap: 16px; /* Space between cards, adjust as needed */
 }
 
+.rec-container {
+  flex: 1 1 calc(20% - 16px); /* Makes each card take up 20% width minus the gap */
+  min-width: 200px; /* Ensures a minimum width */
+  max-width: 300px; /* Optional: Limits the max width */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Optional: Adds shadow */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 .album-card {
   flex: 1 1 calc(10% - 16px); /* Adjust width to fit 5 cards per row (100% / 5 = 20%) */
   box-sizing: border-box; /* Ensure padding and border are included in the width */

@@ -12,6 +12,8 @@
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.23.1",
     "react-scripts": "5.0.1",
+    "react-spotify-embed": "^2.0.4",
+    "react-spotify-web-playback": "^0.14.4",
     "web-vitals": "^2.1.4"
   },
   "scripts": {

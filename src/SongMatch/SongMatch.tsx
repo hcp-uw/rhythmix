@@ -1,8 +1,12 @@
 import React, { Component, ChangeEvent, MouseEvent } from "react";
 import { Container, InputGroup, FormControl, Button, Row, Col, Card } from 'react-bootstrap';
+import { Spotify } from "react-spotify-embed";
 import { Root } from "react-dom/client";
+import Player from "./Player";
 import './index.css';
 import SearchBar from "./SearchBar";
+
+var accessTokenGLOBAL;
 
 // Specific Songs seedArtist, seedTrack, and seedGenre
 type recommendationSeed = {
@@ -42,6 +46,7 @@ type SongMatchState = {
     songResults: any[]; // current list of diplayed songs
     songMatchList: Song[];
     songRecommendations: any[];
+    songRecommendationsLINK: String[];
     
     // match pool content
     
@@ -60,7 +65,8 @@ export class SongMatch extends Component<SongMatchProps, SongMatchState> {
             errorMessage: "",
             songResults: [],
             songMatchList: [],
-            songRecommendations: []
+            songRecommendations: [],
+            songRecommendationsLINK: []
             
         }
     }
@@ -82,21 +88,30 @@ export class SongMatch extends Component<SongMatchProps, SongMatchState> {
             
 
             // CHANGE doAddSong to CREATE PLAYLIST
+
+            //
+            //  Call Player.js
+            // <> <Player/>
+            //
+
+            // TEST @@@@@@@@@@@@@@@@@@
+            console.log(accessTokenGLOBAL)
             return(
+                
                 <div className="background">
+                    
                     <Container className="song-container">
                         
                             {this.state.songRecommendations.map( (song, i) => {
+
+                                console.log(song);
                                 return (
-                                <Card className="album-card">
-                                    <Card.Img src={song.album.images[0].url}/>
-                                    <Card.Body>
-                                    <Card.Title>{song.name}</Card.Title>
-                                    <button onClick={() => this.doAddSong(song.name, song.album.images[0].url, song.id, song.artists)}> + </button>
-                                    </Card.Body>
-                                </Card>
+                                   <Spotify link={song.external_urls.spotify}/>
                                 )
                             })}
+                            
+                            
+                
                     </Container>
 
                     <div className="song-container">
@@ -115,6 +130,41 @@ export class SongMatch extends Component<SongMatchProps, SongMatchState> {
 
 
             )
+
+
+            // return(
+            //     <div className="background">
+            //         <Container className="song-container">
+                        
+            //                 {this.state.songRecommendations.map( (song, i) => {
+            //                     return (
+            //                     <Card className="album-card">
+            //                         <Card.Img src={song.album.images[0].url}/>
+            //                         <Card.Body>
+            //                         <Card.Title>{song.name}</Card.Title>
+            //                         <button onClick={() => this.doAddSong(song.name, song.album.images[0].url, song.id, song.artists)}> + </button>
+            //                         </Card.Body>
+            //                     </Card>
+            //                     )
+            //                 })}
+            //         </Container>
+
+            //         <div className="song-container">
+            //             {this.state.songMatchList.map( (song, i) => {
+            //                 return (
+            //                     <Card className="album-card">
+            //                         <Card.Img src={song.image}/>
+            //                         <Card.Body>
+            //                         <Card.Title>{song.name}</Card.Title>
+            //                         </Card.Body>
+            //                     </Card>
+            //                 )
+            //             })}
+            //         </div>
+            //     </div>
+
+
+            // )
             
         } else {
             return (
@@ -275,6 +325,8 @@ export class SongMatch extends Component<SongMatchProps, SongMatchState> {
         const result = await fetch('https://accounts.spotify.com/api/token', authParameters);
         const data = await result.json();
         const accessToken = data.access_token;
+        // store accessToken
+        accessTokenGLOBAL = accessToken;
 
         // GET request using Search to get Artist ID
         var searchParameters = {
@@ -401,10 +453,13 @@ export class SongMatch extends Component<SongMatchProps, SongMatchState> {
                 const spotifyRecs = data.tracks
                 // get current array
                 const array = this.state.songRecommendations
+                const links = [];
                 
                 for (var i = 0; i < spotifyRecs.length; i++ ){
                     array.push(data.tracks[i])
+                    // links.push(data.tracks[i].)
                     console.log(data.tracks[i].id + " success") // TEST
+                    console.log(data.tracks[i] + "result")
                 }
 
                 this.setState({songRecommendations: array})})
