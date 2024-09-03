@@ -7,6 +7,8 @@ import { UpdatePlaylists, GenreToPlaylistMap } from './DiscoverDaily/DiscoverDai
 import logo from "./spotiblend_logo.png";
 import { loginWithSpotifyClick, logoutClick } from "./spotify.js";
 
+export const accessTokenGLOBAL = localStorage.getItem('access_token');
+
 type HomePageState = {
     genre: string;
     page: {kind: "home"} | {kind: "songmatch"};

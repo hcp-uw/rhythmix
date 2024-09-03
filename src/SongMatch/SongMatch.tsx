@@ -2,7 +2,6 @@ import React, { Component, ChangeEvent, MouseEvent } from "react";
 import { Container, InputGroup, FormControl, Button, Row, Col, Card } from 'react-bootstrap';
 import { Spotify } from "react-spotify-embed";
 import { Root } from "react-dom/client";
-import Player from "./Player";
 import './index.css';
 import SearchBar from "./SearchBar";
 
@@ -47,6 +46,9 @@ type SongMatchState = {
     songMatchList: Song[];
     songRecommendations: any[];
     songRecommendationsLINK: String[];
+    currID: string;
+    playlistSongs: any[];
+    finalPlaylistLINK: string;
     
     // match pool content
     
@@ -66,7 +68,10 @@ export class SongMatch extends Component<SongMatchProps, SongMatchState> {
             songResults: [],
             songMatchList: [],
             songRecommendations: [],
-            songRecommendationsLINK: []
+            songRecommendationsLINK: [],
+            currID: "",
+            playlistSongs: [],
+            finalPlaylistLINK: ""
             
         }
     }
@@ -89,12 +94,6 @@ export class SongMatch extends Component<SongMatchProps, SongMatchState> {
 
             // CHANGE doAddSong to CREATE PLAYLIST
 
-            //
-            //  Call Player.js
-            // <> <Player/>
-            //
-
-            // TEST @@@@@@@@@@@@@@@@@@
             console.log(accessTokenGLOBAL)
             return(
                 
@@ -106,7 +105,17 @@ export class SongMatch extends Component<SongMatchProps, SongMatchState> {
 
                                 console.log(song);
                                 return (
-                                   <Spotify link={song.external_urls.spotify}/>
+                                    <div>
+                                        <Spotify link={song.external_urls.spotify}/>
+                                        <center>
+                                            <button onClick={() => this.doCreatePlaylist(song)}>
+                                                Create Playlist
+                                            </button>
+                                        </center>
+
+                                    </div>
+
+                                   
                                 )
                             })}
                             
@@ -130,42 +139,13 @@ export class SongMatch extends Component<SongMatchProps, SongMatchState> {
 
 
             )
-
-
-            // return(
-            //     <div className="background">
-            //         <Container className="song-container">
-                        
-            //                 {this.state.songRecommendations.map( (song, i) => {
-            //                     return (
-            //                     <Card className="album-card">
-            //                         <Card.Img src={song.album.images[0].url}/>
-            //                         <Card.Body>
-            //                         <Card.Title>{song.name}</Card.Title>
-            //                         <button onClick={() => this.doAddSong(song.name, song.album.images[0].url, song.id, song.artists)}> + </button>
-            //                         </Card.Body>
-            //                     </Card>
-            //                     )
-            //                 })}
-            //         </Container>
-
-            //         <div className="song-container">
-            //             {this.state.songMatchList.map( (song, i) => {
-            //                 return (
-            //                     <Card className="album-card">
-            //                         <Card.Img src={song.image}/>
-            //                         <Card.Body>
-            //                         <Card.Title>{song.name}</Card.Title>
-            //                         </Card.Body>
-            //                     </Card>
-            //                 )
-            //             })}
-            //         </div>
-            //     </div>
-
-
-            // )
             
+        } else if (this.state.currentPage == "playlist") {
+            return (
+                <div>
+                    <Spotify link={this.state.finalPlaylistLINK}></Spotify>
+                </div>
+            )
         } else {
             return (
                 <div>other page</div>
@@ -199,23 +179,6 @@ export class SongMatch extends Component<SongMatchProps, SongMatchState> {
                     </InputGroup>
                 </Container>
 
-                {/* <Container>
-                    <Row className="mx-2 row row-cols-6">
-                    
-                    {this.state.songResults.map( (song, i) => {
-                        return (
-                        <Card>
-                            <Card.Img src={song.images[0].url}/>
-                            <Card.Body>
-                            <Card.Title>{song.name}</Card.Title>
-                            </Card.Body>
-                        </Card>
-                        )
-                    })}
-            
-                    </Row>
-                </Container> */}
-
                 <Container className="song-container">
                     
                         {this.state.songResults.map( (song, i) => {
@@ -243,7 +206,7 @@ export class SongMatch extends Component<SongMatchProps, SongMatchState> {
                                 </Card>
                             )
                         })}
-                    {this.state.songMatchList.length > 0 && <Button onClick={this.doSearchRecs}>Search</Button>}
+                    {this.state.songMatchList.length > 0 && <Button onClick={() => this.doSearchRecs(3, this.state.songMatchList)}>Search</Button>}
                 </div>
                 
                 
@@ -347,14 +310,14 @@ export class SongMatch extends Component<SongMatchProps, SongMatchState> {
     /**
      * New Song Search
      */
-    doSearchRecs = (): void => {
+    doSearchRecs = (numRecs: number, list: any[]): void => {
 
         var recs: recommendationSeed[] = [];
 
         // create list of recs
-        for (var i = 0; i < this.state.songMatchList.length; i++) {
+        for (var i = 0; i < list.length; i++) {
             // stores current song
-            const currSong: Song = this.state.songMatchList[i];
+            const currSong: Song = list[i];
 
             // translate genre
                 // make api call to get list of genres
@@ -370,7 +333,7 @@ export class SongMatch extends Component<SongMatchProps, SongMatchState> {
         // calculate number of recommendations from each song
 
         // loop through each song and call getRecommendation() 
-        this.getRecommendation(recs);
+        this.getRecommendation(recs, numRecs);
 
 
 
@@ -404,7 +367,7 @@ export class SongMatch extends Component<SongMatchProps, SongMatchState> {
     }
 
 
-    getRecommendation = async (recs: recommendationSeed[]): Promise<void> => {
+    getRecommendation = async (recs: recommendationSeed[], numRecs: number): Promise<void> => {
         this.setState({currentPage: "getRecs"})
         
         const CLIENT_ID = "e910cd42af954cd39b2e04cb4a1a43c3";
@@ -445,7 +408,7 @@ export class SongMatch extends Component<SongMatchProps, SongMatchState> {
             }
         }
         // var recs = await fetch('https://api.spotify.com/v1/reccomendation?seed_artists=' + seedArtist + '&seed_tracks=' + seedTrack, searchParameters)    
-        var spotifyRecs = await fetch('https://api.spotify.com/v1/recommendations?' + seedTrack + '&limit=3', searchParameters)    
+        var spotifyRecs = await fetch('https://api.spotify.com/v1/recommendations?' + seedTrack + '&limit=' + numRecs, searchParameters)    
             .then(response => response.json())
             // .then(data => console.log(data))  // FOR QUERY TESTING
             .then(data => {
@@ -453,11 +416,9 @@ export class SongMatch extends Component<SongMatchProps, SongMatchState> {
                 const spotifyRecs = data.tracks
                 // get current array
                 const array = this.state.songRecommendations
-                const links = [];
                 
                 for (var i = 0; i < spotifyRecs.length; i++ ){
                     array.push(data.tracks[i])
-                    // links.push(data.tracks[i].)
                     console.log(data.tracks[i].id + " success") // TEST
                     console.log(data.tracks[i] + "result")
                 }
@@ -471,7 +432,7 @@ export class SongMatch extends Component<SongMatchProps, SongMatchState> {
     /**
      * Search AFTER choosing Recs
      */
-    doCreatePlaylist = (): void => {
+    doCreatePlaylist = async (song: any): Promise<void> => {
 
         /*
         After the users clicked create playlist
@@ -482,14 +443,132 @@ export class SongMatch extends Component<SongMatchProps, SongMatchState> {
         3. Add all reccomended songs
         */
 
-        // search for songs based on the recommendation(s) they chose
+        console.log(song)
+
+        // get list of recommendationSeed[]
+            // call getRecommendation()
+        this.doGetPlaylistSongs(song.id)
         
-
-        // create playlist
-
+        // state will update songRecommendations to be used for the playlist
 
 
-        // auth + spotify login
+        // API Access Token
+        const CLIENT_ID = "e910cd42af954cd39b2e04cb4a1a43c3";
+        const CLIENT_SECRET = "2e5b8f0e3f464084bd3546d5dad312c5";
+
+        var authParameters = {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            },
+            body: 'grant_type=client_credentials&client_id=' + CLIENT_ID + '&client_secret=' + CLIENT_SECRET
+        }
+        // call to get token, and update value
+        const result = await fetch('https://accounts.spotify.com/api/token', authParameters);
+        const data = await result.json();
+        const accessToken = data.access_token;
+
+        // GET request using /reccomendation to get array of Tracks
+        var searchParameters = {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + accessToken
+            }
+        }
+
+
+        // need to get userID of logged in person
+        var user = await fetch("https://api.spotify.com/v1/me", searchParameters)
+            .then(response => response.json())
+            .then(data => {
+                console.log("HERE IS THE API CALL FOR GETTING CURRENT USER" + data.id)
+                this.setState({currID: data.id})
+            })
+
+
+        var playlistParameters = {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + accessToken
+            },
+            body: JSON.stringify({
+                name: "Spotiblend Playlist"
+            })
+        }
+
+        console.log("CURRENT USER + " + this.state.currID)
+        // create the playlist based on songRecommendations
+        var createPlaylist = await fetch("https://api.spotify.com/v1/users/" + this.state.currID + "/playlists" , playlistParameters)
+            .then(response => response.json())
+            .then(data => {
+
+                console.log("INSIDE CREATEPLAYLIST API CALL")
+                console.log(data)
+
+                this.setState({finalPlaylistLINK: data.external_urls.spotify})
+            })
+
+
+        // add items to said playlist
+
+
+        // change state to display playlist
+        this.setState({currentPage: "playlist"})
+    }
+
+
+
+
+    doGetPlaylistSongs = async (song: String) => {
+        const CLIENT_ID = "e910cd42af954cd39b2e04cb4a1a43c3";
+        const CLIENT_SECRET = "2e5b8f0e3f464084bd3546d5dad312c5";
+
+        // DOING JUST track FOR NOW
+        var seedTrack = "seed_tracks=" + song
+        
+        // API Access Token
+        var authParameters = {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            },
+            body: 'grant_type=client_credentials&client_id=' + CLIENT_ID + '&client_secret=' + CLIENT_SECRET
+        }
+        // call to get token, and update value
+        const result = await fetch('https://accounts.spotify.com/api/token', authParameters);
+        const data = await result.json();
+        const accessToken = data.access_token;
+
+        // GET request using /reccomendation to get array of Tracks
+        var searchParameters = {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + accessToken
+            }
+        }
+        // var recs = await fetch('https://api.spotify.com/v1/reccomendation?seed_artists=' + seedArtist + '&seed_tracks=' + seedTrack, searchParameters)    
+        var spotifyRecs = await fetch('https://api.spotify.com/v1/recommendations?' + seedTrack + '&limit=20', searchParameters)    
+            .then(response => response.json())
+            // .then(data => console.log(data))  // FOR QUERY TESTING
+            .then(data => {
+                // get list response
+                const spotifyRecs = data.tracks
+                // get current array
+                const array = this.state.playlistSongs
+                
+                for (var i = 0; i < spotifyRecs.length; i++ ){
+                    array.push(data.tracks[i])
+                    console.log(data.tracks[i].id + " success") // TEST
+                    console.log(data.tracks[i] + "result")
+                }
+
+                console.log("TEST")
+                console.log(array)
+
+                this.setState({playlistSongs: array})})
     }
 
 
