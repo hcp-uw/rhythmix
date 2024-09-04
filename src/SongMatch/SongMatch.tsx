@@ -278,22 +278,22 @@ export class SongMatch extends Component<SongMatchProps, SongMatchState> {
 
         
 
-        // // API Access Token
-        // var authParameters = {
-        //     method: 'POST',
-        //     headers: {
-        //         'Content-Type': 'application/x-www-form-urlencoded'
-        //     },
-        //     body: 'grant_type=client_credentials&client_id=' + CLIENT_ID + '&client_secret=' + CLIENT_SECRET
-        // }
-        // // call to get token, and update value
-        // const result = await fetch('https://accounts.spotify.com/api/token', authParameters);
-        // const data = await result.json();
-        // const accessToken = data.access_token;
-        // // store accessToken
-        // accessTokenGLOBAL = accessToken;
-        const accessToken = localStorage.getItem('access_token');
-        console.log(accessToken)
+        // API Access Token
+        var authParameters = {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            },
+            body: 'grant_type=client_credentials&client_id=' + CLIENT_ID + '&client_secret=' + CLIENT_SECRET
+        }
+        // call to get token, and update value
+        const result = await fetch('https://accounts.spotify.com/api/token', authParameters);
+        const data = await result.json();
+        const accessToken = data.access_token;
+
+        // store accessToken
+        // const accessToken = localStorage.getItem('access_token');
+        // console.log(accessToken)
 
         // GET request using Search to get Artist ID
         var searchParameters = {
@@ -390,20 +390,20 @@ export class SongMatch extends Component<SongMatchProps, SongMatchState> {
 
         var seedTrack = fiveRecs;
         
-        // // API Access Token
-        // var authParameters = {
-        //     method: 'POST',
-        //     headers: {
-        //         'Content-Type': 'application/x-www-form-urlencoded'
-        //     },
-        //     body: 'grant_type=client_credentials&client_id=' + CLIENT_ID + '&client_secret=' + CLIENT_SECRET
-        // }
-        // // call to get token, and update value
-        // const result = await fetch('https://accounts.spotify.com/api/token', authParameters);
-        // const data = await result.json();
-        // const accessToken = data.access_token;
-        const accessToken = localStorage.getItem('access_token');
-        console.log(accessToken)
+        // API Access Token
+        var authParameters = {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            },
+            body: 'grant_type=client_credentials&client_id=' + CLIENT_ID + '&client_secret=' + CLIENT_SECRET
+        }
+        // call to get token, and update value
+        const result = await fetch('https://accounts.spotify.com/api/token', authParameters);
+        const data = await result.json();
+        const accessToken = data.access_token;
+        // const accessToken = localStorage.getItem('access_token');
+        // console.log(accessToken)
 
         // GET request using /reccomendation to get array of Tracks
         var searchParameters = {
@@ -462,19 +462,19 @@ export class SongMatch extends Component<SongMatchProps, SongMatchState> {
         const CLIENT_ID = "e910cd42af954cd39b2e04cb4a1a43c3";
         const CLIENT_SECRET = "2e5b8f0e3f464084bd3546d5dad312c5";
 
-        // var authParameters = {
-        //     method: 'POST',
-        //     headers: {
-        //         'Content-Type': 'application/x-www-form-urlencoded'
-        //     },
-        //     body: 'grant_type=client_credentials&client_id=' + CLIENT_ID + '&client_secret=' + CLIENT_SECRET
-        // }
-        // // call to get token, and update value
-        // const result = await fetch('https://accounts.spotify.com/api/token', authParameters);
-        // const data = await result.json();
-        // const accessToken = data.access_token;
-        const accessToken = localStorage.getItem('access_token');
-        console.log(accessToken)
+        var authParameters = {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            },
+            body: 'grant_type=client_credentials&client_id=' + CLIENT_ID + '&client_secret=' + CLIENT_SECRET + '&scope=user-read-private user-read-email'
+        }
+        // call to get token, and update value
+        const result = await fetch('https://accounts.spotify.com/api/token', authParameters);
+        const data = await result.json();
+        const accessToken = data.access_token;
+        // const accessToken = localStorage.getItem('access_token');
+        // console.log(accessToken)
 
         // REPLACE - const access_token = localStorage.getItem('access_token');
 
@@ -538,20 +538,20 @@ export class SongMatch extends Component<SongMatchProps, SongMatchState> {
         // DOING JUST track FOR NOW
         var seedTrack = "seed_tracks=" + song
         
-        // // API Access Token
-        // var authParameters = {
-        //     method: 'POST',
-        //     headers: {
-        //         'Content-Type': 'application/x-www-form-urlencoded'
-        //     },
-        //     body: 'grant_type=client_credentials&client_id=' + CLIENT_ID + '&client_secret=' + CLIENT_SECRET
-        // }
-        // // call to get token, and update value
-        // const result = await fetch('https://accounts.spotify.com/api/token', authParameters);
-        // const data = await result.json();
-        // const accessToken = data.access_token;
-        const accessToken = localStorage.getItem('access_token');
-        console.log(accessToken)
+        // API Access Token
+        var authParameters = {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            },
+            body: 'grant_type=client_credentials&client_id=' + CLIENT_ID + '&client_secret=' + CLIENT_SECRET
+        }
+        // call to get token, and update value
+        const result = await fetch('https://accounts.spotify.com/api/token', authParameters);
+        const data = await result.json();
+        const accessToken = data.access_token;
+        // const accessToken = localStorage.getItem('access_token');
+        // console.log(accessToken)
 
         // GET request using /reccomendation to get array of Tracks
         var searchParameters = {
