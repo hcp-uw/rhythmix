@@ -93,8 +93,6 @@ export class SongMatch extends Component<SongMatchProps, SongMatchState> {
             
 
             // CHANGE doAddSong to CREATE PLAYLIST
-
-            console.log(accessTokenGLOBAL)
             return(
                 
                 <div className="background">
