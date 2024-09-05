@@ -18,7 +18,7 @@ export class HomePage extends Component<null, HomePageState> {
   constructor(props: HomePageProps) {
     super(props);
     this.state = {
-      genre: "R&B",
+      genre: "Pop",
       page: { kind: "home" }
     };
   }
@@ -60,7 +60,7 @@ export class HomePage extends Component<null, HomePageState> {
               <div className="dd-bg">
                 <iframe
                   title="custom_playlist"
-                  src={genreToPlaylistMap.get(this.state.genre)}
+                  src={genreToPlaylistMap.get(this.state.genre)?.link}
                   width="100%"
                   allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
                   loading="lazy"
@@ -70,7 +70,7 @@ export class HomePage extends Component<null, HomePageState> {
                   <select
                     id="genre"
                     name="genre"
-                    defaultValue="R&B"
+                    defaultValue={this.state.genre}
                     onChange={this.doGenreChange}
                     className="styled-select"
                   >
