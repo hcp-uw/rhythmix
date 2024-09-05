@@ -3,6 +3,7 @@ import { Root } from "react-dom/client";
 import "./CustomPlaylist.css";
 import home_button from "./home-button.png";
 import back_button from "./back-button.png";
+import { accessTokenGLOBAL } from "../HomePage.tsx";
 
 type Page = {kind: "genres"} | {kind: "basic_sliders"} | {kind: "all_sliders"} | {kind: "result"};
 
@@ -12,7 +13,6 @@ type CustomPlaylistState = {
   attributes: Map<string, number>;
   include: Set<string>;
   genres: Set<string>;
-  access_token: string | null;
   tracks: Array<any>;
   playlist_url: string;
 };
@@ -30,7 +30,7 @@ const playlist_size : bigint = 25n;
 export class CustomPlaylist extends Component<CustomPlaylistProps, CustomPlaylistState> {
   constructor(props: CustomPlaylistProps) {
     super(props);
-    this.state = {root: props.root, page: {kind: "genres"}, attributes: new Map<string, number>(), include: new Set<string>(), genres: new Set<string>(), access_token: null, tracks: [], playlist_url: ""};
+    this.state = {root: props.root, page: {kind: "genres"}, attributes: new Map<string, number>(), include: new Set<string>(), genres: new Set<string>(), tracks: [], playlist_url: ""};
     for (let i = 0; i < all_attributes.length; i++) {
       this.state.attributes.set(all_attributes[i], 1);
     }
@@ -235,9 +235,9 @@ export class CustomPlaylist extends Component<CustomPlaylistProps, CustomPlaylis
       this.doBasicSlidersClick();
       return;
     }
-    const access_token = localStorage.getItem('spotifyAccessToken');
+    // const access_token = localStorage.getItem('spotifyAccessToken');
     // Ideally don't send all the attributes to spotify
-    if (access_token === undefined || access_token === null) {
+    if (accessTokenGLOBAL === undefined || accessTokenGLOBAL === null) {
       alert("Please login to use Custom Playlist Generator!");
       this.state.root.unmount();
     } else {
@@ -257,7 +257,7 @@ export class CustomPlaylist extends Component<CustomPlaylistProps, CustomPlaylis
           fetch_url = fetch_url.concat("&target_", attribute.replace(" ", "_"), "=", this.state.attributes.get(attribute).toString())
         }        
       }
-      const auth = "Bearer " + access_token;
+      const auth = "Bearer " + accessTokenGLOBAL;
       fetch(fetch_url, {
         method: "GET",
         headers: {
@@ -287,8 +287,7 @@ export class CustomPlaylist extends Component<CustomPlaylistProps, CustomPlaylis
     const tracks = obj.tracks;
     this.setState({tracks: tracks});
     // Get user Spotify ID
-    const access_token = localStorage.getItem('spotifyAccessToken');
-    const auth = "Bearer " + access_token;
+    const auth = "Bearer " + accessTokenGLOBAL;
     fetch("https://api.spotify.com/v1/me", {
       method: "GET",
         headers: {
@@ -309,8 +308,7 @@ export class CustomPlaylist extends Component<CustomPlaylistProps, CustomPlaylis
     }
     // Create empty playlist
     const playlist_endpoint = "https://api.spotify.com/v1/users/" + user_id + "/playlists";
-    const access_token = localStorage.getItem('spotifyAccessToken');
-    const auth = "Bearer " + access_token;
+    const auth = "Bearer " + accessTokenGLOBAL;
 
     const payload = {
       method: "POST",
@@ -337,8 +335,7 @@ export class CustomPlaylist extends Component<CustomPlaylistProps, CustomPlaylis
       track_uris.push(track.uri);
     }
     const add_endpoint = "https://api.spotify.com/v1/playlists/" + playlist_id + "/tracks";
-    const access_token = localStorage.getItem('spotifyAccessToken');
-    const auth = "Bearer " + access_token;
+    const auth = "Bearer " + accessTokenGLOBAL;
 
     const payload = {
       method: "POST",
