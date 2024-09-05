@@ -7,36 +7,49 @@
   font-weight: 300;
   color: #07532e;
   margin-bottom: 20px;
-  margin-top: 20px;
+  margin-top: 50px;
 }
 
-/* Adjust container layout */
-.container {
+/* Adjust block spacing */
+.block-spacing {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: calc(100% - 40px);
 }
 
-/* Block for playlist and genre selector */
-.block {
+/* Background blocks */
+.dd-bg, .cp-bg, .sm-bg {
   display: flex;
-  flex-direction: column; /* Stack iframe and selector vertically */
+  flex-direction: column;
   justify-content: center;
   align-items: center;
-  width: 300px;
-  height: auto; /* Adjust height to fit content */
-  background-image: linear-gradient(#79A4E4, #C7794C); /* Gradient to match the other blocks */
+  width: 375px;
+  height: 560px;
   border-radius: 20px;
   margin: 0 10px;
   padding: 20px;
-  border-color: black;
+  border: 1px solid black;
+  box-shadow: 1px 1px 1px 1px black;
+}
+
+.dd-bg {
+  background-image: linear-gradient(#A788DA, #C7794C);
+}
+
+.cp-bg {
+  background-image: linear-gradient(#5ABD88, #C7794C);
+  cursor: pointer;
+}
+
+.sm-bg {
+  background-image: linear-gradient(#79A4E4, #C7794C);
+  cursor: pointer;
 }
 
 /* Style the iframe */
 iframe {
   width: 100%;
-  height: 300px;
+  height: 560px;
   border: none;
   border-radius: 20px;
   overflow: auto;
@@ -54,23 +67,26 @@ iframe {
   font-weight: bold;
   cursor: pointer;
   margin-top: 20px; /* Space between the playlist and genre selector */
-  width: 100%; /* Make it fill the block width */
+  width: 100%;
   text-align: center;
 }
 
-/* Genre selector container */
-.genre-selector {
-  width: 100%;
-  display: flex;
-  justify-content: center;
+/* Login page styling */
+.login-page {
+ display: flex;
+ flex-direction: column;
+ justify-content: center;
+ align-items: center;
+ gap: 20px;
+ height: 85vh;
 }
 
-/* Style for the other blocks */
-.block1, .block2 {
-  width: 300px;
-  height: 400px;
-  background-image: linear-gradient(#79A4E4, #C7794C); /* Gradient for both blocks */
-  border-radius: 20px;
-  margin: 0 10px;
-  border-color: black;
+/* Login button styling */
+.login-button {
+  background-color: #1db954;
+  font-weight: bold;
+  border-radius: 30px;
+  padding: 15px 30px;
+  font-size: large;
+  cursor: pointer;
 }

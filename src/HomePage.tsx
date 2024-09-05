@@ -3,8 +3,8 @@ import "./HomePage.css";
 import { CustomPlaylist } from './CustomPlaylist/CustomPlaylist.tsx';
 import { SongMatch } from './SongMatch/SongMatch.tsx';
 import ReactDOM from 'react-dom/client';
-import { UpdatePlaylists, GenreToPlaylistMap } from './DiscoverDaily/DiscoverDaily.tsx';
-import logo from "./spotiblend_logo.png";
+import { updatePlaylistsClick, deleteMostRecentPlaylist, GenreToPlaylistMap } from './DiscoverDaily/DiscoverDaily.tsx';
+import logo from "./logo.png";
 import { loginWithSpotifyClick, logoutClick } from "./spotify.js";
 
 export const accessTokenGLOBAL = localStorage.getItem('access_token');
@@ -41,13 +41,14 @@ export class HomePage extends Component<HomePageProps, HomePageState> {
     // Login button before home page access
     if (localStorage.getItem('access_token') == null) {
       return (
-        <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
-          <button type="button" onClick={this.doLoginSpotify}> Login to Spotify </button>
+        <div className="login-page">
+          <img src={logo} alt="" width="200" height="200" />
+          <button className="login-button" type="button" onClick={this.doLoginSpotify}> Login to Spotify </button>
         </div>
       );
     } else {
       if (this.state.page.kind === "home") {
-        UpdatePlaylists();
+        // updatePlaylistsClick();
 
         return (
           <div className="App">
@@ -57,8 +58,8 @@ export class HomePage extends Component<HomePageProps, HomePageState> {
             </header>
 
             {/* Main 3 features */}
-            <div className="container">
-              <div className="block">
+            <div className="block-spacing">
+              <div className="dd-bg">
                 <iframe
                   title="custom_playlist"
                   src={GenreToPlaylistMap.get(this.state.genre)}
@@ -68,7 +69,6 @@ export class HomePage extends Component<HomePageProps, HomePageState> {
                 ></iframe>
 
                 {/* Genre dropdown below the playlist iframe */}
-                <div className="genre-selector">
                   <select
                     id="genre"
                     name="genre"
@@ -81,20 +81,21 @@ export class HomePage extends Component<HomePageProps, HomePageState> {
                     <option value="Indie">Indie</option>
                     <option value="R&B">R&B</option>
                   </select>
-                </div>
               </div>
 
-              <button className="block1" type="button" onClick={CustomPlaylistClick}></button>
-              <button className="block2" type="button" onClick={this.doSongMatchClick}></button>
+              <button className="cp-bg" type="button" onClick={CustomPlaylistClick}></button>
+              <button className="sm-bg" type="button" onClick={this.doSongMatchClick}></button>
             </div>
 
-            {/* Temporary button for authorization debugging */}
-            <button type="button" onClick={this.doLogoutSpotify}> Logout of Spotify </button>
-          </div>
-        );
-      } else {
-        return (
-          <SongMatch
+              {/* Temporary buttons for debugging */}
+              <button type="button" onClick={this.doLogoutSpotify}> Logout of Spotify </button>
+              <button type="button" onClick={this.doUpdatePlaylists}> Update Playlists </button>
+              <button type="button" onClick={this.doDeleteMostRecentPlaylist}> Delete Custom Playlists </button>
+            </div>
+            );
+        } else {
+          return (
+            <SongMatch
             onBack={this.doBackClick}
           />
         );
@@ -106,13 +107,21 @@ export class HomePage extends Component<HomePageProps, HomePageState> {
     loginWithSpotifyClick();
   };
 
-  doLogoutSpotify = () => {
-    logoutClick();
-  };
+    doLogoutSpotify = () => {
+      logoutClick();
+    };
 
-  doGenreChange = (evt: ChangeEvent<HTMLSelectElement>): void => {
-    this.setState({ genre: document.getElementById("genre").value });
-  };
+    doUpdatePlaylists = () => {
+      updatePlaylistsClick();
+    };
+
+    doDeleteMostRecentPlaylist = () => {
+      deleteMostRecentPlaylist();
+    }
+    
+    doGenreChange = (evt: ChangeEvent<HTMLSelectElement>): void => {
+        this.setState({genre: document.getElementById("genre").value});
+    };
 
   /**
    * SONG MATCH FEATURES
