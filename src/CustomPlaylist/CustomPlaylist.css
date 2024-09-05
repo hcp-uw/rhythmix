@@ -57,7 +57,7 @@
 }
 
 .checkboxes {
-    margin-right: 2vh;
+    margin-right: 1.5vh;
 }
 
 .slider_checkboxes {
@@ -150,12 +150,12 @@ td {
 
 .slider-container {
     width: 90%;
-    margin: 2vh auto 2vh auto;
+    margin: 4vh auto 4vh auto;
 }
 
 .slider-label {
-    margin-bottom: 1vh;
-    margin-top: 1.8vh;
+    margin-bottom: 2vh;
+    margin-top: 2vh;
     font-size: 3vh;
     color: rgba(223, 240, 203, 0.9);
     letter-spacing: 0.1em;
@@ -206,6 +206,7 @@ input[type="range"]:focus {
 /* slider track */
 input[type="range"]::-webkit-slider-runnable-track {
     background-color: rgba(212, 241, 176, 0.7);
+    margin-top: 4vh;
     height: 0.3vh;
 }
 
@@ -231,20 +232,21 @@ input[type="range"]:focus::-webkit-slider-thumb {
 /******** Firefox styles ********/
 /* slider track */
 input[type="range"]::-moz-range-track {
-    background-color: #070f15;
-    border-radius: 0.5rem;
-    height: 0.5rem;
+    background-color: rgba(212, 241, 176, 0.7);
+    height: 0.3vh;
 }
 
 /* slider thumb */
 input[type="range"]::-moz-range-thumb {
-    border: none; /*Removes extra border that FF applies*/
-    border-radius: 0; /*Removes default border-radius that FF applies*/
+    -webkit-appearance: none; /* Override default look */
+    appearance: none;
+    margin-top: -2.5vh; /* Centers thumb on the track */
 
     /*custom styles*/
-    background-color: #020505;
-    height: 1rem;
-    width: 0.5rem;
+    background-color: rgb(218, 239, 211);
+    height: 5vh;
+    width: 1.2vw;
+    border-radius: 0.3vw;
 }
 
 input[type="range"]:focus::-moz-range-thumb {
