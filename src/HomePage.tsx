@@ -3,7 +3,7 @@ import "./HomePage.css";
 import { CustomPlaylist } from './CustomPlaylist/CustomPlaylist.tsx';
 import { SongMatch } from './SongMatch/SongMatch.tsx';
 import ReactDOM from 'react-dom/client';
-import { GenreToPlaylistMap } from './DiscoverDaily/DiscoverDaily.tsx';
+import { updatePlaylistsClick, genreToPlaylistMap } from './DiscoverDaily/DiscoverDaily.tsx';
 import logo from "./logo.png";
 import { loginWithSpotifyClick, logoutClick } from "./spotify.js";
 
@@ -14,13 +14,11 @@ type HomePageState = {
   page: { kind: "home" } | { kind: "songmatch" };
 };
 
-type HomePageProps = {}
-
-export class HomePage extends Component<HomePageProps, HomePageState> {
+export class HomePage extends Component<null, HomePageState> {
   constructor(props: HomePageProps) {
     super(props);
     this.state = {
-      genre: "Pop",
+      genre: "R&B",
       page: { kind: "home" }
     };
   }
@@ -33,10 +31,10 @@ export class HomePage extends Component<HomePageProps, HomePageState> {
   render = (): JSX.Element => {
 
     // Authorization debugging
-    console.log("access token: " + localStorage.getItem('access_token'));
-    console.log("refresh token: " + localStorage.getItem('refresh_token'));
-    console.log("expires in: " + localStorage.getItem('expires_in'));
-    console.log("expires: " + localStorage.getItem('expires'));
+    // console.log("access token: " + localStorage.getItem('access_token'));
+    // console.log("refresh token: " + localStorage.getItem('refresh_token'));
+    // console.log("expires in: " + localStorage.getItem('expires_in'));
+    // console.log("expires: " + localStorage.getItem('expires'));
 
     // Login button before home page access
     if (localStorage.getItem('access_token') == null) {
@@ -62,7 +60,7 @@ export class HomePage extends Component<HomePageProps, HomePageState> {
               <div className="dd-bg">
                 <iframe
                   title="custom_playlist"
-                  src={GenreToPlaylistMap.get(this.state.genre)}
+                  src={genreToPlaylistMap.get(this.state.genre)}
                   width="100%"
                   allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
                   loading="lazy"
@@ -72,7 +70,7 @@ export class HomePage extends Component<HomePageProps, HomePageState> {
                   <select
                     id="genre"
                     name="genre"
-                    defaultValue="Pop"
+                    defaultValue="R&B"
                     onChange={this.doGenreChange}
                     className="styled-select"
                   >
@@ -89,8 +87,8 @@ export class HomePage extends Component<HomePageProps, HomePageState> {
 
               {/* Temporary buttons for debugging */}
               <button type="button" onClick={this.doLogoutSpotify}> Logout of Spotify </button>
-              {/* <button type="button" onClick={this.doUpdatePlaylists}> Update Playlists </button>
-              <button type="button" onClick={this.doDeleteMostRecentPlaylist}> Delete Custom Playlists </button> */}
+              <button type="button" onClick={this.doUpdatePlaylists}> Update Playlists </button>
+              {/* <button type="button" onClick={this.doDeletePlaylists}> Delete Custom Playlists </button> */}
             </div>
             );
         } else {
@@ -111,12 +109,12 @@ export class HomePage extends Component<HomePageProps, HomePageState> {
     logoutClick();
   };
 
-  // doUpdatePlaylists = () => {
-  //   updatePlaylistsClick();
-  // };
+  doUpdatePlaylists = () => {
+    updatePlaylistsClick();
+  };
 
-  // doDeleteMostRecentPlaylist = () => {
-  //   deleteMostRecentPlaylist();
+  // doDeletePlaylists = () => {
+  //   deletePlaylistsClick();
   // }
   
   doGenreChange = (evt: ChangeEvent<HTMLSelectElement>): void => {
