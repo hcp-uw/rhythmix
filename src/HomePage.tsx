@@ -3,7 +3,7 @@ import "./HomePage.css";
 import { CustomPlaylist } from './CustomPlaylist/CustomPlaylist.tsx';
 import { SongMatch } from './SongMatch/SongMatch.tsx';
 import ReactDOM from 'react-dom/client';
-import { updatePlaylistsClick, deleteMostRecentPlaylist, GenreToPlaylistMap } from './DiscoverDaily/DiscoverDaily.tsx';
+import { GenreToPlaylistMap } from './DiscoverDaily/DiscoverDaily.tsx';
 import logo from "./logo.png";
 import { loginWithSpotifyClick, logoutClick } from "./spotify.js";
 
@@ -89,8 +89,8 @@ export class HomePage extends Component<HomePageProps, HomePageState> {
 
               {/* Temporary buttons for debugging */}
               <button type="button" onClick={this.doLogoutSpotify}> Logout of Spotify </button>
-              <button type="button" onClick={this.doUpdatePlaylists}> Update Playlists </button>
-              <button type="button" onClick={this.doDeleteMostRecentPlaylist}> Delete Custom Playlists </button>
+              {/* <button type="button" onClick={this.doUpdatePlaylists}> Update Playlists </button>
+              <button type="button" onClick={this.doDeleteMostRecentPlaylist}> Delete Custom Playlists </button> */}
             </div>
             );
         } else {
@@ -107,21 +107,21 @@ export class HomePage extends Component<HomePageProps, HomePageState> {
     loginWithSpotifyClick();
   };
 
-    doLogoutSpotify = () => {
-      logoutClick();
-    };
+  doLogoutSpotify = () => {
+    logoutClick();
+  };
 
-    doUpdatePlaylists = () => {
-      updatePlaylistsClick();
-    };
+  // doUpdatePlaylists = () => {
+  //   updatePlaylistsClick();
+  // };
 
-    doDeleteMostRecentPlaylist = () => {
-      deleteMostRecentPlaylist();
-    }
-    
-    doGenreChange = (evt: ChangeEvent<HTMLSelectElement>): void => {
-        this.setState({genre: document.getElementById("genre").value});
-    };
+  // doDeleteMostRecentPlaylist = () => {
+  //   deleteMostRecentPlaylist();
+  // }
+  
+  doGenreChange = (evt: ChangeEvent<HTMLSelectElement>): void => {
+      this.setState({genre: document.getElementById("genre").value});
+  };
 
   /**
    * SONG MATCH FEATURES
