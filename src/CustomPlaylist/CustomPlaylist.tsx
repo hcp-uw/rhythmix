@@ -1,5 +1,4 @@
 import React, { Component, ChangeEvent } from "react";
-import { Root } from "react-dom/client";
 import "./CustomPlaylist.css";
 import home_button from "./home-button.png";
 import back_button from "./back-button.png";
@@ -8,7 +7,6 @@ import { accessTokenGLOBAL } from "../HomePage.tsx";
 type Page = {kind: "genres"} | {kind: "basic_sliders"} | {kind: "all_sliders"} | {kind: "result"};
 
 type CustomPlaylistState = {
-  root: Root;
   page: Page;
   attributes: Map<string, number>;
   include: Set<string>;
@@ -18,7 +16,7 @@ type CustomPlaylistState = {
 };
 
 type CustomPlaylistProps = {
-  root: Root;
+  onHome: () => void;
 }
 
 const all_attributes : Array<string> = ["tempo", "energy", "popularity", "loudness", "acousticness", "danceability", "duration", "instrumentalness", "key", "liveness", "mode", "speechiness", "time signature", "valence"];
@@ -30,7 +28,7 @@ const playlist_size : bigint = 25n;
 export class CustomPlaylist extends Component<CustomPlaylistProps, CustomPlaylistState> {
   constructor(props: CustomPlaylistProps) {
     super(props);
-    this.state = {root: props.root, page: {kind: "genres"}, attributes: new Map<string, number>(), include: new Set<string>(), genres: new Set<string>(), tracks: [], playlist_url: ""};
+    this.state = {page: {kind: "genres"}, attributes: new Map<string, number>(), include: new Set<string>(), genres: new Set<string>(), tracks: [], playlist_url: ""};
     for (let i = 0; i < all_attributes.length; i++) {
       this.state.attributes.set(all_attributes[i], 1);
     }
@@ -202,7 +200,7 @@ export class CustomPlaylist extends Component<CustomPlaylistProps, CustomPlaylis
   }
 
   doHomeClick = () : void => {
-    this.state.root.unmount();
+    return this.props.onHome();
   };
 
   doBackClick = () : void => {
@@ -239,7 +237,7 @@ export class CustomPlaylist extends Component<CustomPlaylistProps, CustomPlaylis
     // Ideally don't send all the attributes to spotify
     if (accessTokenGLOBAL === undefined || accessTokenGLOBAL === null) {
       alert("Please login to use Custom Playlist Generator!");
-      this.state.root.unmount();
+      this.doHomeClick();
     } else {
       var fetch_url = "https://api.spotify.com/v1/recommendations?seed_genres=";
       // Append seed genres
@@ -274,7 +272,7 @@ export class CustomPlaylist extends Component<CustomPlaylistProps, CustomPlaylis
               .catch((error) => this.doGeneralError(error));
     } else if (res.status === 401) {
       alert("Please login to use Custom Playlist Generator!");
-      this.state.root.unmount();
+      this.doHomeClick();
     } else if (res.status === 403) {
       res.text().then(this.doGeneralError)
               .catch(() => this.doGeneralError(res.status + " response is not text"));
