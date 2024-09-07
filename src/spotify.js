@@ -1,6 +1,6 @@
 // Code sourced from https://github.com/spotify/web-api-examples/blob/master/authorization/authorization_code_pkce/public/app.js
 
-const clientId = 'e910cd42af954cd39b2e04cb4a1a43c3'
+export const clientId = 'e910cd42af954cd39b2e04cb4a1a43c3';
 const redirectUrl = 'http://localhost:3000';
 
 const authorizationEndpoint = "https://accounts.spotify.com/authorize";
@@ -12,17 +12,16 @@ const currentToken = {
   get access_token() { return localStorage.getItem('access_token') || null; },
   get refresh_token() { return localStorage.getItem('refresh_token') || null; },
   get expires_in() { return localStorage.getItem('expires_in') || null },
-  get expires() { return localStorage.getItem('expires') || null },
+  get expires_at() { return localStorage.getItem('expires_at') || null },
 
   save: function (response) {
     const { access_token, refresh_token, expires_in } = response;
     localStorage.setItem('access_token', access_token);
     localStorage.setItem('refresh_token', refresh_token);
     localStorage.setItem('expires_in', expires_in);
-
-    const now = new Date();
-    const expiry = new Date(now.getTime() + (expires_in * 1000));
-    localStorage.setItem('expires', expiry);
+    
+    const expires_at = Date.now() + (expires_in * 1000);
+    localStorage.setItem('expires_at', expires_at);
   }
 };
 
@@ -94,22 +93,6 @@ async function getToken(code) {
   return await response.json();
 }
 
-// async function refreshToken() {
-//   const response = await fetch(tokenEndpoint, {
-//     method: 'POST',
-//     headers: {
-//       'Content-Type': 'application/x-www-form-urlencoded'
-//     },
-//     body: new URLSearchParams({
-//       client_id: clientId,
-//       grant_type: 'refresh_token',
-//       refresh_token: currentToken.refresh_token
-//     }),
-//   });
-
-//   return await response.json();
-// }
-
 // Click handlers
 export async function loginWithSpotifyClick() {
   await redirectToSpotifyAuthorize();
@@ -119,9 +102,3 @@ export async function logoutClick() {
   localStorage.clear();
   window.location.href = redirectUrl;
 }
-
-// async function refreshTokenClick() {
-//   const token = await refreshToken();
-//   currentToken.save(token);
-//   renderTemplate("oauth", "oauth-template", currentToken);
-// }
