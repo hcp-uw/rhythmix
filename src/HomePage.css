@@ -120,9 +120,9 @@ iframe {
 .dd-hide {
   position: absolute;
   background-image: linear-gradient(#A788DA, #C7794C);
-  left: 10px;
+  left: 9px;
   top: 0px;
-  width: 335px;
+  width: 336px;
   height: 550px;
   border: none;
   border-radius: 20px;
