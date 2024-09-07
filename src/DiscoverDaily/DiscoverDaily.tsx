@@ -1,4 +1,10 @@
+import { clientId } from "../spotify";
+
 type playlistInfo = {genre_seed: string, link: string};
+
+// Might have to store SpotiBlend tokens in a file and read/write to file
+let access_token = "";
+let refresh_token = "AQDqAAsiUweGtYtxTw27WfeQ1tBV_s_1y8L0zTFPMkoMfzkxQpCVVBPy3STaNaj_U4A37sk6D9XYztStn3mLAgwjfYVQ8hy83PDp-szkR0K8RLkikx2zrzN244BB5cYFskE";
 
 export const genreToPlaylistMap = new Map<string, playlistInfo>([
   ["Pop", {genre_seed: "pop", link: "https://open.spotify.com/embed/playlist/2sTcvjcZasAQwlgDrVprbD?utm_source=generator"}],
@@ -8,21 +14,27 @@ export const genreToPlaylistMap = new Map<string, playlistInfo>([
   // TODO: add other genres
 ]);
 
-export const updatePlaylistsClick = () => {
-  // Check when a playlist was last updated
-  // If made 1 day ago (yesterday), loop through every playlist, remove every song
-  // Find 25 songs for each playlist, algo needed:
-  // console.log(Date());
-
-  /*
-  1. loop through every playlist in genretoplaylist map value, parsing the id
-  2. for every id:
-      remove every song
-      make recommendations (some algo needed)
-
-  */
-
+export const updatePlaylists = async () => {
+  const token = await getRefreshToken();
+  access_token = token.access_token;
+  refresh_token = token.refresh_token;
   getPlaylistItems();
+};
+
+const getRefreshToken = async () => {
+  const fetch_url = "https://accounts.spotify.com/api/token";
+  const response = await fetch(fetch_url, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded'
+    },
+    body: new URLSearchParams({
+      client_id: clientId,
+      grant_type: 'refresh_token',
+      refresh_token: refresh_token,
+    })
+  });
+  return await response.json();
 };
 
 type trackURI = {uri: string};
@@ -37,10 +49,10 @@ const getPlaylistItems = (): void => {
     fetch(fetch_url, {
       method: 'GET',
       headers: {
-        'Authorization': 'Bearer ' + localStorage.getItem('access_token')
+        'Authorization': 'Bearer ' + access_token
       }
     }).then((res) => generalResp(res, "getPlaylistItems", playlist_id, genre_seed))
-      .catch(() => generalError("getPlaylistItems fetch failed"))
+      .catch(() => generalError("getPlaylistItems fetch failed"));
   }
 };
 
@@ -53,18 +65,22 @@ const getPlaylistItemsJson = (data: unknown, playlist_id: string, genre_seed: st
 };
 
 const removeTracks = (track_uris: trackURI[], playlist_id: string, genre_seed: string): void => {
-  const fetch_url = `https://api.spotify.com/v1/playlists/${playlist_id}/tracks`;
-  fetch(fetch_url, {
-    method: 'DELETE',
-    headers: {
-      'Authorization': 'Bearer ' + localStorage.getItem('access_token'),
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify({
-      'tracks': track_uris,
-    }),
-  }).then((res) => generalResp(res, "removeTracks", playlist_id, genre_seed))
-    .catch(() => generalError("removeTracks fetch failed"))
+  if (track_uris.length === 0) {
+    getRecommendations(playlist_id, genre_seed);
+  } else {
+    const fetch_url = `https://api.spotify.com/v1/playlists/${playlist_id}/tracks`;
+    fetch(fetch_url, {
+      method: 'DELETE',
+      headers: {
+        'Authorization': 'Bearer ' + access_token,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        'tracks': track_uris,
+      }),
+    }).then((res) => generalResp(res, "removeTracks", playlist_id, genre_seed))
+      .catch(() => generalError("removeTracks fetch failed"))
+  }
 };
 
 const removeTracksJson = (data: unknown, playlist_id: string, genre_seed: string): void => {
@@ -77,7 +93,7 @@ const getRecommendations = (playlist_id: string, genre_seed: string): void => {
   fetch(fetch_url, {
     method: 'GET',
     headers: {
-      'Authorization': 'Bearer ' + localStorage.getItem('access_token')
+      'Authorization': 'Bearer ' + access_token
     }
   }).then((res) => generalResp(res, "getRecommendations", playlist_id, genre_seed))
     .catch(() => generalError("getRecommendations fetch failed"))
@@ -96,7 +112,7 @@ const addTracks = (track_uris: string[], playlist_id: string, genre_seed: string
   fetch(fetch_url, {
     method: 'POST',
     headers: {
-      'Authorization': 'Bearer ' + localStorage.getItem('access_token'),
+      'Authorization': 'Bearer ' + access_token,
       'Content-Type': 'application/json'
     },
     body: JSON.stringify({
@@ -132,7 +148,7 @@ const generalError = (msg: string): void => {
 //   fetch('https://api.spotify.com/v1/me/playlists?limit=25&offset=0', {
 //     method: 'GET',
 //     headers: {
-//       'Authorization': 'Bearer ' + localStorage.getItem('access_token')
+//       'Authorization': 'Bearer ' + access_token
 //     }
 //   }).then((res) => generalResp(res, "deletePlaylists"))
 //     .catch(() => generalError("deletePlaylists fetch failed"));
@@ -151,7 +167,7 @@ const generalError = (msg: string): void => {
 //   fetch(fetch_url, {
 //     method: 'DELETE',
 //     headers: {
-//       'Authorization': 'Bearer ' + localStorage.getItem('access_token')
+//       'Authorization': 'Bearer ' + access_token
 //     }
 //   }).then(deletePlaylistHelperResp)
 //     .catch(() => generalError("deletePlaylistHelper fetch failed"));
