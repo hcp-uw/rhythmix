@@ -1,11 +1,10 @@
 import React, { Component, ChangeEvent, MouseEvent } from "react";
 import { Container, InputGroup, FormControl, Button, Row, Col, Card } from 'react-bootstrap';
 import { Spotify } from "react-spotify-embed";
+import { accessTokenGLOBAL } from "../HomePage.tsx"
 import { Root } from "react-dom/client";
 import './index.css';
 import SearchBar from "./SearchBar";
-
-var accessTokenGLOBAL;
 
 // Specific Songs seedArtist, seedTrack, and seedGenre
 type recommendationSeed = {
@@ -46,7 +45,8 @@ type SongMatchState = {
     songMatchList: Song[];
     songRecommendations: any[];
     songRecommendationsLINK: String[];
-    currID: string;
+    currID: any;
+    chosenSong: any;
     playlistSongs: any[];
     finalPlaylistLINK: string;
     
@@ -70,6 +70,7 @@ export class SongMatch extends Component<SongMatchProps, SongMatchState> {
             songRecommendations: [],
             songRecommendationsLINK: [],
             currID: "",
+            chosenSong: "",
             playlistSongs: [],
             finalPlaylistLINK: ""
             
@@ -99,14 +100,14 @@ export class SongMatch extends Component<SongMatchProps, SongMatchState> {
                     
                     <Container className="song-container">
                         
-                            {this.state.songRecommendations.map( (song, i) => {
+                            {this.state.songRecommendations.map((song, i) => {
 
                                 console.log(song);
                                 return (
                                     <div>
                                         <Spotify link={song.external_urls.spotify}/>
                                         <center>
-                                            <button onClick={() => this.doCreatePlaylist(song)}>
+                                            <button onClick={() => this.doSetChosenSong(song)}>
                                                 Create Playlist
                                             </button>
                                         </center>
@@ -136,14 +137,14 @@ export class SongMatch extends Component<SongMatchProps, SongMatchState> {
                 </div>
 
 
-            )
+            );
             
         } else if (this.state.currentPage == "playlist") {
             return (
                 <div>
                     <Spotify link={this.state.finalPlaylistLINK}></Spotify>
                 </div>
-            )
+            );
         } else {
             return (
                 <div>other page</div>
@@ -209,7 +210,7 @@ export class SongMatch extends Component<SongMatchProps, SongMatchState> {
                 
                 
             </div>
-        )
+        );
     }
 
 
@@ -287,9 +288,10 @@ export class SongMatch extends Component<SongMatchProps, SongMatchState> {
             body: 'grant_type=client_credentials&client_id=' + CLIENT_ID + '&client_secret=' + CLIENT_SECRET
         }
         // call to get token, and update value
-        const result = await fetch('https://accounts.spotify.com/api/token', authParameters);
-        const data = await result.json();
-        const accessToken = data.access_token;
+        // const result = await fetch('https://accounts.spotify.com/api/token', authParameters);
+        // const data = await result.json();
+        // const accessToken = data.access_token;
+        const accessToken = accessTokenGLOBAL;
 
         // store accessToken
         // const accessToken = localStorage.getItem('access_token');
@@ -399,11 +401,12 @@ export class SongMatch extends Component<SongMatchProps, SongMatchState> {
             body: 'grant_type=client_credentials&client_id=' + CLIENT_ID + '&client_secret=' + CLIENT_SECRET
         }
         // call to get token, and update value
-        const result = await fetch('https://accounts.spotify.com/api/token', authParameters);
-        const data = await result.json();
-        const accessToken = data.access_token;
+        // const result = await fetch('https://accounts.spotify.com/api/token', authParameters);
+        // const data = await result.json();
+        // const accessToken = data.access_token;
         // const accessToken = localStorage.getItem('access_token');
         // console.log(accessToken)
+        const accessToken = accessTokenGLOBAL;
 
         // GET request using /reccomendation to get array of Tracks
         var searchParameters = {
@@ -433,12 +436,37 @@ export class SongMatch extends Component<SongMatchProps, SongMatchState> {
     }
 
 
+    doGetUserID = async (): Promise<void> => {
+        const accessToken = accessTokenGLOBAL;
+        var searchParameters = {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + accessToken
+            }
+        }
 
+        // need to get userID of logged in person
+        var user = await fetch("https://api.spotify.com/v1/me", searchParameters)
+            .then(response => response.json())
+            .then(
+                // Pass the user ID to doSendID
+                this.doSendID)
+    }
 
+    doSendID = (id: any): void => {
+        this.doCreatePlaylist(id);
+    }
     /**
      * Search AFTER choosing Recs
      */
-    doCreatePlaylist = async (song: any): Promise<void> => {
+    
+    doSetChosenSong = async (song: any): Promise<void> => {
+        this.setState({chosenSong: song});
+        this.doGetUserID();
+    }
+
+    doCreatePlaylist = async (id: any): Promise<void> => {
 
         /*
         After the users clicked create playlist
@@ -449,11 +477,11 @@ export class SongMatch extends Component<SongMatchProps, SongMatchState> {
         3. Add all reccomended songs
         */
 
-        console.log(song)
+        // console.log(song)
 
         // get list of recommendationSeed[]
             // call getRecommendation()
-        this.doGetPlaylistSongs(song.id)
+        this.doGetPlaylistSongs(this.state.chosenSong.id);
         
         // state will update songRecommendations to be used for the playlist
 
@@ -462,67 +490,100 @@ export class SongMatch extends Component<SongMatchProps, SongMatchState> {
         const CLIENT_ID = "e910cd42af954cd39b2e04cb4a1a43c3";
         const CLIENT_SECRET = "2e5b8f0e3f464084bd3546d5dad312c5";
 
-        var authParameters = {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded'
-            },
-            body: 'grant_type=client_credentials&client_id=' + CLIENT_ID + '&client_secret=' + CLIENT_SECRET + '&scope=user-read-private user-read-email'
-        }
+        // var authParameters = {
+        //     method: 'POST',
+        //     headers: {
+        //         'Content-Type': 'application/x-www-form-urlencoded'
+        //     },
+        //     body: 'grant_type=client_credentials&client_id=' + CLIENT_ID + '&client_secret=' + CLIENT_SECRET + '&scope=user-read-private user-read-email'
+        // }
         // call to get token, and update value
-        const result = await fetch('https://accounts.spotify.com/api/token', authParameters);
-        const data = await result.json();
-        const accessToken = data.access_token;
-        // const accessToken = localStorage.getItem('access_token');
-        // console.log(accessToken)
+        // const result = await fetch('https://accounts.spotify.com/api/token', authParameters);
+        // const data = await result.json();
+        // const accessToken = data.access_token;
+        // const accessToken = accessTokenGLOBAL;
+        // // console.log(accessToken)
 
-        // REPLACE - const access_token = localStorage.getItem('access_token');
+        // // REPLACE - const access_token = localStorage.getItem('access_token');
 
-        // GET request using /reccomendation to get array of Tracks
-        var searchParameters = {
-            method: 'GET',
+        // // GET request using /reccomendation to get array of Tracks
+        // var searchParameters = {
+        //     method: 'GET',
+        //     headers: {
+        //         'Content-Type': 'application/json',
+        //         'Authorization': 'Bearer ' + accessToken
+        //     }
+        // }
+
+
+        // // need to get userID of logged in person
+        // var user = await fetch("https://api.spotify.com/v1/me", searchParameters)
+        //     .then(response => response.json())
+        //     .then(data => {
+        //         this.setState({currID: data.id})
+        //         console.log("HERE IS THE API CALL FOR GETTING CURRENT USER" + data.id)
+        //     })
+
+
+        // var playlistParameters = {
+        //     method: 'POST',
+        //     headers: {
+        //         'Content-Type': 'application/json',
+        //         'Authorization': 'Bearer ' + accessToken
+        //     },
+        //     body: JSON.stringify({
+        //         name: "Spotiblend Playlist"
+        //     })
+        // }
+
+        const accessToken = accessTokenGLOBAL;
+
+        const userID = id.id;
+
+        const playlistParameters = {
+            method: "POST",
             headers: {
-                'Content-Type': 'application/json',
-                'Authorization': 'Bearer ' + accessToken
-            }
-        }
-
-
-        // need to get userID of logged in person
-        var user = await fetch("https://api.spotify.com/v1/me", searchParameters)
-            .then(response => response.json())
-            .then(data => {
-                console.log("HERE IS THE API CALL FOR GETTING CURRENT USER" + data.id)
-                this.setState({currID: data.id})
-            })
-
-
-        var playlistParameters = {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': 'Bearer ' + accessToken
+              'Content-Type': 'application/json',
+              'Authorization': 'Bearer ' + accessToken,
             },
             body: JSON.stringify({
-                name: "Spotiblend Playlist"
-            })
-        }
+              'name': "Spotiblend Playlist",
+            }),
+          };
 
-        console.log("CURRENT USER + " + this.state.currID)
+        console.log("CURRENT USER + " + userID)
         // create the playlist based on songRecommendations
-        var createPlaylist = await fetch("https://api.spotify.com/v1/users/" + this.state.currID + "/playlists" , playlistParameters)
+        var createPlaylist = await fetch("https://api.spotify.com/v1/users/" + userID + "/playlists", playlistParameters)
             .then(response => response.json())
-            .then(data => {
+            .then(
+                this.doAddSongs
+            //     data => {
 
-                console.log("INSIDE CREATEPLAYLIST API CALL")
-                console.log(data)
+            //     console.log("INSIDE CREATEPLAYLIST API CALL")
+            //     console.log(data)
 
-                this.setState({finalPlaylistLINK: data.external_urls.spotify})
-            })
+            //     this.setState({finalPlaylistLINK: data.external_urls.spotify})
+            // }
+        )
 
 
         // add items to said playlist
+    }
 
+    doAddSongs = async (playlistLink: any): Promise<void> => {
+
+        this.setState({finalPlaylistLINK: playlistLink.external_urls.spotify})
+
+        var addSongs = await fetch('https://api.spotify.com/v1/playlists/' + playlistLink.id + '/tracks', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + accessTokenGLOBAL,
+            },
+            body: JSON.stringify({
+                uris: this.state.playlistSongs, // Array of song URIs
+            }),
+        });
 
         // change state to display playlist
         this.setState({currentPage: "playlist"})
@@ -539,19 +600,21 @@ export class SongMatch extends Component<SongMatchProps, SongMatchState> {
         var seedTrack = "seed_tracks=" + song
         
         // API Access Token
-        var authParameters = {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded'
-            },
-            body: 'grant_type=client_credentials&client_id=' + CLIENT_ID + '&client_secret=' + CLIENT_SECRET
-        }
+        // var authParameters = {
+        //     method: 'POST',
+        //     headers: {
+        //         'Content-Type': 'application/x-www-form-urlencoded'
+        //     },
+        //     body: 'grant_type=client_credentials&client_id=' + CLIENT_ID + '&client_secret=' + CLIENT_SECRET
+        // }
         // call to get token, and update value
-        const result = await fetch('https://accounts.spotify.com/api/token', authParameters);
-        const data = await result.json();
-        const accessToken = data.access_token;
+        // const result = await fetch('https://accounts.spotify.com/api/token', authParameters);
+        // const data = await result.json();
+        // const accessToken = data.access_token;
         // const accessToken = localStorage.getItem('access_token');
         // console.log(accessToken)
+
+        const accessToken = accessTokenGLOBAL;
 
         // GET request using /reccomendation to get array of Tracks
         var searchParameters = {
@@ -572,8 +635,8 @@ export class SongMatch extends Component<SongMatchProps, SongMatchState> {
                 const array = this.state.playlistSongs
                 
                 for (var i = 0; i < spotifyRecs.length; i++ ){
-                    array.push(data.tracks[i])
-                    console.log(data.tracks[i].id + " success") // TEST
+                    array.push(data.tracks[i].uri)
+                    console.log(data.tracks[i].uri + " success") // TEST
                     console.log(data.tracks[i] + "result")
                 }
 
