@@ -52,7 +52,7 @@ export class HomePage extends Component<null, HomePageState> {
       return (
         <div className="login-page">
           <img src={logo} alt="" width="200" height="200" />
-          <button className="login-button" type="button" onClick={this.doLoginSpotify}> Login to Spotify </button>
+          <button className="login-button" type="button" onClick={this.doLoginSpotify}> Log in to Spotify </button>
         </div>);
     } else if (this.state.page === "home") {
         return (
