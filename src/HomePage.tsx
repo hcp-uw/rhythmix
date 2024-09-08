@@ -3,7 +3,7 @@ import "./HomePage.css";
 import { CustomPlaylist } from './CustomPlaylist/CustomPlaylist.tsx';
 import { SongMatch } from './SongMatch/SongMatch.tsx';
 import { updatePlaylists, genreToPlaylistMap } from './DiscoverDaily/DiscoverDaily.tsx';
-import logo from "./logo.png";
+import logo from "../src/white_filled_logo.png";
 import { loginWithSpotifyClick, logoutClick } from "./spotify.js";
 
 export const accessTokenGLOBAL = localStorage.getItem('access_token');
@@ -60,8 +60,11 @@ export class HomePage extends Component<null, HomePageState> {
 
             {/* Logo and title */}
             <header className="header">
-              <h1> <img src={logo} alt="" width="80" height="80" /> spotiblend </h1>
+              <img src={logo} alt="logo" /> {/* Logo */}
+              <h1>spotiblend</h1>  {/* Text */}
             </header>
+
+
 
             {/* Main 3 features */}
              <div className="block-spacing">

@@ -18,16 +18,28 @@
   cursor: pointer;
 }
 
-/* Center header */
+/* Center header with logo and text */
 .header {
-  text-align: center;
+  display: flex;
+  justify-content: center; /* Center horizontally */
+  align-items: center; /* Align items vertically in the center */
+  gap: 10px; /* Add space between logo and text */
   font-weight: 700;
-  font-size: large;
+  font-size: x-large;
   font-family: "Teachers", sans-serif;
   font-weight: 300;
   color: #07532e;
   margin-bottom: 20px;
   margin-top: 50px;
+}
+
+.header img {
+  width: 80px;
+  height: 80px;
+}
+
+.header h1 {
+  font-size: 3rem;
 }
 
 /* Adjust block spacing */
