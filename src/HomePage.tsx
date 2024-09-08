@@ -35,13 +35,6 @@ export class HomePage extends Component<null, HomePageState> {
   };
 
   render = (): JSX.Element => {
-
-    // Authorization debugging
-    // console.log("access token: " + localStorage.getItem('access_token'));
-    // console.log("refresh token: " + localStorage.getItem('refresh_token'));
-    // console.log("expires in: " + localStorage.getItem('expires_in'));
-    // console.log("expires at: " + localStorage.getItem('expires_at'));
-
     let expires_at: string | null = localStorage.getItem('expires_at');
     if (expires_at === null) {
       expires_at = "0";
@@ -53,70 +46,73 @@ export class HomePage extends Component<null, HomePageState> {
         <div className="login-page">
           <img src={logo} alt="" width="200" height="200" />
           <button className="login-button" type="button" onClick={this.doLoginSpotify}> Log in to Spotify </button>
-        </div>);
+        </div>
+      );
     } else if (this.state.page === "home") {
-        return (
-          <div className="App">
+      return (
+        <div className="App">
+          {/* Logo and title */}
+          <header className="header">
+            <img src={logo} alt="logo" /> {/* Logo */}
+            <h1>spotiblend</h1> {/* Text */}
+            <button className="logout-button" onClick={this.doLogoutSpotify}>
+              Logout
+            </button>
+          </header>
 
-            {/* Logo and title */}
-            <header className="header">
-              <img src={logo} alt="logo" /> {/* Logo */}
-              <h1>spotiblend</h1>  {/* Text */}
-            </header>
+          {/* Main 3 features */}
+          <div className="block-spacing">
+            <div className="overlap-container">
+              <div className="dd-block dd-bg">
+                <iframe
+                  title="discover_daily"
+                  src={genreToPlaylistMap.get(this.state.genre)?.link}
+                  width="100%"
+                  allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+                  loading="lazy"
+                ></iframe>
 
+                {/* Genre dropdown below the playlist iframe */}
+                <select
+                  id="genre"
+                  name="genre"
+                  defaultValue={this.state.genre}
+                  onChange={this.doGenreChange}
+                  className="styled-select"
+                >
+                  <option value="Pop">Pop</option>
+                  <option value="Hip-Hop">Hip-Hop</option>
+                  <option value="Indie">Indie</option>
+                  <option value="R&B">R&B</option>
+                </select>
 
-
-            {/* Main 3 features */}
-             <div className="block-spacing">
-              <div className="overlap-container">
-                <div className="dd-block dd-bg">
-                  <iframe
-                    title="discover_daily"
-                    src={genreToPlaylistMap.get(this.state.genre)?.link}
-                    width="100%"
-                    allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
-                    loading="lazy"
-                  ></iframe>
-
-                  {/* Genre dropdown below the playlist iframe */}
-                  <select
-                    id="genre"
-                    name="genre"
-                    defaultValue={this.state.genre}
-                    onChange={this.doGenreChange}
-                    className="styled-select">
-                    <option value="Pop">Pop</option>
-                    <option value="Hip-Hop">Hip-Hop</option>
-                    <option value="Indie">Indie</option>
-                    <option value="R&B">R&B</option>
-                  </select>
-
-                  <div> 
-                    { !this.state.displayPlaylist && <div className="dd-block dd-hide">
+                <div>
+                  {!this.state.displayPlaylist && (
+                    <div className="dd-block dd-hide">
                       <div className="loading-dots">
                         <span className="dot"></span>
                         <span className="dot"></span>
                         <span className="dot"></span>
                       </div>
-                    </div>}
-                  </div>
+                    </div>
+                  )}
                 </div>
               </div>
-
-              <button className="cp-bg" type="button" onClick={this.doCustomPlaylistClick}></button>
-              <button className="sm-bg" type="button" onClick={this.doSongMatchClick}></button>
             </div>
 
-            {/* Temporary buttons for debugging */}
-            <button type="button" onClick={this.doLogoutSpotify}> Logout of Spotify </button>
-            <button type="button" onClick={this.doUpdatePlaylists}> Update Playlists </button>
-            {/* <button type="button" onClick={this.doDeletePlaylists}> Delete Custom Playlists </button> */}
-          </div>);
-      } else if (this.state.page === "song_match") {
-          return (<SongMatch onBack={this.doBackClick}/>);
-      } else {
-          return (<CustomPlaylist onHome={this.doBackClick}/>);
-      }
+            <button className="cp-bg" type="button" onClick={this.doCustomPlaylistClick}></button>
+            <button className="sm-bg" type="button" onClick={this.doSongMatchClick}></button>
+          </div>
+
+          {/* Temporary buttons for debugging */}
+          <button type="button" onClick={this.doUpdatePlaylists}>Update Playlists</button>
+        </div>
+      );
+    } else if (this.state.page === "song_match") {
+      return <SongMatch onBack={this.doBackClick} />;
+    } else {
+      return <CustomPlaylist onHome={this.doBackClick} />;
+    }
   };
 
   doLoginSpotify = () => {
@@ -131,27 +127,21 @@ export class HomePage extends Component<null, HomePageState> {
     updatePlaylists();
   };
 
-  // doDeletePlaylists = () => {
-  //   deletePlaylistsClick();
-  // };
-  
   doGenreChange = (evt: ChangeEvent<HTMLSelectElement>): void => {
-      this.setState({genre: document.getElementById("genre")?.value, displayPlaylist: false});
-      this.hidePlaylist();
+    this.setState({ genre: document.getElementById("genre")?.value, displayPlaylist: false });
+    this.hidePlaylist();
   };
 
-  // Display song match feature
   doSongMatchClick = (): void => {
     this.setState({ page: "song_match" });
   };
 
-  // Display custom playlist feature
   doCustomPlaylistClick = (): void => {
     this.setState({ page: "custom_playlist" });
   };
 
   doBackClick = (): void => {
-    this.setState({ page: "home", displayPlaylist: false});
+    this.setState({ page: "home", displayPlaylist: false });
     this.hidePlaylist();
   };
 }

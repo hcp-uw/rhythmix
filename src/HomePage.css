@@ -1,4 +1,24 @@
-/* Login page styling */
+/* Logout button styling */
+.logout-button {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background-color: turquoise;
+  color: white;
+  border: none;
+  border-radius: 20px;
+  padding: 10px 20px;
+  cursor: pointer;
+  font-weight: bold;
+  font-size: medium;
+  transition: background-color 0.3s ease;
+}
+
+.logout-button:hover {
+  background-color: seagreen;
+}
+
+/* Existing styles */
 .login-page {
   display: flex;
   flex-direction: column;
@@ -7,8 +27,7 @@
   gap: 20px;
   height: 85vh;
 }
- 
-/* Login button styling */
+
 .login-button {
   background-color: #1db954;
   font-weight: bold;
@@ -18,12 +37,11 @@
   cursor: pointer;
 }
 
-/* Center header with logo and text */
 .header {
   display: flex;
-  justify-content: center; /* Center horizontally */
-  align-items: center; /* Align items vertically in the center */
-  gap: 10px; /* Add space between logo and text */
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
   font-weight: 700;
   font-size: x-large;
   font-family: "Teachers", sans-serif;
@@ -31,6 +49,7 @@
   color: #07532e;
   margin-bottom: 20px;
   margin-top: 50px;
+  position: relative;
 }
 
 .header img {
@@ -41,6 +60,7 @@
 .header h1 {
   font-size: 3rem;
 }
+
 
 /* Adjust block spacing */
 .block-spacing {
