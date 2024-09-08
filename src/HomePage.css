@@ -3,7 +3,7 @@
   position: absolute;
   top: 20px;
   right: 20px;
-  background-color: turquoise;
+  background-color: lightblue;
   color: white;
   border: none;
   border-radius: 20px;
@@ -61,7 +61,6 @@
   font-size: 3rem;
 }
 
-
 /* Adjust block spacing */
 .block-spacing {
   display: flex;
@@ -92,6 +91,28 @@
 .sm-bg {
   background-image: linear-gradient(#79A4E4, #C7794C);
   cursor: pointer;
+}
+
+/* Rectangle labels */
+.rectangle-label {
+  font-size: 1.8rem;
+  color: white;
+  font-weight: bold;
+  text-align: center;
+  animation: floatLabel 3s ease-in-out infinite; /* Apply hover animation */
+}
+
+/* Floating (hover) animation for the labels */
+@keyframes floatLabel {
+  0% {
+    transform: translateY(0); /* Start at original position */
+  }
+  50% {
+    transform: translateY(-10px); /* Move up slightly */
+  }
+  100% {
+    transform: translateY(0); /* Back to original position */
+  }
 }
 
 /* Style the iframe */

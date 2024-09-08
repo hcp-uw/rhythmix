@@ -100,8 +100,15 @@ export class HomePage extends Component<null, HomePageState> {
               </div>
             </div>
 
-            <button className="cp-bg" type="button" onClick={this.doCustomPlaylistClick}></button>
-            <button className="sm-bg" type="button" onClick={this.doSongMatchClick}></button>
+            {/* Left: Song Match */}
+            <button className="sm-bg" type="button" onClick={this.doSongMatchClick}>
+              <span className="rectangle-label">Song Match</span>
+            </button>
+
+            {/* Middle: Custom Playlist Generator */}
+            <button className="cp-bg" type="button" onClick={this.doCustomPlaylistClick}>
+              <span className="rectangle-label">Custom Playlist Generator</span>
+            </button>
           </div>
 
           {/* Temporary buttons for debugging */}
