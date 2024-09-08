@@ -3,7 +3,7 @@ import "./HomePage.css";
 import { CustomPlaylist } from './CustomPlaylist/CustomPlaylist.tsx';
 import { SongMatch } from './SongMatch/SongMatch.tsx';
 import { updatePlaylists, genreToPlaylistMap } from './DiscoverDaily/DiscoverDaily.tsx';
-import logo from "../src/white_filled_logo.png";
+import logo from "../src/logo.png";
 import { loginWithSpotifyClick, logoutClick } from "./spotify.js";
 
 export const accessTokenGLOBAL = localStorage.getItem('access_token');
