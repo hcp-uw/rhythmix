@@ -3,7 +3,7 @@
   position: absolute;
   top: 20px;
   right: 20px;
-  background-color: lightblue;
+  background-color: turquoise;
   color: white;
   border: none;
   border-radius: 20px;
@@ -96,8 +96,8 @@
 /* Rectangle labels */
 .rectangle-label {
   font-size: 1.8rem;
-  color: white;
-  font-weight: bold;
+  color: black;
+  font-weight: bolder;
   text-align: center;
   animation: floatLabel 3s ease-in-out infinite; /* Apply hover animation */
 }
