@@ -1,42 +1,36 @@
-/* Logout button styling */
-.logout-button {
-  position: absolute;
-  top: 20px;
-  right: 20px;
-  background-color: turquoise;
-  color: white;
-  border: none;
-  border-radius: 20px;
-  padding: 10px 20px;
-  cursor: pointer;
-  font-weight: bold;
-  font-size: medium;
-  transition: background-color 0.3s ease;
-}
-
-.logout-button:hover {
-  background-color: seagreen;
-}
-
-/* Existing styles */
+/* Login page styling */
 .login-page {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  gap: 20px;
+  gap: 25px;
   height: 85vh;
 }
 
-.login-button {
+/* Log in/out button styling */
+.login-button, .logout-button {
   background-color: #1db954;
+  color: black;
   font-weight: bold;
   border-radius: 30px;
   padding: 15px 30px;
   font-size: large;
   cursor: pointer;
+  text-transform: uppercase;
 }
 
+.logout-button {
+  position: absolute;
+  top: 35px;
+  right: 35px;
+}
+
+.login-button:hover, .logout-button:hover {
+  transform: scale(1.1);
+}
+
+/* Home page styling */
 .header {
   display: flex;
   justify-content: center;
@@ -46,9 +40,9 @@
   font-size: x-large;
   font-family: "Teachers", sans-serif;
   font-weight: 300;
-  color: #07532e;
+  color: #1db954;
   margin-bottom: 20px;
-  margin-top: 50px;
+  margin-top: 100px;
   position: relative;
 }
 
@@ -81,16 +75,15 @@
   padding: 20px;
   border: 1px solid black;
   box-shadow: 1px 1px 1px 1px black;
+  cursor: pointer;
 }
 
 .cp-bg {
   background-image: linear-gradient(#5ABD88, #C7794C);
-  cursor: pointer;
 }
 
 .sm-bg {
   background-image: linear-gradient(#79A4E4, #C7794C);
-  cursor: pointer;
 }
 
 /* Rectangle labels */
@@ -139,6 +132,10 @@ iframe {
   width: 100%;
   text-align: center;
   z-index: 1;
+}
+
+.styled-select:hover{
+  transform: scale(1.05);
 }
 
 /* Overlap styling for discover daily to hide iframe playlist load */
@@ -225,4 +222,13 @@ iframe {
   40% {
     transform: scale(1);
   }
+}
+
+.footer {
+  position: fixed;
+  bottom: 0px;
+  left: 0px;
+  width: 100%;
+  text-align: center;
+  color: rgb(173, 176, 173);
 }

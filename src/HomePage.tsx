@@ -31,7 +31,7 @@ export class HomePage extends Component<null, HomePageState> {
   hidePlaylist = () => {
     setTimeout(() => {
       this.setState({ displayPlaylist: true });
-    }, 750);
+    }, 850);
   };
 
   render = (): JSX.Element => {
@@ -51,13 +51,13 @@ export class HomePage extends Component<null, HomePageState> {
     } else if (this.state.page === "home") {
       return (
         <div className="App">
+          {/* Logout button in top right corner */}
+          <button className="logout-button" onClick={this.doLogoutSpotify}> Logout </button>
+          
           {/* Logo and title */}
           <header className="header">
-            <img src={logo} alt="logo" /> {/* Logo */}
-            <h1>spotiblend</h1> {/* Text */}
-            <button className="logout-button" onClick={this.doLogoutSpotify}>
-              Logout
-            </button>
+            <img src={logo} alt="logo" />
+            <h1> spotiblend </h1>
           </header>
 
           {/* Main 3 features */}
@@ -100,25 +100,26 @@ export class HomePage extends Component<null, HomePageState> {
               </div>
             </div>
 
-            {/* Left: Custom Playlist Generator */}
+            {/* Middle: Custom Playlist Generator */}
             <button className="cp-bg" type="button" onClick={this.doCustomPlaylistClick}>
               <span className="rectangle-label">Custom Playlist Generator</span>
             </button>
 
-            {/* Middle: Song Match */}
+            {/* Right: Song Match */}
             <button className="sm-bg" type="button" onClick={this.doSongMatchClick}>
               <span className="rectangle-label">Song Match</span>
             </button>
           </div>
 
-          {/* Temporary buttons for debugging */}
-          <button type="button" onClick={this.doUpdatePlaylists}>Update Playlists</button>
+          <header className="footer">
+            <p> © 2024 SpotiBlend. All rights reserved. </p>
+          </header>
         </div>
       );
     } else if (this.state.page === "song_match") {
-      return <SongMatch onBack={this.doBackClick} />;
+        return <SongMatch onBack={this.doBackClick} />;
     } else {
-      return <CustomPlaylist onHome={this.doBackClick} />;
+        return <CustomPlaylist onHome={this.doBackClick} />;
     }
   };
 
