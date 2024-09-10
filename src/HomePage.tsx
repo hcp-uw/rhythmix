@@ -2,7 +2,7 @@ import React, { Component, ChangeEvent } from "react";
 import "./HomePage.css";
 import { CustomPlaylist } from './CustomPlaylist/CustomPlaylist.tsx';
 import { SongMatch } from './SongMatch/SongMatch.tsx';
-import { updatePlaylists, genreToPlaylistMap } from './DiscoverDaily/DiscoverDaily.tsx';
+import { genreToPlaylistMap } from './DiscoverDaily/DiscoverDaily.ts';
 import logo from "../src/logo.png";
 import { loginWithSpotifyClick, logoutClick } from "./spotify.js";
 
@@ -129,10 +129,6 @@ export class HomePage extends Component<null, HomePageState> {
 
   doLogoutSpotify = () => {
     logoutClick();
-  };
-
-  doUpdatePlaylists = () => {
-    updatePlaylists();
   };
 
   doGenreChange = (evt: ChangeEvent<HTMLSelectElement>): void => {

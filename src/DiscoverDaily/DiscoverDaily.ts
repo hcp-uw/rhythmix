@@ -2,9 +2,27 @@ import { clientId } from "../spotify";
 
 type playlistInfo = {genre_seed: string, link: string};
 
+interface Track {
+  href: string;
+  name: string;
+  uri: string;
+};
+
+interface Playlist {
+  track: Track;
+};
+
+interface PlaylistResponse {
+  items: Playlist[];
+};
+
+interface RecommendationResponse {
+  tracks: Track[];
+};
+
 // Might have to store SpotiBlend tokens in a file and read/write to file
 let access_token = "";
-let refresh_token = "AQDqAAsiUweGtYtxTw27WfeQ1tBV_s_1y8L0zTFPMkoMfzkxQpCVVBPy3STaNaj_U4A37sk6D9XYztStn3mLAgwjfYVQ8hy83PDp-szkR0K8RLkikx2zrzN244BB5cYFskE";
+let refresh_token = "";
 
 export const genreToPlaylistMap = new Map<string, playlistInfo>([
   ["Pop", {genre_seed: "pop", link: "https://open.spotify.com/embed/playlist/2sTcvjcZasAQwlgDrVprbD?utm_source=generator"}],
@@ -15,13 +33,13 @@ export const genreToPlaylistMap = new Map<string, playlistInfo>([
 ]);
 
 export const updatePlaylists = async () => {
-  const token = await getRefreshToken();
-  access_token = token.access_token;
-  refresh_token = token.refresh_token;
+  const tokens = await getAccessToken();
+  access_token = tokens.access_token;
+  refresh_token = tokens.refresh_token;
   getPlaylistItems();
 };
 
-const getRefreshToken = async () => {
+const getAccessToken = async () => {
   const fetch_url = "https://accounts.spotify.com/api/token";
   const response = await fetch(fetch_url, {
     method: 'POST',
@@ -56,7 +74,7 @@ const getPlaylistItems = (): void => {
   }
 };
 
-const getPlaylistItemsJson = (data: unknown, playlist_id: string, genre_seed: string): void => {
+const getPlaylistItemsJson = (data: PlaylistResponse, playlist_id: string, genre_seed: string): void => {
   const track_uris: trackURI[] = [];
   for (const item of data.items) {
     track_uris.push({"uri": item.track.uri});
@@ -99,7 +117,7 @@ const getRecommendations = (playlist_id: string, genre_seed: string): void => {
     .catch(() => generalError("getRecommendations fetch failed"))
 };
 
-const getRecommendationsJson = (data: unknown, playlist_id: string, genre_seed: string): void => {
+const getRecommendationsJson = (data: RecommendationResponse, playlist_id: string, genre_seed: string): void => {
   const track_uris: string[] = [];
   for (const track of data.tracks) {
     track_uris.push(track.uri);
