@@ -1,7 +1,7 @@
 // Code sourced from https://github.com/spotify/web-api-examples/blob/master/authorization/authorization_code_pkce/public/app.js
 
 export const clientId = 'e910cd42af954cd39b2e04cb4a1a43c3';
-const redirectUrl = 'https://spotiblend.netlify.app/';
+const redirectUrl = 'https://spotiblend.netlify.app';
 
 const authorizationEndpoint = "https://accounts.spotify.com/authorize";
 const tokenEndpoint = "https://accounts.spotify.com/api/token";
