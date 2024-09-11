@@ -30,8 +30,11 @@ export class CustomPlaylist extends Component<CustomPlaylistProps, CustomPlaylis
     super(props);
     this.state = {page: {kind: "genres"}, attributes: new Map<string, number>(), include: new Set<string>(), genres: new Set<string>(), tracks: [], playlist_url: ""};
     for (let i = 0; i < all_attributes.length; i++) {
-      this.state.attributes.set(all_attributes[i], 1);
+      this.state.attributes.set(all_attributes[i], 0.5);
     }
+    this.state.attributes.set(all_attributes[all_attributes.indexOf("popularity")], 50.5);
+    this.state.attributes.set(all_attributes[all_attributes.indexOf("time signature")], 6);
+    this.state.attributes.set(all_attributes[all_attributes.indexOf("key")], 6);
   };
 
   render = () : JSX.Element => {
@@ -101,7 +104,7 @@ export class CustomPlaylist extends Component<CustomPlaylistProps, CustomPlaylis
             <label htmlFor={curr_attribute} className="slider-label">{curr_attribute}</label>
             <input className="slider_checkboxes" type="checkbox" onChange={this.doIncludeClick} id={curr_attribute + "_include"} name={curr_attribute} value={curr_attribute} />
             <label htmlFor={curr_attribute + "_include"} className="checkbox-label">include</label> <br />
-            <input type="range" min="1" max="11" id={curr_attribute} onChange={this.doAttributeChange} defaultValue={this.state.attributes.get(curr_attribute)}></input>
+            <input type="range" min="1" max="11" step="0.01" id={curr_attribute} onChange={this.doAttributeChange} defaultValue={this.state.attributes.get(curr_attribute)}></input>
           </div>
         )
       } else if (curr_attribute === "popularity") {
@@ -110,7 +113,7 @@ export class CustomPlaylist extends Component<CustomPlaylistProps, CustomPlaylis
             <label htmlFor={curr_attribute} className="slider-label">{curr_attribute}</label>
             <input className="slider_checkboxes" type="checkbox" onChange={this.doIncludeClick} id={curr_attribute + "_include"} name={curr_attribute} value={curr_attribute} />
             <label htmlFor={curr_attribute + "_include"} className="checkbox-label">include</label> <br />
-            <input type="range" min="1" max="100" id={curr_attribute} onChange={this.doAttributeChange} defaultValue={this.state.attributes.get(curr_attribute)}></input>
+            <input type="range" min="1" max="100" step="0.01" id={curr_attribute} onChange={this.doAttributeChange} defaultValue={this.state.attributes.get(curr_attribute)}></input>
           </div>
         )
       } else {
@@ -222,7 +225,11 @@ export class CustomPlaylist extends Component<CustomPlaylistProps, CustomPlaylis
   doAttributeChange = (evt: ChangeEvent<HTMLInputElement>): void => {
     //Creates new map so react recognizes change
     const newAttributes = new Map(this.state.attributes);
-    newAttributes.set(evt.target.id, parseFloat(evt.target.value));
+    if (evt.target.id === 'popularity' || evt.target.id === 'time signature' || evt.target.id === 'key') {
+      console.log(evt.target.id + ": " + parseInt(evt.target.value));
+    } else {
+      console.log(evt.target.id + ": " + parseFloat(evt.target.value));
+    }
     this.setState({ attributes: newAttributes });
   };
 
