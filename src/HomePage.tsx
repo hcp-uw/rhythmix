@@ -2,11 +2,18 @@ import React, { Component, ChangeEvent } from "react";
 import "./HomePage.css";
 import { CustomPlaylist } from './CustomPlaylist/CustomPlaylist.tsx';
 import { SongMatch } from './SongMatch/SongMatch.tsx';
-import { genreToPlaylistMap } from './DiscoverDaily/DiscoverDaily.ts';
 import logo from "../src/logo.png";
 import { loginWithSpotifyClick, logoutClick } from "./spotify.js";
 
 export const accessTokenGLOBAL = localStorage.getItem('access_token');
+
+// TODO: add more genres
+const genreToPlaylistMap = new Map<string, string>([
+  ["Pop", "https://open.spotify.com/embed/playlist/2sTcvjcZasAQwlgDrVprbD?utm_source=generator"],
+  ["Hip-Hop", "https://open.spotify.com/embed/playlist/2AF0jOomrpvwo81QdCiTB9?utm_source=generator"],
+  ["Indie", "https://open.spotify.com/embed/playlist/0aLJwR85YiVpuf2Udmn6Ti?utm_source=generator"],
+  ["R&B", "https://open.spotify.com/embed/playlist/0osjfZWfYKvLd7RtsIqu4T?utm_source=generator"],
+]);
 
 type HomePageState = {
   genre: string;
@@ -25,6 +32,7 @@ export class HomePage extends Component<null, HomePageState> {
   }
 
   componentDidMount = () => {
+    console.log("Refresh token: " + localStorage.getItem('refresh_token'));
     this.hidePlaylist();
   };
 
