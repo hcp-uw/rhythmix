@@ -1,6 +1,10 @@
 
 import { MongoClient, ObjectId } from "mongodb";
 
+// For local dev.
+// import * as dotenv from 'dotenv'
+// dotenv.config()
+
 interface TokenDocument {
   _id: ObjectId;
   refresh_token: string;
@@ -84,7 +88,7 @@ const updateRefreshToken = async (filter: object, newToken: string): Promise<boo
 };
 
 export const updatePlaylists = async (): Promise<void> => {
-  const filter = { _id: new ObjectId(objectId) }; // Replace with your filter criteria
+  const filter = { _id: new ObjectId(objectId) };
   let refresh_token = await getRefreshToken(filter);
   console.log("old refresh token: " + refresh_token);
   const tokens = await getAccessToken(refresh_token);
@@ -220,17 +224,33 @@ const addTracksJson = async (data: unknown, playlist_id: string, genre_seed: str
 const generalResp = async (res: Response, function_name: string, playlist_id: string, genre_seed: string, access_token: string): Promise<void> => {
   if (res.status === 200 || res.status === 201) {
     if (function_name === "getPlaylistItems") {
-      res.json().then((data) => getPlaylistItemsJson(data, playlist_id, genre_seed, access_token))
-      .catch((error) => generalError(error));
+      const data = await res.json();
+      try {
+        await getPlaylistItemsJson(data, playlist_id, genre_seed, access_token)
+      } catch (error) {
+        generalError(error);
+      }
     } else if (function_name === "removeTracks") {
-      res.json().then((data) => removeTracksJson(data, playlist_id, genre_seed, access_token))
-      .catch((error) => generalError(error));
+      const data = await res.json();
+      try {
+        await removeTracksJson(data, playlist_id, genre_seed, access_token)
+      } catch (error) {
+        generalError(error);
+      }
     } else if (function_name === "getRecommendations") {
-      res.json().then((data) => getRecommendationsJson(data, playlist_id, genre_seed, access_token))
-      .catch((error) => generalError(error));
+      const data = await res.json();
+      try {
+        await getRecommendationsJson(data, playlist_id, genre_seed, access_token)
+      } catch (error) {
+        generalError(error);
+      }
     } else if (function_name === "addTracks") {
-      res.json().then((data) => addTracksJson(data, playlist_id, genre_seed, access_token))
-      .catch((error) => generalError(error));
+      const data = await res.json();
+      try {
+        await addTracksJson(data, playlist_id, genre_seed, access_token)
+      } catch (error) {
+        generalError(error);
+      }
     }
   } else if (res.status === 401) {
       console.log('Bad or expired token');
@@ -243,6 +263,6 @@ const generalResp = async (res: Response, function_name: string, playlist_id: st
   }
 };
 
-const generalError = (msg: string): void => {
+const generalError = (msg: unknown): void => {
   console.log(msg);
 };

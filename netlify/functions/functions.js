@@ -73,7 +73,7 @@ const updateRefreshToken = (filter, newToken) => __awaiter(void 0, void 0, void 
     }
 });
 const updatePlaylists = () => __awaiter(void 0, void 0, void 0, function* () {
-    const filter = { _id: new mongodb_1.ObjectId(objectId) }; // Replace with your filter criteria
+    const filter = { _id: new mongodb_1.ObjectId(objectId) };
     let refresh_token = yield getRefreshToken(filter);
     console.log("old refresh token: " + refresh_token);
     const tokens = yield getAccessToken(refresh_token);
@@ -205,20 +205,40 @@ const addTracksJson = (data, playlist_id, genre_seed, access_token) => __awaiter
 const generalResp = (res, function_name, playlist_id, genre_seed, access_token) => __awaiter(void 0, void 0, void 0, function* () {
     if (res.status === 200 || res.status === 201) {
         if (function_name === "getPlaylistItems") {
-            res.json().then((data) => getPlaylistItemsJson(data, playlist_id, genre_seed, access_token))
-                .catch((error) => generalError(error));
+            const data = yield res.json();
+            try {
+                yield getPlaylistItemsJson(data, playlist_id, genre_seed, access_token);
+            }
+            catch (error) {
+                generalError(error);
+            }
         }
         else if (function_name === "removeTracks") {
-            res.json().then((data) => removeTracksJson(data, playlist_id, genre_seed, access_token))
-                .catch((error) => generalError(error));
+            const data = yield res.json();
+            try {
+                yield removeTracksJson(data, playlist_id, genre_seed, access_token);
+            }
+            catch (error) {
+                generalError(error);
+            }
         }
         else if (function_name === "getRecommendations") {
-            res.json().then((data) => getRecommendationsJson(data, playlist_id, genre_seed, access_token))
-                .catch((error) => generalError(error));
+            const data = yield res.json();
+            try {
+                yield getRecommendationsJson(data, playlist_id, genre_seed, access_token);
+            }
+            catch (error) {
+                generalError(error);
+            }
         }
         else if (function_name === "addTracks") {
-            res.json().then((data) => addTracksJson(data, playlist_id, genre_seed, access_token))
-                .catch((error) => generalError(error));
+            const data = yield res.json();
+            try {
+                yield addTracksJson(data, playlist_id, genre_seed, access_token);
+            }
+            catch (error) {
+                generalError(error);
+            }
         }
     }
     else if (res.status === 401) {
