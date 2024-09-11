@@ -43,7 +43,7 @@ export class HomePage extends Component<null, HomePageState> {
   hidePlaylist = () => {
     setTimeout(() => {
       this.setState({ displayPlaylist: true });
-    }, 850);
+    }, 1000);
   };
 
   render = (): JSX.Element => {
