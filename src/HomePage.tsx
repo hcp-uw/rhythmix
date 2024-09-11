@@ -74,7 +74,7 @@ export class HomePage extends Component<null, HomePageState> {
               <div className="dd-block dd-bg">
                 <iframe
                   title="discover_daily"
-                  src={genreToPlaylistMap.get(this.state.genre)?.link}
+                  src={genreToPlaylistMap.get(this.state.genre)}
                   width="100%"
                   allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
                   loading="lazy"
