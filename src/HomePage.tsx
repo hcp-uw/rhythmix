@@ -15,7 +15,6 @@ const genreToPlaylistMap = new Map<string, string>([
   ["EDM", "https://open.spotify.com/embed/playlist/0T0JF0dPzzczmQ3hV9x2q5?utm_source=generator"],
   ["Romance", "https://open.spotify.com/embed/playlist/6vGCq5o22Q2o351Nim1TLJ?utm_source=generator"],
   ["K-pop", "https://open.spotify.com/embed/playlist/37A4pqUHFQwR1GqNZI8qII?utm_source=generator"],
-  ["Alternative", "https://open.spotify.com/embed/playlist/4Hlej1tVLz2XU6RtChIurM?utm_source=generator"],
   ["Workout", "https://open.spotify.com/embed/playlist/5W8GJqJ4GaJ3NkEOrjTRSf?utm_source=generator"]
 ]);
 
@@ -93,7 +92,6 @@ export class HomePage extends Component<null, HomePageState> {
                   className="styled-select"
                 >
 
-                <option value="Alternative">Alternative</option>
                 <option value="EDM">EDM</option>
                 <option value="Hip-Hop">Hip-Hop</option>
                 <option value="Indie">Indie</option>

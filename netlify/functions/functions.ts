@@ -36,7 +36,6 @@ const genreToPlaylistMap = new Map<string, playlistInfo>([
   ["EDM", {genre_seed: "edm", link: "https://open.spotify.com/embed/playlist/0T0JF0dPzzczmQ3hV9x2q5?utm_source=generator"}],
   ["Romance", {genre_seed: "romance", link: "https://open.spotify.com/embed/playlist/6vGCq5o22Q2o351Nim1TLJ?utm_source=generator"}],
   ["K-pop", {genre_seed: "k-pop", link: "https://open.spotify.com/embed/playlist/37A4pqUHFQwR1GqNZI8qII?utm_source=generator"}],
-  ["Alternative", {genre_seed: "alternative", link: "https://open.spotify.com/embed/playlist/4Hlej1tVLz2XU6RtChIurM?utm_source=generator"}],
   ["Workout", {genre_seed: "work-out", link: "https://open.spotify.com/embed/playlist/5W8GJqJ4GaJ3NkEOrjTRSf?utm_source=generator"}]
 ]);
 
