@@ -39,9 +39,9 @@ const genreToPlaylistMap = new Map<string, playlistInfo>([
   ["Workout", {genre_seed: "work-out", link: "https://open.spotify.com/embed/playlist/5W8GJqJ4GaJ3NkEOrjTRSf?utm_source=generator"}]
 ]);
 
-const clientId = process.env.CLIENT_ID ?? 'default';
-const uri = process.env.MONGODB_URI ?? 'default';
-const objectId = process.env.MONGODB_OBJECT_ID ?? 'default';
+const clientId = process.env.REACT_APP_CLIENT_ID || 'default';
+const uri = process.env.REACT_APP_MONGODB_URI || 'default';
+const objectId = process.env.REACT_APP_MONGODB_OBJECT_ID || 'default';
 const client = new MongoClient(uri);
 
 const getRefreshToken = async (filter: object): Promise<string> => {

@@ -1,6 +1,6 @@
 // Code sourced from https://github.com/spotify/web-api-examples/blob/master/authorization/authorization_code_pkce/public/app.js
 
-const clientId = process.env.CLIENT_ID ?? 'default';
+const clientId = process.env.REACT_APP_CLIENT_ID || 'default';
 const redirectUrl = 'https://spotiblend.netlify.app';
 
 const authorizationEndpoint = "https://accounts.spotify.com/authorize";
