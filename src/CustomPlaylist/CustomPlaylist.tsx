@@ -100,7 +100,7 @@ export class CustomPlaylist extends Component<CustomPlaylistProps, CustomPlaylis
 
       if (curr_attribute === "time signature" || curr_attribute === "key") {
         slider_render.push(
-          <div className="slider-container">
+          <div key={i} className="slider-container">
             <label htmlFor={curr_attribute} className="slider-label">{curr_attribute}</label>
             <input className="slider_checkboxes" type="checkbox" onChange={this.doIncludeClick} id={curr_attribute + "_include"} name={curr_attribute} value={curr_attribute} />
             <label htmlFor={curr_attribute + "_include"} className="checkbox-label">include</label> <br />
@@ -109,7 +109,7 @@ export class CustomPlaylist extends Component<CustomPlaylistProps, CustomPlaylis
         )
       } else if (curr_attribute === "popularity") {
         slider_render.push(
-          <div className="slider-container">
+          <div key={i} className="slider-container">
             <label htmlFor={curr_attribute} className="slider-label">{curr_attribute}</label>
             <input className="slider_checkboxes" type="checkbox" onChange={this.doIncludeClick} id={curr_attribute + "_include"} name={curr_attribute} value={curr_attribute} />
             <label htmlFor={curr_attribute + "_include"} className="checkbox-label">include</label> <br />
@@ -118,7 +118,7 @@ export class CustomPlaylist extends Component<CustomPlaylistProps, CustomPlaylis
         )
       } else {
         slider_render.push(
-          <div className="slider-container">
+          <div key={i} className="slider-container">
             <label htmlFor={curr_attribute} className="slider-label">{curr_attribute}</label>
             <input className="slider_checkboxes" type="checkbox" onChange={this.doIncludeClick} id={curr_attribute + "_include"} name={curr_attribute} value={curr_attribute}/>
             <label htmlFor={curr_attribute + "_include"} className="checkbox-label">include</label> <br />
@@ -136,7 +136,7 @@ export class CustomPlaylist extends Component<CustomPlaylistProps, CustomPlaylis
     const genre_render : JSX.Element[] = [];
     for (let i = 0; i < all_genres.length; i += 7) {
       genre_render.push(
-        <React.Fragment>
+        <React.Fragment key={i}>
           <div className="genres">
             <tr>
               <td>
@@ -226,9 +226,9 @@ export class CustomPlaylist extends Component<CustomPlaylistProps, CustomPlaylis
     //Creates new map so react recognizes change
     const newAttributes = new Map(this.state.attributes);
     if (evt.target.id === 'popularity' || evt.target.id === 'time signature' || evt.target.id === 'key') {
-      console.log(evt.target.id + ": " + parseInt(evt.target.value));
+      newAttributes.set(evt.target.id, parseInt(evt.target.value));
     } else {
-      console.log(evt.target.id + ": " + parseFloat(evt.target.value));
+      newAttributes.set(evt.target.id, parseFloat(evt.target.value));
     }
     this.setState({ attributes: newAttributes });
   };
