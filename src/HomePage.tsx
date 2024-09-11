@@ -15,7 +15,8 @@ const genreToPlaylistMap = new Map<string, string>([
   ["EDM", "https://open.spotify.com/embed/playlist/0T0JF0dPzzczmQ3hV9x2q5?utm_source=generator"],
   ["Romance", "https://open.spotify.com/embed/playlist/6vGCq5o22Q2o351Nim1TLJ?utm_source=generator"],
   ["K-pop", "https://open.spotify.com/embed/playlist/37A4pqUHFQwR1GqNZI8qII?utm_source=generator"],
-  ["Workout", "https://open.spotify.com/embed/playlist/5W8GJqJ4GaJ3NkEOrjTRSf?utm_source=generator"]
+  ["Workout", "https://open.spotify.com/embed/playlist/5W8GJqJ4GaJ3NkEOrjTRSf?utm_source=generator"],
+  ["Alternative", "https://open.spotify.com/embed/playlist/3nu8tauOOkdwZVjWYXCrlS?utm_source=generator"]
 ]);
 
 type HomePageState = {
@@ -62,9 +63,7 @@ export class HomePage extends Component<null, HomePageState> {
     } else if (this.state.page === "home") {
       return (
         <div className="App">
-          {/* Logout button in top right corner */}
-          <button className="logout-button" onClick={this.doLogoutSpotify}> Logout </button>
-          
+
           {/* Logo and title */}
           <header className="header">
             <img src={logo} alt="logo" />
@@ -92,6 +91,7 @@ export class HomePage extends Component<null, HomePageState> {
                   className="styled-select"
                 >
 
+                <option value="Alternative">Alternative</option>
                 <option value="EDM">EDM</option>
                 <option value="Hip-Hop">Hip-Hop</option>
                 <option value="Indie">Indie</option>
@@ -119,16 +119,26 @@ export class HomePage extends Component<null, HomePageState> {
 
             {/* Middle: Custom Playlist Generator */}
             <button className="cp-bg" type="button" onClick={this.doCustomPlaylistClick}>
-              <span className="rectangle-label">Custom Playlist Generator</span>
+              <span className="cp-label">Custom Playlist Generator</span>
+              {/* <video
+                style={{
+                  width: '100%',
+                  height: 'auto',
+                  objectFit: 'cover',
+                  borderRadius: '20px',
+                }} autoPlay muted loop>
+                <source src={"/video.mp4"} type="video/mp4" />
+              </video> */}
             </button>
 
             {/* Right: Song Match */}
             <button className="sm-bg" type="button" onClick={this.doSongMatchClick}>
-              <span className="rectangle-label">Song Match</span>
+              <span className="sm-label">Song Match</span>
             </button>
           </div>
 
           <header className="footer">
+            <button className="logout-button" onClick={this.doLogoutSpotify}> Logout </button>
             <p> © 2024 SpotiBlend. All rights reserved. </p>
           </header>
         </div>

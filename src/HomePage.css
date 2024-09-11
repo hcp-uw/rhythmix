@@ -1,3 +1,9 @@
+.App {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
 /* Login page styling */
 .login-page {
   display: flex;
@@ -10,8 +16,6 @@
 
 /* Log in/out button styling */
 .login-button, .logout-button {
-  background-color: #1db954;
-  color: black;
   font-weight: bold;
   border-radius: 30px;
   padding: 15px 30px;
@@ -20,10 +24,16 @@
   text-transform: uppercase;
 }
 
+.login-button {
+  background-color: #1db954;
+  color: black;
+}
+
 .logout-button {
-  position: absolute;
-  top: 35px;
-  right: 35px;
+  background-color: transparent;
+  border: 1px solid white;
+  color: white;
+  width: 150px;
 }
 
 .login-button:hover, .logout-button:hover {
@@ -42,8 +52,9 @@
   font-weight: 300;
   color: #1db954;
   margin-bottom: 20px;
-  margin-top: 100px;
+  margin-top: 50px;
   position: relative;
+  right: 5px;
 }
 
 .header img {
@@ -53,6 +64,10 @@
 
 .header h1 {
   font-size: 3rem;
+  text-shadow: 
+    4px 4px 6px rgba(0, 0, 0, 0.7), /* Dark shadow */
+    2px 2px 15px rgba(102, 255, 0, 0.6); /* Gold glow */
+  letter-spacing: 1.5px;
 }
 
 /* Adjust block spacing */
@@ -76,6 +91,7 @@
   border: 1px solid black;
   box-shadow: 1px 1px 1px 1px black;
   cursor: pointer;
+  min-width: 375px;
 }
 
 .cp-bg {
@@ -86,13 +102,40 @@
   background-image: linear-gradient(#79A4E4, #C7794C);
 }
 
+/* Media query for smaller screens */
+@media (max-width: 1200px) {
+  .block-spacing {
+    flex-direction: column;
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+
+  .cp-bg, .sm-bg {
+    margin: 15px 0;
+  }
+}
+
 /* Rectangle labels */
-.rectangle-label {
-  font-size: 1.8rem;
-  color: black;
-  font-weight: bolder;
+.cp-label, .sm-label {
+  font-size: 1.3rem;
+  color: white;
+  font-weight: bold;
   text-align: center;
-  animation: floatLabel 3s ease-in-out infinite; /* Apply hover animation */
+  position: absolute;
+  margin-bottom: 450px;
+  padding: 10px 20px;
+  border-radius: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  animation: floatLabel 3s ease-in-out infinite;
+  width: 335px;
+}
+
+.cp-label {
+  background: #5ABD88;
+}
+
+.sm-label {
+  background: #79A4E4;
 }
 
 /* Floating (hover) animation for the labels */
@@ -225,10 +268,11 @@ iframe {
 }
 
 .footer {
-  position: fixed;
-  bottom: 0px;
-  left: 0px;
-  width: 100%;
-  text-align: center;
   color: rgb(173, 176, 173);
+  padding: 4vh;
+  align-items: center;
+  text-align: center;
+  display: flex;
+  flex-direction: column; /* Stack items vertically */
+  gap: 20px; /* Add vertical spacing between items */
 }
