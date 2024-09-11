@@ -1,6 +1,6 @@
 // Code sourced from https://github.com/spotify/web-api-examples/blob/master/authorization/authorization_code_pkce/public/app.js
 
-export const clientId = 'e910cd42af954cd39b2e04cb4a1a43c3';
+const clientId = process.env.CLIENT_ID ?? 'default';
 const redirectUrl = 'https://spotiblend.netlify.app';
 
 const authorizationEndpoint = "https://accounts.spotify.com/authorize";
@@ -66,6 +66,7 @@ async function redirectToSpotifyAuthorize() {
     code_challenge_method: 'S256',
     code_challenge: code_challenge_base64,
     redirect_uri: redirectUrl,
+    show_dialog: false
   };
 
   authUrl.search = new URLSearchParams(params).toString();

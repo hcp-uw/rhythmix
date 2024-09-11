@@ -39,10 +39,9 @@ const genreToPlaylistMap = new Map<string, playlistInfo>([
   ["Workout", {genre_seed: "work-out", link: "https://open.spotify.com/embed/playlist/5W8GJqJ4GaJ3NkEOrjTRSf?utm_source=generator"}]
 ]);
 
-// TODO: change to environmental variables
-const clientId = "e910cd42af954cd39b2e04cb4a1a43c3";
-const uri = "mongodb+srv://wlo12489:FRvfj2f6UZLGbvyl@spotiblend.l5fua.mongodb.net/?retryWrites=true&w=majority&appName=spotiblend";
-const objectId = "66e0b24bcbb043bf94e6276b";
+const clientId = process.env.CLIENT_ID ?? 'default';
+const uri = process.env.MONGODB_URI ?? 'default';
+const objectId = process.env.MONGODB_OBJECT_ID ?? 'default';
 const client = new MongoClient(uri);
 
 const getRefreshToken = async (filter: object): Promise<string> => {

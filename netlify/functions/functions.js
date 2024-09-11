@@ -8,6 +8,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+var _a, _b, _c;
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.updatePlaylists = void 0;
 const mongodb_1 = require("mongodb");
@@ -26,10 +27,9 @@ const genreToPlaylistMap = new Map([
     ["K-pop", { genre_seed: "k-pop", link: "https://open.spotify.com/embed/playlist/37A4pqUHFQwR1GqNZI8qII?utm_source=generator" }],
     ["Workout", { genre_seed: "work-out", link: "https://open.spotify.com/embed/playlist/5W8GJqJ4GaJ3NkEOrjTRSf?utm_source=generator" }]
 ]);
-// TODO: change to environmental variables
-const clientId = "e910cd42af954cd39b2e04cb4a1a43c3";
-const uri = "mongodb+srv://wlo12489:FRvfj2f6UZLGbvyl@spotiblend.l5fua.mongodb.net/?retryWrites=true&w=majority&appName=spotiblend";
-const objectId = "66e0b24bcbb043bf94e6276b";
+const clientId = (_a = process.env.CLIENT_ID) !== null && _a !== void 0 ? _a : 'default';
+const uri = (_b = process.env.MONGODB_URI) !== null && _b !== void 0 ? _b : 'default';
+const objectId = (_c = process.env.MONGODB_OBJECT_ID) !== null && _c !== void 0 ? _c : 'default';
 const client = new mongodb_1.MongoClient(uri);
 const getRefreshToken = (filter) => __awaiter(void 0, void 0, void 0, function* () {
     try {
@@ -119,7 +119,7 @@ const getPlaylistItems = (access_token) => __awaiter(void 0, void 0, void 0, fun
             });
             yield generalResp(response, "getPlaylistItems", playlist_id, genre_seed, access_token);
         }
-        catch (_a) {
+        catch (_d) {
             generalError("getPlaylistItems fetch failed");
         }
     }
@@ -150,7 +150,7 @@ const removeTracks = (track_uris, playlist_id, genre_seed, access_token) => __aw
             });
             yield generalResp(response, "removeTracks", playlist_id, genre_seed, access_token);
         }
-        catch (_b) {
+        catch (_e) {
             generalError("removeTracks fetch failed");
         }
     }
@@ -170,7 +170,7 @@ const getRecommendations = (playlist_id, genre_seed, access_token) => __awaiter(
         });
         yield generalResp(response, "getRecommendations", playlist_id, genre_seed, access_token);
     }
-    catch (_c) {
+    catch (_f) {
         generalError("getRecommendations fetch failed");
     }
 });
@@ -196,7 +196,7 @@ const addTracks = (track_uris, playlist_id, genre_seed, access_token) => __await
         });
         yield generalResp(response, "addTracks", playlist_id, genre_seed, access_token);
     }
-    catch (_d) {
+    catch (_g) {
         generalError("addTracks fetch failed");
     }
 });
