@@ -17,10 +17,10 @@ const mongodb_1 = require("mongodb");
 ;
 ;
 const genreToPlaylistMap = new Map([
-    ["Pop", { genre_seed: "pop", link: "https://open.spotify.com/embed/playlist/2sTcvjcZasAQwlgDrVprbD?utm_source=generator" }],
-    ["Hip-Hop", { genre_seed: "hip-hop", link: "https://open.spotify.com/embed/playlist/2AF0jOomrpvwo81QdCiTB9?utm_source=generator" }],
-    ["Indie", { genre_seed: "indie", link: "https://open.spotify.com/embed/playlist/0aLJwR85YiVpuf2Udmn6Ti?utm_source=generator" }],
-    ["R&B", { genre_seed: "r-n-b", link: "https://open.spotify.com/embed/playlist/0osjfZWfYKvLd7RtsIqu4T?utm_source=generator" }],
+    ["Pop", { genre_seed: "pop", link: "https://open.spotify.com/embed/playlist/6WZx6JODAeplGmQL7YBXfK?utm_source=generator" }],
+    ["Hip-Hop", { genre_seed: "hip-hop", link: "https://open.spotify.com/embed/playlist/5n9846Hwm6OsDicJ5a0v6f?utm_source=generator" }],
+    ["Indie", { genre_seed: "indie", link: "https://open.spotify.com/embed/playlist/1JHl3qS08VD8Qcb0pfqGU3?utm_source=generator" }],
+    ["R&B", { genre_seed: "r-n-b", link: "https://open.spotify.com/embed/playlist/2ooZlUQuH5xNgrJkD1dpe5?utm_source=generator" }],
     ["EDM", { genre_seed: "edm", link: "https://open.spotify.com/embed/playlist/0T0JF0dPzzczmQ3hV9x2q5?utm_source=generator" }],
     ["Romance", { genre_seed: "romance", link: "https://open.spotify.com/embed/playlist/6vGCq5o22Q2o351Nim1TLJ?utm_source=generator" }],
     ["K-pop", { genre_seed: "k-pop", link: "https://open.spotify.com/embed/playlist/37A4pqUHFQwR1GqNZI8qII?utm_source=generator" }],
