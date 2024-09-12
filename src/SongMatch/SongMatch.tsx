@@ -4,7 +4,8 @@ import { Spotify } from "react-spotify-embed";
 import { accessTokenGLOBAL } from "../HomePage.tsx"
 import { Root } from "react-dom/client";
 import back_button from './back-button.png'
-import './index.css';
+import home_button from './home-button.png'
+import './index2.css';
 import SearchBar from "./SearchBar";
 
 // Specific Songs seedArtist, seedTrack, and seedGenre
@@ -183,9 +184,10 @@ export class SongMatch extends Component<SongMatchProps, SongMatchState> {
 
     renderStartPage = (): JSX.Element => {
         return (
-            <div className="divider">
-                <Container>
-                    <InputGroup className="mb-3" size="lg">
+
+            <div className="search-container">
+                <header className="search-header">
+                    <InputGroup className="search-bar" size="lg">
                     <FormControl
                         placeholder="Search for Artist"
                         type="input"
@@ -195,16 +197,16 @@ export class SongMatch extends Component<SongMatchProps, SongMatchState> {
                         }
                         }}
                         onChange={this.doSearchChange}
+                        className="search-input"
                     />
-                    <Button onClick={() => this.searchSong()}>
+                    <button className="search-button" onClick={() => this.searchSong()}>
                         Search
-                    </Button>
-
-                    <button onClick={this.doBackClick}>Back</button>
+                    </button>
                     </InputGroup>
-                </Container>
+                </header>
 
-                <Container className="song-container">
+                <Container className="song-container-search">
+                    
                     
                         {this.state.songResults.map( (song, i) => {
                             return (
@@ -212,7 +214,7 @@ export class SongMatch extends Component<SongMatchProps, SongMatchState> {
                                 <Card.Img src={song.album.images[0].url}/>
                                 <Card.Body>
                                 <Card.Title>{song.name}</Card.Title>
-                                <button onClick={() => this.doAddSong(song.name, song.album.images[0].url, song.id, song.artists)}> + </button>
+                                <button className="add-button" onClick={() => this.doAddSong(song.name, song.album.images[0].url, song.id, song.artists)}> + </button>
                                 </Card.Body>
                             </Card>
                             )
@@ -220,7 +222,7 @@ export class SongMatch extends Component<SongMatchProps, SongMatchState> {
                 
                 </Container>
                 
-                <div className="song-container">
+                <div className="song-match-pool-container">
                         {this.state.songMatchList.map( (song, i) => {
                             return (
                                 <Card className="album-card">
@@ -231,9 +233,10 @@ export class SongMatch extends Component<SongMatchProps, SongMatchState> {
                                 </Card>
                             )
                         })}
-                    {this.state.songMatchList.length > 0 && <Button onClick={() => this.doSearchRecs(3, this.state.songMatchList)}>Search</Button>}
+                    {this.state.songMatchList.length > 0 && <button className="rec-button" onClick={() => this.doSearchRecs(3, this.state.songMatchList)}>Search</button>}
                 </div>
-                
+                <button className="home-button-song-match" type="button" onClick={this.doBackClick}><img className="button-image" alt="home" src={home_button}/></button>
+
                 
             </div>
         );
@@ -319,7 +322,7 @@ export class SongMatch extends Component<SongMatchProps, SongMatchState> {
                 'Authorization': 'Bearer ' + accessToken
             }
         }
-        var songID = await fetch('https://api.spotify.com/v1/search?q=' + this.state.currentSearch + '&type=track&limit=10', searchParameters)
+        var songID = await fetch('https://api.spotify.com/v1/search?q=' + this.state.currentSearch + '&type=track&limit=20', searchParameters)
             .then(response => response.json())
             // .then(data => console.log(data))  // FOR QUERY TESTING
             .then(data => {this.setState({songResults: data.tracks.items})})

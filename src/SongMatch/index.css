@@ -5,28 +5,49 @@ body {
       sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-  }
+}
 
   /*.divider{
     overflow-y: scroll;
   }*/
 
-  .background {
-    position: fixed; /* or absolute */
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background-color: rgb(137, 207, 240, 0.9);
-    width: 100%; /* Adjust width as needed */
-    height: 100%; /* Adjust height as needed */
-    justify-content: center; /* Add this if you want to center content horizontally */
-    overflow-y: scroll;
-  } 
+.background {
+  position: fixed; 
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: rgb(137, 207, 240, 0.9);
+  width: 100%; 
+  height: 100%; 
+  justify-content: center; 
+  overflow-y: scroll;
+} 
 
-.large-container {
-  overflow-x: hidden;
-  max-height: 600px;
-  padding: 20px;
+.search-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between; /* Space between the song containers */
+  height: 100vh; /* Full viewport height */
+}
+
+.search-bar-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.search-bar {
+  max-width: 600px;    
+  width: 100%;        
+}
+
+.song-container-search {
+  flex-grow: 1;
+    overflow-y: auto; /* Scroll if content overflows */
+    padding: 20px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
 }
 
 .row {

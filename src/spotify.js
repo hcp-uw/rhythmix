@@ -1,12 +1,12 @@
 // Code sourced from https://github.com/spotify/web-api-examples/blob/master/authorization/authorization_code_pkce/public/app.js
 
 // Use for production.
-const clientId = process.env.REACT_APP_CLIENT_ID || 'default';
-const redirectUrl = 'https://spotiblend.netlify.app';
+// const clientId = process.env.REACT_APP_CLIENT_ID || 'default';
+// const redirectUrl = 'https://spotiblend.netlify.app';
 
 // Use for local development. Running 'netlify dev' goes to http://localhost:8888. Uses the TestApp Spotify Dev app (not production SpotiBlend).
-// const clientId = 'ebc045cb9fcb4ad8a57b487704be9805';
-// const redirectUrl = 'http://localhost:8888';
+const clientId = 'ebc045cb9fcb4ad8a57b487704be9805';
+const redirectUrl = 'http://localhost:8888';
 
 const authorizationEndpoint = "https://accounts.spotify.com/authorize";
 const tokenEndpoint = "https://accounts.spotify.com/api/token";
