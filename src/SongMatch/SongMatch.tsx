@@ -3,6 +3,7 @@ import { Container, InputGroup, FormControl, Button, Row, Col, Card } from 'reac
 import { Spotify } from "react-spotify-embed";
 import { accessTokenGLOBAL } from "../HomePage.tsx"
 import { Root } from "react-dom/client";
+import back_button from './back-button.png'
 import './index.css';
 import SearchBar from "./SearchBar";
 
@@ -141,11 +142,35 @@ export class SongMatch extends Component<SongMatchProps, SongMatchState> {
             );
             
         } else if (this.state.currentPage == "playlist") {
-            return (
-                <div>
-                    <Spotify link={this.state.finalPlaylistLINK}></Spotify>
+            // return (
+            //     <div>
+            //         <Spotify link={this.state.finalPlaylistLINK}></Spotify>
+            //     </div>
+            // );
+            const timeout = async () => {
+                console.log('a');
+                console.log('waiting...')
+                let delayres = await delay(3000);
+                console.log('b');
+            };
+            const delay = (delayInms) => {
+                return new Promise(resolve => setTimeout(resolve, delayInms));
+            };
+
+            timeout();
+
+            console.log(this.state.finalPlaylistLINK)
+            return <div className="CPG-base">
+                <h1 className="CPG-header">your custom playlist</h1>
+                <div className="CPG-background">
+                    <iframe className="embed-playlist" title="CPG-result" src={this.state.finalPlaylistLINK}
+                        width="100%"
+                        allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" 
+                        loading="lazy">
+                    </iframe>
                 </div>
-            );
+                <button className="home-button" type="button" onClick={this.doBackClick}><img className="button-image" alt="home" src={back_button} /></button>
+            </div>;
         } else {
             return (
                 <div>other page</div>
@@ -213,6 +238,7 @@ export class SongMatch extends Component<SongMatchProps, SongMatchState> {
             </div>
         );
     }
+
 
 
     /**
@@ -486,7 +512,7 @@ export class SongMatch extends Component<SongMatchProps, SongMatchState> {
             .then(data => {
                 // this.doSendPlaylistID
                 this.setState({playlistID: data.id})
-                this.setState({finalPlaylistLINK: data.external_urls.spotify})
+                this.setState({finalPlaylistLINK: "https://open.spotify.com/embed/playlist/" + data.id})
             }
         )
         
@@ -527,8 +553,10 @@ export class SongMatch extends Component<SongMatchProps, SongMatchState> {
             body: JSON.stringify({
                 'uris': trackArray, // Array of song URIs
             }),
-        }).then((res) => generalResp(res, "addTracks"))
-        .catch(() => generalError("addTracks fetch failed"))
+        })
+        
+        // .then((res) => generalResp(res, "addTracks"))
+        // .catch(() => generalError("addTracks fetch failed"))
 
         // change state to display playlist
         this.setState({currentPage: "playlist"})
@@ -566,24 +594,26 @@ export class SongMatch extends Component<SongMatchProps, SongMatchState> {
 
 }
 
-const generalResp = (res: Response, function_name: string): void => {
-    if (res.status === 200 || res.status === 201) {
-      res.json().then((data) => eval(function_name + "Json(data, playlist_id, genre_seed)"))
-        .catch((error) => generalError(error));
-    } else if (res.status === 401) {
-        alert('Bad or expired token');
-    } else if (res.status === 403) {
-        alert('Bad OAuth request');
-    } else if (res.status === 429) {
-        alert('App has exceeded rate limits'); 
-    } else {
-        generalError('Bad status code: ' + res.status);
-    }
-};
+// const generalResp = (res: Response, function_name: string): void => {
+//     if (res.status === 200 || res.status === 201) {
+//       res.json().then((data) => eval(function_name + "Json(data, playlist_id, genre_seed)"))
+//         .catch((error) => generalError(error));
+//     } else if (res.status === 401) {
+//         alert('Bad or expired token');
+//     } else if (res.status === 403) {
+//         alert('Bad OAuth request');
+//     } else if (res.status === 429) {
+//         alert('App has exceeded rate limits'); 
+//     } else {
+//         generalError('Bad status code: ' + res.status);
+//     }
+// };
 
 const generalError = (msg: string): void => {
 alert(msg);
 };
+
+
 
 
 
