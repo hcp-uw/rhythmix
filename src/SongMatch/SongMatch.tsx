@@ -150,7 +150,7 @@ export class SongMatch extends Component<SongMatchProps, SongMatchState> {
             const timeout = async () => {
                 console.log('a');
                 console.log('waiting...')
-                let delayres = await delay(3000);
+                let delayres = await delay(5000);
                 console.log('b');
             };
             const delay = (delayInms) => {
@@ -509,21 +509,26 @@ export class SongMatch extends Component<SongMatchProps, SongMatchState> {
         // create the playlist based on songRecommendations
         fetch("https://api.spotify.com/v1/users/" + userID + "/playlists", playlistParameters)
             .then(response => response.json())
-            .then(data => {
+            .then(
                 // this.doSendPlaylistID
-                this.setState({playlistID: data.id})
-                this.setState({finalPlaylistLINK: "https://open.spotify.com/embed/playlist/" + data.id})
-            }
-        )
+                this.doSetPlaylist
+            )
         
         this.doGetPlaylistSongs(this.state.chosenSong.id);
+    }
+
+    doSetPlaylist = (res: any) : void => {
+        console.log(res)
+        const playlist_id = res.id
+        this.setState({playlistID: playlist_id})
+        this.setState({finalPlaylistLINK : "https://open.spotify.com/embed/playlist/" + playlist_id})
     }
 
     doSendPlaylistID = (id: any): void => {
         this.doAddSongs(id);
     }
 
-    doAddSongs = (songRecs: any): void => {
+    doAddSongs = async (songRecs: any): Promise<void> => {
 
         const accessToken = accessTokenGLOBAL;
 
@@ -544,7 +549,7 @@ export class SongMatch extends Component<SongMatchProps, SongMatchState> {
 
         console.log(playlistID);
 
-        fetch('https://api.spotify.com/v1/playlists/' + playlistID + '/tracks', {
+        await fetch('https://api.spotify.com/v1/playlists/' + playlistID + '/tracks', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -559,6 +564,19 @@ export class SongMatch extends Component<SongMatchProps, SongMatchState> {
         // .catch(() => generalError("addTracks fetch failed"))
 
         // change state to display playlist
+
+        const timeout = async () => {
+            console.log('a');
+            console.log('waiting...')
+            let delayres = await delay(5000);
+            console.log('b');
+        };
+        const delay = (delayInms) => {
+            return new Promise(resolve => setTimeout(resolve, delayInms));
+        };
+
+        timeout();
+        
         this.setState({currentPage: "playlist"})
     }
 
