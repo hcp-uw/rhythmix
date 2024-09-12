@@ -119,7 +119,7 @@ export class HomePage extends Component<null, HomePageState> {
 
             {/* Middle: Custom Playlist Generator */}
             <button className="cp-bg" type="button" onClick={this.doCustomPlaylistClick}>
-              <span className="cp-label">Custom Playlist Generator</span>
+              <span className="cp-label">custom playlist generator</span>
               {/* <video
                 style={{
                   width: '100%',
@@ -133,7 +133,7 @@ export class HomePage extends Component<null, HomePageState> {
 
             {/* Right: Song Match */}
             <button className="sm-bg" type="button" onClick={this.doSongMatchClick}>
-              <span className="sm-label">Song Match</span>
+              <span className="sm-label">song match</span>
             </button>
           </div>
 
