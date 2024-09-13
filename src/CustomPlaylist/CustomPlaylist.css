@@ -77,7 +77,7 @@ body {
     color: rgba(223, 240, 203, 1);
 }
 
-.create-playlist-button {
+.CPG-create-playlist-button {
     background-color: rgb(192, 231, 179);
     padding: 1vh 4vw;
     position: absolute;
@@ -91,7 +91,7 @@ body {
     z-index: 1;
 }
 
-.create-playlist-button:hover {
+.CPG-create-playlist-button:hover {
     transform: scale(1.1) translateY(20vh);
 }
 

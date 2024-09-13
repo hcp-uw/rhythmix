@@ -55,7 +55,7 @@ export class CustomPlaylist extends Component<CustomPlaylistProps, CustomPlaylis
           <div className="slider-background">
             {this.renderSliders()}
           </div>
-          <button className="create-playlist-button" type="button" onClick={this.doSpotifyFetchClick}>create playlist</button>
+          <button className="CPG-create-playlist-button" type="button" onClick={this.doSpotifyFetchClick}>create playlist</button>
           <div className="more-options-background">
             <button className="more-options-button" type="button" onClick={this.doAllSlidersClick}>see all</button>
           </div>
@@ -175,6 +175,7 @@ export class CustomPlaylist extends Component<CustomPlaylistProps, CustomPlaylis
     return genre_render;
   }
 
+  // Selects or deselects a genre
   doGenreClick = (evt: ChangeEvent<HTMLInputElement>) : void => {
     if (this.state.genres.has(evt.target.id)) {
       this.state.genres.delete(evt.target.id);
@@ -189,6 +190,7 @@ export class CustomPlaylist extends Component<CustomPlaylistProps, CustomPlaylis
     }
   }
 
+  // Selects or deselects an attribute to include in query
   doIncludeClick = (evt: ChangeEvent<HTMLInputElement>) : void => {
     const attribute = evt.target.id.substring(0, evt.target.id.length - 8);
     const checkbox : HTMLInputElement = document.getElementById(evt.target.id);
@@ -202,18 +204,23 @@ export class CustomPlaylist extends Component<CustomPlaylistProps, CustomPlaylis
     console.log(this.state.include);
   }
 
+  // Returns to home page
   doHomeClick = () : void => {
     return this.props.onHome();
   };
 
+  // Returns to sliders
   doBackClick = () : void => {
+    this.state.attributes.clear();
     this.setState({page: {kind: "genres"}});
   }
 
+  // Shows all sliders
   doAllSlidersClick = () : void => {
     this.setState({page: {kind: "all_sliders"}});
   }
 
+  // Shows only basic sliders
   doBasicSlidersClick = () : void => {
     if (this.state.genres.size === 0) {
       alert("Must select at least 1 seed genre.");
@@ -222,6 +229,7 @@ export class CustomPlaylist extends Component<CustomPlaylistProps, CustomPlaylis
     }
   }
 
+  // Changes attribute slider value
   doAttributeChange = (evt: ChangeEvent<HTMLInputElement>): void => {
     //Creates new map so react recognizes change
     const newAttributes = new Map(this.state.attributes);
