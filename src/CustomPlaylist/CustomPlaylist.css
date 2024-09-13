@@ -2,6 +2,10 @@
     --body-font-size: 3vh;
 }
 
+body {
+    font-weight: normal !important;
+}
+
 * {
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
@@ -12,7 +16,7 @@
     background-color: rgb(90, 189, 136);
     padding: 1vh 8vh;
     position: fixed;
-    top: 6%;
+    top: 3%;
     border-radius: 10vh;
     font-size: 5vh;
     letter-spacing: 0.1rem;
@@ -133,6 +137,7 @@
     font-size: var(--body-font-size);
     letter-spacing: 0.1rem;
     border-style: none;
+    font-weight: bold;
 }
 
 .more-options-button {
