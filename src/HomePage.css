@@ -217,6 +217,7 @@ iframe {
   text-align: center;
   z-index: 1;
   transition: background-color 0.3s ease-in-out;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15); /* Soft shadow for a floating effect */
 }
 
 .styled-select:hover{

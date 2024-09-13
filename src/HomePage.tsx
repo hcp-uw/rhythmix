@@ -67,7 +67,7 @@ export class HomePage extends Component<null, HomePageState> {
           {/* Logo and title */}
           <header className="header">
             <img src={logo} alt="logo" />
-            <h1> spotiblend </h1>
+            <h1> Spotiblend </h1>
           </header>
 
           {/* Main 3 features */}
@@ -119,25 +119,14 @@ export class HomePage extends Component<null, HomePageState> {
 
             {/* Middle: Custom Playlist Generator */}
             <button className="cp-bg" type="button" onClick={this.doCustomPlaylistClick}>
-              <span className="cp-label">custom playlist generator</span>
-              <p className="block-description">Generate a playlist tailored to your favorite genres and preferences.</p>
-
-            {/* Right: Song Match */}
-              {/* <video
-                style={{
-                  width: '100%',
-                  height: 'auto',
-                  objectFit: 'cover',
-                  borderRadius: '20px',
-                }} autoPlay muted loop>
-                <source src={"/video.mp4"} type="video/mp4" />
-              </video> */}
+              <span className="cp-label">Custom Playlist Generator</span>
+              <p className="block-description">Generate playlists tailored to your favorite genres :)</p>
             </button>
 
             {/* Right: Song Match */}
             <button className="sm-bg" type="button" onClick={this.doSongMatchClick}>
-              <span className="sm-label">song match</span>
-              <p className="block-description">Find songs that match your mood or any song you like.</p>
+              <span className="sm-label">Song Match</span>
+              <p className="block-description">Disover music that matches your current mood!</p>
             </button>
           </div>
 
