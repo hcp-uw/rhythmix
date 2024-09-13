@@ -64,9 +64,6 @@
 
 .header h1 {
   font-size: 3rem;
-  text-shadow: 
-    4px 4px 6px rgba(0, 0, 0, 0.7), /* Dark shadow */
-    2px 2px 15px rgba(102, 255, 0, 0.6); /* Gold glow */
   letter-spacing: 1.5px;
 }
 
