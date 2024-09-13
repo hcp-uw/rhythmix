@@ -201,7 +201,6 @@ export class CustomPlaylist extends Component<CustomPlaylistProps, CustomPlaylis
       this.state.include.add(attribute);
       checkbox.checked = true;
     }
-    console.log(this.state.include);
   }
 
   // Returns to home page
@@ -211,7 +210,7 @@ export class CustomPlaylist extends Component<CustomPlaylistProps, CustomPlaylis
 
   // Returns to sliders
   doBackClick = () : void => {
-    this.state.attributes.clear();
+    this.state.include.clear();
     this.setState({page: {kind: "genres"}});
   }
 
