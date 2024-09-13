@@ -102,30 +102,28 @@ export class SongMatch extends Component<SongMatchProps, SongMatchState> {
                 
                 <div className="background">
                     
-                    <Container className="song-container">
-                        
-                            {this.state.songRecommendations.map((song, i) => {
+                    <Container className="song-recommendation-container">
+                        {this.state.songRecommendations.map((song, i) => {
 
-                                console.log(song);
-                                return (
+                            console.log(song);
+                            return (
+                                <div key={i} className="spotify-container">
+                                    <Spotify link={song.external_urls.spotify}/>       
                                     <div>
-                                        <Spotify link={song.external_urls.spotify}/>
-                                        <center>
-                                            <button onClick={() => this.doSetChosenSong(song)}>
-                                                Create Playlist
-                                            </button>
-                                        </center>
-
+                                        <button className="playlist-button" onClick={() => this.doSetChosenSong(song)}>
+                                            Create Playlist
+                                        </button> 
                                     </div>
+                                        
+                                </div>
+                                
 
-                                )
-                            })}
-                            
-                            
-                
+                            )
+                        })}
                     </Container>
 
-                    <div className="song-container">
+                    <center>Selected Songs:</center>
+                    <div className="song-match-pool-container-2">
                         {this.state.songMatchList.map( (song, i) => {
                             return (
                                 <Card className="album-card">
@@ -137,6 +135,7 @@ export class SongMatch extends Component<SongMatchProps, SongMatchState> {
                             )
                         })}
                     </div>
+                    
                 </div>
 
 
@@ -162,7 +161,7 @@ export class SongMatch extends Component<SongMatchProps, SongMatchState> {
 
             console.log(this.state.finalPlaylistLINK)
             return <div className="CPG-base">
-                <h1 className="CPG-header">your custom playlist</h1>
+                <h1 className="CPG-header">Your Song Match Playlist</h1>
                 <div className="CPG-background">
                     <iframe className="embed-playlist" title="CPG-result" src={this.state.finalPlaylistLINK}
                         width="100%"
@@ -204,7 +203,8 @@ export class SongMatch extends Component<SongMatchProps, SongMatchState> {
                     </button>
                     </InputGroup>
                 </header>
-
+                
+                
                 <Container className="song-container-search">
                     
                     
@@ -214,7 +214,7 @@ export class SongMatch extends Component<SongMatchProps, SongMatchState> {
                                 <Card.Img src={song.album.images[0].url}/>
                                 <Card.Body>
                                 <Card.Title>{song.name}</Card.Title>
-                                <button className="add-button" onClick={() => this.doAddSong(song.name, song.album.images[0].url, song.id, song.artists)}> + </button>
+                                    <button className="add-button" onClick={() => this.doAddSong(song.name, song.album.images[0].url, song.id, song.artists)}> + </button>
                                 </Card.Body>
                             </Card>
                             )
@@ -223,6 +223,7 @@ export class SongMatch extends Component<SongMatchProps, SongMatchState> {
                 </Container>
                 
                 <div className="song-match-pool-container">
+                <center>Selected Songs:</center>
                         {this.state.songMatchList.map( (song, i) => {
                             return (
                                 <Card className="album-card">
@@ -322,7 +323,7 @@ export class SongMatch extends Component<SongMatchProps, SongMatchState> {
                 'Authorization': 'Bearer ' + accessToken
             }
         }
-        var songID = await fetch('https://api.spotify.com/v1/search?q=' + this.state.currentSearch + '&type=track&limit=20', searchParameters)
+        var songID = await fetch('https://api.spotify.com/v1/search?q=' + this.state.currentSearch + '&type=track&limit=14', searchParameters)
             .then(response => response.json())
             // .then(data => console.log(data))  // FOR QUERY TESTING
             .then(data => {this.setState({songResults: data.tracks.items})})

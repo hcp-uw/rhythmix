@@ -1,3 +1,12 @@
+body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+      'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+      sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
 .background {
     display: flex;
     flex-direction: column;
@@ -63,23 +72,74 @@
     margin: 20px;
 }
 
+
+.song-recommendation-container {
+    display: flex; /* Enables Flexbox for horizontal alignment */
+    flex-wrap: wrap; /* Allows items to wrap to the next line if necessary */
+    justify-content: center; /* Centers the items horizontally */
+    gap: 20px; /* Adds space between items */
+    padding: 10px;
+  }
+
+.spotify-container {
+    display: flex; /* Align items in a row */
+    align-items: center; /* Vertically centers the items */
+    margin-bottom: -100px; /* Adds some spacing below each song block */
+    max-width: 450px; /* Limits the width of each container */
+    width: 100%; /* Ensures the container does not exceed the parent's width */
+    flex-direction: column; /* Stacks children vertically */
+}
+
+.spotify-container > .Spotify {
+flex: 1; /* Allows the Spotify component to take up remaining space */
+}
+
+.playlist-button {
+    display: flex; /* Enables Flexbox layout for button container */
+  justify-content: center; /* Centers button horizontally */
+  
+    margin-top: -200px; /* Adds some space between the Spotify player and the button */
+  }
+
 .song-match-pool-container {
     height: 25vh; /* Takes up the bottom 1/4 of the screen */
-    overflow-y: auto; /* Scrollable if there are too many songs */
     padding: 10px;
     display: flex;
-    justify-content: center;
+    justify-content: center; /* Centers items horizontally */
+    align-items: center; /* Centers items vertically */
+    flex-direction: row; /* Aligns items in a horizontal row */
+    margin-top: 20px;
+    margin: 100px;
+}
+
+.song-match-pool-container-2 {
+    height: 25vh; /* Takes up the bottom 1/4 of the screen */
+    padding: 10px;
+    display: flex;
+    justify-content: center; /* Centers items horizontally */
+    align-items: center; /* Centers items vertically */
+    flex-direction: row; /* Aligns items in a horizontal row */
+    margin-top: 20px;
+}
+
+.selected-songs-title {
+    position: absolute;
+    text-align: center; /* Centers the text within its container */
+    width: 100%; /* Takes full width to allow centering */
+    margin-top: 10px; /* Adjusts spacing from the top if needed */
+    font-weight: bold; /* Makes the title bold */
   }
+
 
 /* Card styling for song display */
 .album-card {
     background-color: rgb(43, 73, 95);
-    margin: 10px;
+    margin: 10px; /* Space around each card */
     padding: 20px;
-    width: calc(10% - 20px);
-    padding-bottom: calc(10% - 20px); /* Maintain square aspect ratio */
-    max-width: 200px;
-    max-height: 45%;
+    width: calc((100% / 7) - 20px); /* Width for 7 items per row, accounting for margins */
+    padding-bottom: calc((100% / 7) - 20px); /* Maintain square aspect ratio */
+    max-width: 200px; /* Optional: Cap the maximum width */
+    max-height: 210px; /* Optional: Cap the maximum height */
     box-sizing: border-box; /* Includes padding and border in the element's total width and height */
     position: relative;
     border-radius: 10px;
@@ -114,6 +174,8 @@
     transition: background-color 0.3s ease;
     bottom: 3%;
     position: absolute;
+    left: 50%; /* Center horizontally */
+    transform: translateX(-50%); /* Center horizontally */
 }
 
 .home-button-song-match {
@@ -148,4 +210,64 @@
         flex: 1 1 100%; /* 1 card per row on very small screens */
         max-width: 100%;
     }
+}
+
+
+
+.CPG-header {
+    background-color: rgba(91, 172, 210, 0.9);
+    padding: 1vh 8vh;
+    position: fixed;
+    top: 6%;
+    border-radius: 10vh;
+    font-size: 5vh;
+    letter-spacing: 0.1rem;
+    border-style: none;
+}
+
+.CPG-background {
+    position: fixed; /* or absolute */
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -40%);
+    background: linear-gradient(rgba(91, 172, 210, 0.9), rgba(45, 106, 134, 0.9), rgba(222, 255, 89, 0));
+    background-repeat: no-repeat;
+    background-size: cover;
+    border-radius: 3vh;
+    width: 95vw;
+    height: 78vh;
+    display: flex; /* Add this if you want to center content horizontally */
+    flex-direction: column;
+    justify-content: center; /* Add this if you want to center content horizontally */
+    align-items: center; /* Add this if you want to center content vertically */
+}
+
+.CPG-base {
+    position: fixed; /* or absolute */
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: rgb(33, 33, 33);
+    background-repeat: no-repeat;
+    background-size: cover;
+    width: 100vw;
+    height: 100vh;
+    display: flex; /* Add this if you want to center content horizontally */
+    flex-direction: column;
+    justify-content: center; /* Add this if you want to center content horizontally */
+    align-items: center; /* Add this if you want to center content vertically */
+}
+
+
+.home-button {
+    transform: translate(44vw, -40vh);
+    background-color: rgba(91, 172, 210, 0.9);
+    position: absolute;
+    padding: 1vh 3vh;
+    border-radius: 10vh;
+    font-size: var(--body-font-size);
+    letter-spacing: 0.1rem;
+    border-style: none;
+    width: 7vw;
+    height: 8vh;
 }
