@@ -164,7 +164,7 @@ body {
     position: relative;
 }
 
-.create-playlist-button, .home-button, .back-button, .next-button, .more-options-button {
+.CPG-create-playlist-button, .home-button, .back-button, .next-button, .more-options-button {
     cursor: pointer;
 }
 

@@ -3,8 +3,9 @@ import { Container, InputGroup, FormControl, Button, Row, Col, Card } from 'reac
 import { Spotify } from "react-spotify-embed";
 import { accessTokenGLOBAL } from "../HomePage.tsx"
 import { Root } from "react-dom/client";
-import back_button from './back-button.png'
-import home_button from './home-button.png'
+import back_button from './back-button.png';
+import home_button from './home-button.png';
+import remove_button from './remove-button.png';
 import './index.css';
 import SearchBar from "./SearchBar";
 
@@ -90,51 +91,17 @@ export class SongMatch extends Component<SongMatchProps, SongMatchState> {
         if (this.state.currentPage === "home") {
             // render start page
             return (
-                <div className="background">
-                    {this.renderStartPage()}
-                </div>
+              <div>
+                {this.renderStartPage()}
+              </div>
             );
         } else if (this.state.currentPage === "getRecs") {
-            
-
+    
             // CHANGE doAddSong to CREATE PLAYLIST
-            return(
-                
-                <div className="background">
-                    
-                    <Container className="song-recommendation-container">
-                        {this.state.songRecommendations.map((song, i) => {
-
-                            console.log(song);
-                            return (
-                                <div key={i} className="spotify-container">
-                                    <Spotify link={song.external_urls.spotify}/>       
-                                    <button className="create-playlist-button" onClick={() => this.doSetChosenSong(song)}>
-                                        Create Playlist
-                                    </button> 
-                                </div>
-
-                            )
-                        })}
-                    </Container>
-                    
-                    <center>Selected Songs:</center>
-                    <div className="song-match-pool-container">
-                        {this.state.songMatchList.map( (song, i) => {
-                            return (
-                                <Card className="album-card">
-                                    <Card.Img src={song.image}/>
-                                    <Card.Body>
-                                    <Card.Title>{song.name}</Card.Title>
-                                    </Card.Body>
-                                </Card>
-                            )
-                        })}
-                    </div>
-                    
-                </div>
-
-
+            return (
+              <div>
+                {this.renderRecsPage()};
+              </div>
             );
             
         } else if (this.state.currentPage == "playlist") {
@@ -157,7 +124,7 @@ export class SongMatch extends Component<SongMatchProps, SongMatchState> {
 
             console.log(this.state.finalPlaylistLINK)
             return <div className="SM-base">
-                <h1 className="SM-header">Your Song Match Playlist</h1>
+                <h1 className="SM-header">your song match playlist</h1>
                 <div className="SM-background">
                     <iframe className="embed-playlist" title="SM-result" src={this.state.finalPlaylistLINK}
                         width="100%"
@@ -165,80 +132,107 @@ export class SongMatch extends Component<SongMatchProps, SongMatchState> {
                         loading="lazy">
                     </iframe>
                 </div>
-                <button className="home-button-song-match" type="button" onClick={this.doBackClick}><img className="button-image" alt="home" src={home_button} /></button>
+                <button className="home-button-song-match" type="button" onClick={this.doHomeClick}><img className="button-image" alt="home" src={home_button} /></button>
             </div>;
         } else {
             return (
                 <div>other page</div>
             );
         }
-
-
     }
-
 
     renderStartPage = (): JSX.Element => {
-        return (
+      return (
+        <div className="SM-base">
+          <h1 className="SM-header">song match</h1>
+          <div className="SM-background"> 
+            <InputGroup className="search-bar" size="lg">
+              <FormControl
+                placeholder="Search for a song or artist"
+                type="input"
+                onKeyUp={event => {
+                if (event.key === "Enter") {
+                    this.searchSong();
+                }
+                }}
+                onChange={this.doSearchChange}
+                className="search-input"
+              />
+              <button className="search-button" onClick={() => this.searchSong()}> Search </button>
+            </InputGroup>    
 
-            <div className="search-container">
-                <header className="search-header">
-                    <InputGroup className="search-bar" size="lg">
-                    <FormControl
-                        placeholder="Search for Artist"
-                        type="input"
-                        onKeyUp={event => {
-                        if (event.key === "Enter") {
-                            this.searchSong();
-                        }
-                        }}
-                        onChange={this.doSearchChange}
-                        className="search-input"
-                    />
-                    <button className="search-button" onClick={() => this.searchSong()}>
-                        Search
-                    </button>
-                    </InputGroup>
-                </header>
-                
-                
-                <Container className="song-container-search">
-                    
-                    
-                        {this.state.songResults.map( (song, i) => {
-                            return (
-                            <Card className="album-card">
-                                <Card.Img src={song.album.images[0].url}/>
-                                <Card.Body>
-                                <Card.Title>{song.name}</Card.Title>
-                                    <button className="add-button" onClick={() => this.doAddSong(song.name, song.album.images[0].url, song.id, song.artists)}> + </button>
-                                </Card.Body>
-                            </Card>
-                            )
-                        })}
-                
-                </Container>
-                
-                <div className="song-match-pool-container">
-                <center>Selected Songs:</center>
-                        {this.state.songMatchList.map( (song, i) => {
-                            return (
-                                <Card className="album-card-match-pool">
-                                    <Card.Img src={song.image}/>
-                                    <Card.Body>
-                                    <Card.Title>{song.name}</Card.Title>
-                                    </Card.Body>
-                                </Card>
-                            )
-                        })}
-                    {this.state.songMatchList.length > 0 && <button className="search-button" onClick={() => this.doSearchRecs(3, this.state.songMatchList)}>Search</button>}
-                </div>
-                <button className="home-button-song-match" type="button" onClick={this.doBackClick}><img className="button-image" alt="home" src={home_button}/></button>
+            <Container className="song-container-search"> 
+              {this.state.songResults.map( (song, i) => {
+                return (
+                <Card className="album-card" onClick={() => this.doAddSong(song.name, song.album.images[0].url, song.id, song.artists)}>
+                  <Card.Img src={song.album.images[0].url}/>
+                  <Card.Body>
+                  <Card.Title>{song.name}</Card.Title>
+                  </Card.Body>
+                </Card>
+                )
+              })}
+            </Container>
 
-                
-            </div>
-        );
+            
+            <div className="selected-text"> Selected Songs: </div>
+            <div className="song-match-pool-container">
+                {this.state.songMatchList.map( (song, i) => {
+                    return (
+                      <Card className="album-card-match-pool">
+                          <Card.Img variant="top" className="remove-button" src={remove_button} onClick={() => this.doRemoveSong(song.name, song.image, song.id, song.artists)}/>
+                          <Card.Img src={song.image}/>
+                          <Card.Body>
+                          <Card.Title>{song.name}</Card.Title>
+                          </Card.Body>
+                      </Card>
+                    )
+                })}
+              </div>
+          </div>
+          {this.state.songMatchList.length > 0 && <button className="recs-button" onClick={() => this.doSearchRecs(3, this.state.songMatchList)}>Get Recommendations</button>}
+          <button className="home-button-song-match" type="button" onClick={this.doHomeClick}><img className="button-image" alt="home" src={home_button} /></button>
+        </div>);
     }
 
+    renderRecsPage = (): JSX.Element => {
+      return (
+        <div className="SM-base">
+          <h1 className="SM-header">song match</h1>
+          <div className="SM-background"> 
+                    
+            <Container className="song-recommendation-container">
+              {this.state.songRecommendations.map((song, i) => {
+                console.log(song);
+                return (
+                  <div key={i} className="spotify-container">
+                    <Spotify link={song.external_urls.spotify}/>       
+                    <button className="create-playlist-button" onClick={() => this.doSetChosenSong(song)}>
+                        Create Playlist
+                    </button> 
+                  </div>
+                )
+            })}
+            </Container>
+            
+            <div className="selected-text"> Selected Songs: </div>
+            <div className="song-match-pool-container">
+                {this.state.songMatchList.map( (song, i) => {
+                    return (
+                      <Card className="album-card-match-pool">
+                          <Card.Img src={song.image}/>
+                          <Card.Body>
+                          <Card.Title>{song.name}</Card.Title>
+                          </Card.Body>
+                      </Card>
+                    )
+                })}
+              </div>
+          </div>
+          <button className="back-button-song-match" type="button" onClick={this.doBackClick}><img className="button-image" alt="back" src={back_button} /></button>
+          <button className="home-button-song-match" type="button" onClick={this.doHomeClick}><img className="button-image" alt="home" src={home_button} /></button>
+        </div>);
+    }
 
 
     /**
@@ -248,10 +242,14 @@ export class SongMatch extends Component<SongMatchProps, SongMatchState> {
         this.setState({currentPage: "searchbar"})
     }
 
+    doBackClick = (_evt: MouseEvent<HTMLButtonElement>): void => {
+      this.setState({currentPage: "home", songRecommendations: []});
+    }
+
     /**
      * BACK BUTTON HANDLER FUNCTIONS
      */
-    doBackClick = (_evt: MouseEvent<HTMLButtonElement>): void => {
+    doHomeClick = (_evt: MouseEvent<HTMLButtonElement>): void => {
         return this.props.onBack();
     }
 
@@ -289,14 +287,25 @@ export class SongMatch extends Component<SongMatchProps, SongMatchState> {
         // add song to state array (songMatchList)
         if (this.state.songMatchList.length < 5) {
             const currList = this.state.songMatchList;
-            currList.push({name: name, image: image, id: id, artists: artists});
+            const newSong: Song = {name: name, image: image, id: id, artists: artists};
+            if (indexOf(this.state.songMatchList, newSong) === -1) {
+              currList.push(newSong);
+            }
             this.setState({songMatchList: currList});
         } else {
-            console.log("too many songs")
+            alert("Maximum of 5 songs selected")
         }
-        
     }
 
+    doRemoveSong = (name: string, image: any, id: string, artists: string): void => {
+      const song: Song = {name: name, image: image, id: id, artists: artists};
+      const currList = this.state.songMatchList;
+      const index = indexOf(this.state.songMatchList, song);
+      if (index > -1) {
+        currList.splice(index, 1);
+      }
+      this.setState({songMatchList: currList});
+  }
 
     searchSong = async (): Promise<void> => {
 
@@ -319,7 +328,7 @@ export class SongMatch extends Component<SongMatchProps, SongMatchState> {
                 'Authorization': 'Bearer ' + accessToken
             }
         }
-        var songID = await fetch('https://api.spotify.com/v1/search?q=' + this.state.currentSearch + '&type=track&limit=14', searchParameters)
+        var songID = await fetch('https://api.spotify.com/v1/search?q=' + this.state.currentSearch + '&type=track&limit=8', searchParameters)
             .then(response => response.json())
             // .then(data => console.log(data))  // FOR QUERY TESTING
             .then(data => {this.setState({songResults: data.tracks.items})})
@@ -501,7 +510,7 @@ export class SongMatch extends Component<SongMatchProps, SongMatchState> {
               'Authorization': 'Bearer ' + accessToken,
             },
             body: JSON.stringify({
-              'name': "Spotiblend Song Match Playlist",
+              'name': "Your New Song Match Playlist",
             }),
           };
 
@@ -632,6 +641,11 @@ alert(msg);
 };
 
 
-
-
-
+const indexOf = (songList: Song[], song: Song): number => {
+  for (let i = 0; i < songList.length; i++) {
+    if (JSON.stringify(songList[i]) === JSON.stringify(song)) {
+      return i;
+    }
+  }
+  return -1;
+};
