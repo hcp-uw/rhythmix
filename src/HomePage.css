@@ -137,11 +137,10 @@
 /* General Styling for Descriptions */
 .block-description {
   font-family: 'Poppins', sans-serif; /* Use a clean, modern font */
-  font-size: 1.1rem; /* Slightly larger font for readability */
+  font-size: 1.2rem; /* Slightly larger font for readability */
   color: #ffffff; /* White text for better contrast */
   text-align: center; /* Center-align text inside the blocks */
-  padding: 10px; /* Add padding to give breathing room */
-  line-height: 1.5; /* Increase line spacing for better readability */
+  line-height: 1.6; /* Increase line spacing for better readability */
 }
 
 /* Adding Shadow to Text for Depth */
@@ -204,7 +203,7 @@ iframe {
 /* Style the select dropdown to look like a button */
 .styled-select {
   appearance: none;
-  background-color: salmon;
+  background-color: #9a77d1;
   color: white;
   padding: 10px 20px;
   border: none;

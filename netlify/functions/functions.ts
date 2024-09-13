@@ -33,15 +33,16 @@ type playlistInfo = {genre_seed: string, link: string};
 type trackURI = {uri: string};
 
 const genreToPlaylistMap = new Map<string, playlistInfo>([
-  ["Pop", {genre_seed: "pop", link: "https://open.spotify.com/embed/playlist/6WZx6JODAeplGmQL7YBXfK?utm_source=generator"}],
-  ["Hip-Hop", {genre_seed: "hip-hop", link: "https://open.spotify.com/embed/playlist/5n9846Hwm6OsDicJ5a0v6f?utm_source=generator"}],
-  ["Indie", {genre_seed: "indie", link: "https://open.spotify.com/embed/playlist/1JHl3qS08VD8Qcb0pfqGU3?utm_source=generator"}],
-  ["R&B",  {genre_seed: "r-n-b", link: "https://open.spotify.com/embed/playlist/2ooZlUQuH5xNgrJkD1dpe5?utm_source=generator"}],
-  ["EDM", {genre_seed: "edm", link: "https://open.spotify.com/embed/playlist/0T0JF0dPzzczmQ3hV9x2q5?utm_source=generator"}],
-  ["Romance", {genre_seed: "romance", link: "https://open.spotify.com/embed/playlist/6vGCq5o22Q2o351Nim1TLJ?utm_source=generator"}],
-  ["K-pop", {genre_seed: "k-pop", link: "https://open.spotify.com/embed/playlist/37A4pqUHFQwR1GqNZI8qII?utm_source=generator"}],
-  ["Workout", {genre_seed: "work-out", link: "https://open.spotify.com/embed/playlist/5W8GJqJ4GaJ3NkEOrjTRSf?utm_source=generator"}],
-  ["Alternative", {genre_seed: "alternative", link: "https://open.spotify.com/embed/playlist/3nu8tauOOkdwZVjWYXCrlS?utm_source=generator"}]
+  ["pop", {genre_seed: "pop", link: "https://open.spotify.com/embed/playlist/6WZx6JODAeplGmQL7YBXfK?utm_source=generator"}],
+  ["hip-hop", {genre_seed: "hip-hop", link: "https://open.spotify.com/embed/playlist/5n9846Hwm6OsDicJ5a0v6f?utm_source=generator"}],
+  ["indie", {genre_seed: "indie", link: "https://open.spotify.com/embed/playlist/1JHl3qS08VD8Qcb0pfqGU3?utm_source=generator"}],
+  ["r&b", {genre_seed: "r-n-b", link: "https://open.spotify.com/embed/playlist/2ooZlUQuH5xNgrJkD1dpe5?utm_source=generator"}],
+  ["edm", {genre_seed: "edm", link: "https://open.spotify.com/embed/playlist/0T0JF0dPzzczmQ3hV9x2q5?utm_source=generator"}],
+  ["romance", {genre_seed: "romance", link: "https://open.spotify.com/embed/playlist/6vGCq5o22Q2o351Nim1TLJ?utm_source=generator"}],
+  ["k-pop", {genre_seed: "k-pop", link: "https://open.spotify.com/embed/playlist/37A4pqUHFQwR1GqNZI8qII?utm_source=generator"}],
+  ["workout", {genre_seed: "work-out", link: "https://open.spotify.com/embed/playlist/5W8GJqJ4GaJ3NkEOrjTRSf?utm_source=generator"}],
+  ["alternative", {genre_seed: "alternative", link: "https://open.spotify.com/embed/playlist/3nu8tauOOkdwZVjWYXCrlS?utm_source=generator"}],
+  ["chill", {genre_seed: "chill", link: "https://open.spotify.com/embed/playlist/4v2VPL4rzfFKAdQS6z9gQj?utm_source=generator"}]
 ]);
 
 const clientId = process.env.REACT_APP_CLIENT_ID || 'default';
