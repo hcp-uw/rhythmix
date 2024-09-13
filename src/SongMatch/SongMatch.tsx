@@ -5,7 +5,7 @@ import { accessTokenGLOBAL } from "../HomePage.tsx"
 import { Root } from "react-dom/client";
 import back_button from './back-button.png'
 import home_button from './home-button.png'
-import './index2.css';
+import './index.css';
 import SearchBar from "./SearchBar";
 
 // Specific Songs seedArtist, seedTrack, and seedGenre
@@ -109,21 +109,17 @@ export class SongMatch extends Component<SongMatchProps, SongMatchState> {
                             return (
                                 <div key={i} className="spotify-container">
                                     <Spotify link={song.external_urls.spotify}/>       
-                                    <div>
-                                        <button className="playlist-button" onClick={() => this.doSetChosenSong(song)}>
-                                            Create Playlist
-                                        </button> 
-                                    </div>
-                                        
+                                    <button className="create-playlist-button" onClick={() => this.doSetChosenSong(song)}>
+                                        Create Playlist
+                                    </button> 
                                 </div>
-                                
 
                             )
                         })}
                     </Container>
-
+                    
                     <center>Selected Songs:</center>
-                    <div className="song-match-pool-container-2">
+                    <div className="song-match-pool-container">
                         {this.state.songMatchList.map( (song, i) => {
                             return (
                                 <Card className="album-card">
@@ -160,16 +156,16 @@ export class SongMatch extends Component<SongMatchProps, SongMatchState> {
             timeout();
 
             console.log(this.state.finalPlaylistLINK)
-            return <div className="CPG-base">
-                <h1 className="CPG-header">Your Song Match Playlist</h1>
-                <div className="CPG-background">
-                    <iframe className="embed-playlist" title="CPG-result" src={this.state.finalPlaylistLINK}
+            return <div className="SM-base">
+                <h1 className="SM-header">Your Song Match Playlist</h1>
+                <div className="SM-background">
+                    <iframe className="embed-playlist" title="SM-result" src={this.state.finalPlaylistLINK}
                         width="100%"
                         allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" 
                         loading="lazy">
                     </iframe>
                 </div>
-                <button className="home-button" type="button" onClick={this.doBackClick}><img className="button-image" alt="home" src={back_button} /></button>
+                <button className="home-button-song-match" type="button" onClick={this.doBackClick}><img className="button-image" alt="home" src={home_button} /></button>
             </div>;
         } else {
             return (
@@ -226,7 +222,7 @@ export class SongMatch extends Component<SongMatchProps, SongMatchState> {
                 <center>Selected Songs:</center>
                         {this.state.songMatchList.map( (song, i) => {
                             return (
-                                <Card className="album-card">
+                                <Card className="album-card-match-pool">
                                     <Card.Img src={song.image}/>
                                     <Card.Body>
                                     <Card.Title>{song.name}</Card.Title>
@@ -234,7 +230,7 @@ export class SongMatch extends Component<SongMatchProps, SongMatchState> {
                                 </Card>
                             )
                         })}
-                    {this.state.songMatchList.length > 0 && <button className="rec-button" onClick={() => this.doSearchRecs(3, this.state.songMatchList)}>Search</button>}
+                    {this.state.songMatchList.length > 0 && <button className="search-button" onClick={() => this.doSearchRecs(3, this.state.songMatchList)}>Search</button>}
                 </div>
                 <button className="home-button-song-match" type="button" onClick={this.doBackClick}><img className="button-image" alt="home" src={home_button}/></button>
 
