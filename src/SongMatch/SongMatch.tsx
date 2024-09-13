@@ -5,7 +5,7 @@ import { accessTokenGLOBAL } from "../HomePage.tsx"
 import { Root } from "react-dom/client";
 import back_button from './back-button.png'
 import home_button from './home-button.png'
-import './index.css';
+import './SongMatch.css';
 import SearchBar from "./SearchBar";
 
 // Specific Songs seedArtist, seedTrack, and seedGenre
