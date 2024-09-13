@@ -66,6 +66,7 @@ body {
     padding: 0.75rem 1.5rem; /* Padding for button */
     font-size: 1rem; /* Font size */
     cursor: pointer;
+    top: -6vh;
 }
 
 .embed-playlist {
@@ -98,7 +99,7 @@ body {
     justify-content: center;
     padding: 20px;
     border-radius: 30px;
-    margin-top: 100px;
+    margin-top: 5vh;
     margin-bottom: 300px;
     max-height: 100px;
 }
@@ -109,11 +110,12 @@ body {
     justify-content: center; /* Centers the items horizontally */
     gap: 20px; /* Adds space between items */
     padding: 10px;
-    top: 100px;
+    top: 2vh;
   }
 
 .spotify-container {
     width: (100% / 3);
+    height: 50vh;
     margin-bottom: 40px;
     display: flex; /* Align items in a row */
     align-items: center; /* Vertically centers the items */
@@ -131,27 +133,35 @@ flex: 1; /* Allows the Spotify component to take up remaining space */
     margin-top: -200px; /* Adds some space between the Spotify player and the button */
   }
 
-.song-match-pool-container {
+.song-match-pool-container, .song-match-pool-container-recs {
     position: absolute;
     display: flex;
     justify-content: center; /* Centers items horizontally */
     align-items: center; /* Centers items vertically */
     flex-direction: row; /* Aligns items in a horizontal row */
-    bottom: 125px;
+    bottom: 9vh;
 }
 
-.selected-text {
+.song-match-pool-container-recs {
+    bottom: 4vh;
+}
+
+.selected-text, .selected-text-recs {
     position: absolute;
     font-size: 25px;
     color: white;
     font-weight: bold;
-    bottom: 350px;
+    bottom: 30vh;
+}
+
+.selected-text-recs {
+    bottom: 25vh;
 }
 
 .recs-button {
     position: absolute;
     bottom: 100px;
-    margin-top: 25px;
+    bottom: 5vh;
 }
 
 .song-match-pool-container-2 {
@@ -176,8 +186,9 @@ flex: 1; /* Allows the Spotify component to take up remaining space */
         background-color: rgb(43, 73, 95);
         margin: 10px; /* Space around each card */
         padding: 20px;
-        width: 250px;
-        height: 270px;
+        width: calc((100% / 8) - 20px);
+        max-width: 200px;
+        max-height: 210px;
         padding-bottom: 150px;
         box-sizing: border-box; /* Includes padding and border in the element's total width and height */
         position: relative;
@@ -214,8 +225,7 @@ flex: 1; /* Allows the Spotify component to take up remaining space */
 
 .album-card-match-pool {
     width: 150px;
-    height: 175px;
-    padding: 10px;
+    height: 115px;
     cursor: default;
 }
 
@@ -223,8 +233,8 @@ flex: 1; /* Allows the Spotify component to take up remaining space */
     position: absolute;
     top: 0;
     right: 0;
-    width: 50px;
-    height: 50px;
+    width: 30px;
+    height: 30px;
     border-bottom: 0px;
     cursor: pointer;
 }

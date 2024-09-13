@@ -215,8 +215,8 @@ export class SongMatch extends Component<SongMatchProps, SongMatchState> {
             })}
             </Container>
             
-            <div className="selected-text"> Selected Songs: </div>
-            <div className="song-match-pool-container">
+            <div className="selected-text-recs"> Selected Songs: </div>
+            <div className="song-match-pool-container-recs">
                 {this.state.songMatchList.map( (song, i) => {
                     return (
                       <Card className="album-card-match-pool">
