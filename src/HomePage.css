@@ -133,6 +133,52 @@
   background: #79A4E4;
 }
 
+
+/* General Styling for Descriptions */
+.block-description {
+  font-family: 'Poppins', sans-serif; /* Use a clean, modern font */
+  font-size: 1.1rem; /* Slightly larger font for readability */
+  color: #ffffff; /* White text for better contrast */
+  text-align: center; /* Center-align text inside the blocks */
+  padding: 10px; /* Add padding to give breathing room */
+  line-height: 1.5; /* Increase line spacing for better readability */
+}
+
+/* Adding Shadow to Text for Depth */
+.block-description {
+  text-shadow: 0 2px 5px rgba(0, 0, 0, 0.3); /* Soft shadow to make the text pop */
+}
+
+/* Adding Subtle Transitions on Hover for Interactivity */
+.block-description:hover {
+  color: #f0e68c; /* Light color change on hover */
+  transition: color 0.3s ease-in-out; /* Smooth color transition */
+}
+
+/* Styling the Container Blocks */
+.block-container {
+  background: linear-gradient(135deg, #ff7e5f, #feb47b); /* Gradient background for visual depth */
+  border-radius: 12px; /* Rounded corners for a modern look */
+  padding: 20px; /* Inner padding to give space between the content and edges */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15); /* Soft shadow for a floating effect */
+}
+
+/* Add Padding and Center the Description Vertically */
+.block-container .description {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%; /* Ensure text is vertically centered within block */
+}
+
+/* For Responsive Design (Mobile Adjustments) */
+@media (max-width: 768px) {
+  .description {
+    font-size: 1rem; /* Slightly smaller font for mobile */
+  }
+}
+
+
 /* Floating (hover) animation for the labels */
 @keyframes floatLabel {
   0% {
@@ -158,7 +204,7 @@ iframe {
 /* Style the select dropdown to look like a button */
 .styled-select {
   appearance: none;
-  background-color: #07532e;
+  background-color: salmon;
   color: white;
   padding: 10px 20px;
   border: none;
@@ -170,6 +216,7 @@ iframe {
   width: 100%;
   text-align: center;
   z-index: 1;
+  transition: background-color 0.3s ease-in-out;
 }
 
 .styled-select:hover{

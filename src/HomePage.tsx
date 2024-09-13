@@ -120,6 +120,9 @@ export class HomePage extends Component<null, HomePageState> {
             {/* Middle: Custom Playlist Generator */}
             <button className="cp-bg" type="button" onClick={this.doCustomPlaylistClick}>
               <span className="cp-label">custom playlist generator</span>
+              <p className="block-description">Generate a playlist tailored to your favorite genres and preferences.</p>
+
+            {/* Right: Song Match */}
               {/* <video
                 style={{
                   width: '100%',
@@ -134,6 +137,7 @@ export class HomePage extends Component<null, HomePageState> {
             {/* Right: Song Match */}
             <button className="sm-bg" type="button" onClick={this.doSongMatchClick}>
               <span className="sm-label">song match</span>
+              <p className="block-description">Find songs that match your mood or any song you like.</p>
             </button>
           </div>
 
