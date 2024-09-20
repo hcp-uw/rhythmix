@@ -1,5 +1,6 @@
 import React, { Component, ChangeEvent } from "react";
 import "./HomePage.css";
+import "./information.css";
 import { CustomPlaylist } from './CustomPlaylist/CustomPlaylist.tsx';
 import { SongMatch } from './SongMatch/SongMatch.tsx';
 import logo from "../src/logo.png";
@@ -134,7 +135,8 @@ export class HomePage extends Component<null, HomePageState> {
 
           <header className="footer">
             <button className="logout-button" onClick={this.doLogoutSpotify}> Logout </button>
-            <p> © 2024 spotiblend. All rights reserved. </p>
+            <p> © 2024 spotiblend. All rights reserved.  | <a href="/privacy-policy" className="privacy-link" target="_blank">Privacy Policy</a> | <a href="mailto:spotiblend.dev@gmail.com">Contact Us</a>
+            </p>
           </header>
         </div>
       );
