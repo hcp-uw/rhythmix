@@ -4,9 +4,9 @@ import './information.css';
 const PrivacyPolicy = () => {
   return (
     <div className="privacy-policy">
-      <h1>Privacy Policy for spotiblend </h1>
+      <h1>Privacy Policy for rhythmix </h1>
 
-      <p>At spotiblend, we value your privacy and are committed to protecting your personal information. This privacy policy outlines how we collect, use, and protect your data when you use our website and services, particularly when interacting with Spotify features.</p>
+      <p>At rhythmix, we value your privacy and are committed to protecting your personal information. This privacy policy outlines how we collect, use, and protect your data when you use our website and services, particularly when interacting with Spotify features.</p>
 
       <h2>1. Information We Collect</h2>
       <p>When you authorize your Spotify account to use our service, we may collect the following information:</p>

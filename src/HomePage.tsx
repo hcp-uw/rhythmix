@@ -69,7 +69,7 @@ export class HomePage extends Component<null, HomePageState> {
           {/* Logo and title */}
           <header className="header">
             <img src={logo} alt="logo" />
-            <h1> spotiblend </h1>
+            <h1> rhythmix </h1>
           </header>
 
           {/* Main 3 features */}
@@ -135,7 +135,7 @@ export class HomePage extends Component<null, HomePageState> {
 
           <header className="footer">
             <button className="logout-button" onClick={this.doLogoutSpotify}> Logout </button>
-            <p> © 2024 spotiblend. All rights reserved.  | <a href="/privacy-policy" className="privacy-link" target="_blank">Privacy Policy</a> | <a href="mailto:spotiblend.dev@gmail.com">Contact Us</a>
+            <p> © 2024 rhythmix. All rights reserved.  | <a href="/privacy-policy" className="privacy-link" target="_blank">Privacy Policy</a> | <a href="mailto:spotiblend.dev@gmail.com">Contact Us</a>
             </p>
           </header>
         </div>

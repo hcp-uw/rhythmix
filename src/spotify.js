@@ -2,7 +2,7 @@
 
 // Use for production.
 const clientId = process.env.REACT_APP_CLIENT_ID || 'default';
-const redirectUrl = 'https://spotiblend.netlify.app';
+const redirectUrl = 'https://rhythm-ix.netlify.app';
 
 // Use for local development. Running 'netlify dev' goes to http://localhost:8888. Uses the TestApp Spotify Dev app (not production SpotiBlend).
 // const clientId = 'ebc045cb9fcb4ad8a57b487704be9805';
