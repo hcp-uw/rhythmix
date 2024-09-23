@@ -10,7 +10,7 @@ const redirectUrl = 'https://rhythm-ix.netlify.app';
 
 const authorizationEndpoint = "https://accounts.spotify.com/authorize";
 const tokenEndpoint = "https://accounts.spotify.com/api/token";
-const scope = 'user-read-private user-read-email playlist-read-private playlist-modify-public playlist-modify-private user-library-read';
+const scope = 'user-read-private playlist-modify-public playlist-modify-private';
 
 // Data structure that manages the current active token, caching it in localStorage
 const currentToken = {
