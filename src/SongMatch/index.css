@@ -41,7 +41,7 @@ body {
     top: 50px;
 }
 
-.search-button, .recs-button {
+.search-button{
     background-color: rgb(43, 73, 95); /* Button color */
     color: white;
     border: none; /* Remove default border */
@@ -51,6 +51,19 @@ body {
     margin-left: 5px;
     cursor: pointer;
     transition: background-color 0.2s ease-in-out; /* Smooth transition for background color */
+}
+
+.recs-button {
+    background-color: rgb(43, 73, 95); /* Button color */
+    color: white;
+    border: none; /* Remove default border */
+    border-radius: 0.5rem; /* Rounded corners */
+    padding: 0.75rem 1.5rem; /* Padding for button */
+    font-size: 1rem; /* Font size */
+    margin-left: 5px;
+    cursor: pointer;
+    transition: background-color 0.2s ease-in-out; /* Smooth transition for background color */
+    
 }
 
 .search-button:hover {
@@ -134,7 +147,7 @@ flex: 1; /* Allows the Spotify component to take up remaining space */
   }
 
 .song-match-pool-container, .song-match-pool-container-recs {
-    position: absolute;
+    /* position: absolute; */
     display: flex;
     justify-content: center; /* Centers items horizontally */
     align-items: center; /* Centers items vertically */
@@ -147,7 +160,7 @@ flex: 1; /* Allows the Spotify component to take up remaining space */
 }
 
 .selected-text, .selected-text-recs {
-    position: absolute;
+    /* position: absolute; */
     font-size: 25px;
     color: white;
     font-weight: bold;
@@ -158,11 +171,11 @@ flex: 1; /* Allows the Spotify component to take up remaining space */
     bottom: 25vh;
 }
 
-.recs-button {
+/* .recs-button {
     position: absolute;
     bottom: 100px;
     bottom: 5vh;
-}
+} */
 
 .song-match-pool-container-2 {
     display: flex;
@@ -336,4 +349,5 @@ flex: 1; /* Allows the Spotify component to take up remaining space */
     flex-direction: column;
     justify-content: center; /* Add this if you want to center content horizontally */
     align-items: center; /* Add this if you want to center content vertically */
+    overflow-y: auto;
 }

@@ -188,9 +188,11 @@ export class SongMatch extends Component<SongMatchProps, SongMatchState> {
                       </Card>
                     )
                 })}
-              </div>
+                <div>
+                {this.state.songMatchList.length > 0 && <button className="recs-button" onClick={() => this.doSearchRecs(3, this.state.songMatchList)}>Get Recommendations</button>}
+                </div>
+            </div>
           </div>
-          {this.state.songMatchList.length > 0 && <button className="recs-button" onClick={() => this.doSearchRecs(3, this.state.songMatchList)}>Get Recommendations</button>}
           <button className="home-button-song-match" type="button" onClick={this.doHomeClick}><img className="button-image" alt="home" src={home_button} /></button>
         </div>);
     }
