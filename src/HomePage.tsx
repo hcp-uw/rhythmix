@@ -1,5 +1,6 @@
 import React, { Component, ChangeEvent } from "react";
 import "./HomePage.css";
+import "./information.css";
 import { CustomPlaylist } from './CustomPlaylist/CustomPlaylist.tsx';
 import { SongMatch } from './SongMatch/SongMatch.tsx';
 import logo from "../src/logo.png";
@@ -8,15 +9,16 @@ import { loginWithSpotifyClick, logoutClick } from "./spotify.js";
 export const accessTokenGLOBAL = localStorage.getItem('access_token');
 
 const genreToPlaylistMap = new Map<string, string>([
-  ["Pop", "https://open.spotify.com/embed/playlist/6WZx6JODAeplGmQL7YBXfK?utm_source=generator"],
-  ["Hip-Hop", "https://open.spotify.com/embed/playlist/5n9846Hwm6OsDicJ5a0v6f?utm_source=generator"],
-  ["Indie", "https://open.spotify.com/embed/playlist/1JHl3qS08VD8Qcb0pfqGU3?utm_source=generator"],
-  ["R&B", "https://open.spotify.com/embed/playlist/2ooZlUQuH5xNgrJkD1dpe5?utm_source=generator"],
-  ["EDM", "https://open.spotify.com/embed/playlist/0T0JF0dPzzczmQ3hV9x2q5?utm_source=generator"],
-  ["Romance", "https://open.spotify.com/embed/playlist/6vGCq5o22Q2o351Nim1TLJ?utm_source=generator"],
-  ["K-pop", "https://open.spotify.com/embed/playlist/37A4pqUHFQwR1GqNZI8qII?utm_source=generator"],
-  ["Workout", "https://open.spotify.com/embed/playlist/5W8GJqJ4GaJ3NkEOrjTRSf?utm_source=generator"],
-  ["Alternative", "https://open.spotify.com/embed/playlist/3nu8tauOOkdwZVjWYXCrlS?utm_source=generator"]
+  ["pop", "https://open.spotify.com/embed/playlist/6WZx6JODAeplGmQL7YBXfK?utm_source=generator"],
+  ["hip-hop", "https://open.spotify.com/embed/playlist/5n9846Hwm6OsDicJ5a0v6f?utm_source=generator"],
+  ["indie", "https://open.spotify.com/embed/playlist/1JHl3qS08VD8Qcb0pfqGU3?utm_source=generator"],
+  ["r&b", "https://open.spotify.com/embed/playlist/2ooZlUQuH5xNgrJkD1dpe5?utm_source=generator"],
+  ["edm", "https://open.spotify.com/embed/playlist/0T0JF0dPzzczmQ3hV9x2q5?utm_source=generator"],
+  ["romance", "https://open.spotify.com/embed/playlist/6vGCq5o22Q2o351Nim1TLJ?utm_source=generator"],
+  ["k-pop", "https://open.spotify.com/embed/playlist/37A4pqUHFQwR1GqNZI8qII?utm_source=generator"],
+  ["workout", "https://open.spotify.com/embed/playlist/5W8GJqJ4GaJ3NkEOrjTRSf?utm_source=generator"],
+  ["alternative", "https://open.spotify.com/embed/playlist/3nu8tauOOkdwZVjWYXCrlS?utm_source=generator"],
+  ["chill", "https://open.spotify.com/embed/playlist/4v2VPL4rzfFKAdQS6z9gQj?utm_source=generato"]
 ]);
 
 type HomePageState = {
@@ -29,7 +31,7 @@ export class HomePage extends Component<null, HomePageState> {
   constructor(props: null) {
     super(props);
     this.state = {
-      genre: "Pop",
+      genre: "pop",
       page: "home",
       displayPlaylist: false,
     };
@@ -67,7 +69,7 @@ export class HomePage extends Component<null, HomePageState> {
           {/* Logo and title */}
           <header className="header">
             <img src={logo} alt="logo" />
-            <h1> Spotiblend </h1>
+            <h1> rhythmix </h1>
           </header>
 
           {/* Main 3 features */}
@@ -91,16 +93,17 @@ export class HomePage extends Component<null, HomePageState> {
                   className="styled-select"
                 >
 
-                <option value="Alternative">Alternative</option>
-                <option value="EDM">EDM</option>
-                <option value="Hip-Hop">Hip-Hop</option>
-                <option value="Indie">Indie</option>
-                <option value="K-pop">K-pop</option>
-                <option value="Pop">Pop</option>
-                <option value="R&B">R&B</option>
-                <option value="Romance">Romance</option>
-                <option value="Workout">Workout</option>
-              
+                  <option value="alternative">alternative</option>
+                  <option value="chill">chill</option>
+                  <option value="edm">edm</option>
+                  <option value="hip-hop">hip-hop</option>
+                  <option value="indie">indie</option>
+                  <option value="k-pop">k-pop</option>
+                  <option value="pop">pop</option>
+                  <option value="r&b">r&b</option>
+                  <option value="romance">romance</option>
+                  <option value="workout">workout</option>
+
                 </select>
 
                 <div>
@@ -119,20 +122,21 @@ export class HomePage extends Component<null, HomePageState> {
 
             {/* Middle: Custom Playlist Generator */}
             <button className="cp-bg" type="button" onClick={this.doCustomPlaylistClick}>
-              <span className="cp-label">Custom Playlist Generator</span>
-              <p className="block-description">Generate playlists tailored to your favorite genres :)</p>
+              <span className="cp-label">custom playlist generator</span>
+              <p className="block-description">adjust a variety of song attributes to craft the perfect playlist for any vibe :)</p>
             </button>
 
             {/* Right: Song Match */}
             <button className="sm-bg" type="button" onClick={this.doSongMatchClick}>
-              <span className="sm-label">Song Match</span>
-              <p className="block-description">Disover music that matches your current mood!</p>
+              <span className="sm-label">song match</span>
+              <p className="block-description">discover music that matches your mood and personal favorites!</p>
             </button>
           </div>
 
           <header className="footer">
             <button className="logout-button" onClick={this.doLogoutSpotify}> Logout </button>
-            <p> © 2024 SpotiBlend. All rights reserved. </p>
+            <p> © 2024 rhythmix. All rights reserved.  | <a href="/privacy-policy" className="privacy-link" target="_blank">Privacy Policy</a> | <a href="mailto:spotiblend.dev@gmail.com">Contact Us</a>
+            </p>
           </header>
         </div>
       );

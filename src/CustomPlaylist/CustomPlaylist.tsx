@@ -131,48 +131,26 @@ export class CustomPlaylist extends Component<CustomPlaylistProps, CustomPlaylis
     return slider_render;
   }
 
-  renderGenres = () : JSX.Element[] => {
-    // Fix duration slider
-    const genre_render : JSX.Element[] = [];
-    for (let i = 0; i < all_genres.length; i += 7) {
-      genre_render.push(
-        <React.Fragment key={i}>
-          <div className="genres">
-            <tr>
-              <td>
-                <input className="checkboxes" type="checkbox" onChange={this.doGenreClick} id={all_genres[i]} name={all_genres[i]} value={all_genres[i]} />
-                <label htmlFor={all_genres[i]}>{all_genres[i]}</label>
-              </td>
-              <td>
-                <input className="checkboxes" type="checkbox" onChange={this.doGenreClick} id={all_genres[i + 1]} name={all_genres[i + 1]} value={all_genres[i + 1]} />
-                <label htmlFor={all_genres[i + 1]}>{all_genres[i + 1]}</label>
-              </td>
-              <td>
-                <input className="checkboxes" type="checkbox" onChange={this.doGenreClick} id={all_genres[i + 2]} name={all_genres[i + 2]} value={all_genres[i + 2]} />
-                <label htmlFor={all_genres[i + 2]}>{all_genres[i + 2]}</label>
-              </td>
-              <td>
-                <input className="checkboxes" type="checkbox" onChange={this.doGenreClick} id={all_genres[i + 3]} name={all_genres[i + 3]} value={all_genres[i + 3]} />
-                <label htmlFor={all_genres[i + 3]}>{all_genres[i + 3]}</label>
-              </td>
-              <td>
-                <input className="checkboxes" type="checkbox" onChange={this.doGenreClick} id={all_genres[i + 4]} name={all_genres[i + 4]} value={all_genres[i + 4]} />
-                <label htmlFor={all_genres[i + 4]}>{all_genres[i + 4]}</label>
-              </td>
-              <td>
-                <input className="checkboxes" type="checkbox" onChange={this.doGenreClick} id={all_genres[i + 5]} name={all_genres[i + 5]} value={all_genres[i + 5]} />
-                <label htmlFor={all_genres[i + 5]}>{all_genres[i + 5]}</label>
-              </td>
-              <td>
-                <input className="checkboxes" type="checkbox" onChange={this.doGenreClick} id={all_genres[i + 6]} name={all_genres[i + 6]} value={all_genres[i + 6]} />
-                <label htmlFor={all_genres[i + 6]}>{all_genres[i + 6]}</label>
-              </td>
-            </tr>
-          </div>
-        </ React.Fragment>
-      );
-    }
-    return genre_render;
+  renderGenres = () : JSX.Element => {
+    return (
+        <div className="genres">
+            {all_genres.map((genre) => (
+                <div key={genre} className="genre-item">
+                    <input
+                        className="checkboxes"
+                        type="checkbox"
+                        onChange={this.doGenreClick}
+                        id={genre}
+                        name={genre}
+                        value={genre}
+                    />
+                    <label htmlFor={genre} className="checkbox-label">
+                        {genre}
+                    </label>
+                </div>
+            ))}
+        </div>
+    );
   }
 
   // Selects or deselects a genre

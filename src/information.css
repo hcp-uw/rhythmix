@@ -1,0 +1,13 @@
+body {
+  color: white;
+}
+
+.privacy-policy {
+  line-height: 1.5;
+  margin: 20px;
+}
+
+a {
+  color: rgb(173, 176, 173);
+  text-decoration: none;
+}

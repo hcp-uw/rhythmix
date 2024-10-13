@@ -1,143 +1,140 @@
 :root {
-    --body-font-size: 3vh;
+    --body-font-size: 16px;
 }
 
 body {
-    font-weight: normal !important;
+    font-weight: normal !important; 
+    font-size: var(--body-font-size);
 }
 
 * {
-    -webkit-box-sizing: border-box;
-    -moz-box-sizing: border-box;
     box-sizing: border-box;
 }
 
 .CPG-header {
     background-color: rgb(90, 189, 136);
-    padding: 1vh 8vh;
+    padding: 0.5rem 1rem;
     position: fixed;
     top: 3%;
-    border-radius: 10vh;
-    font-size: 5vh;
+    left: 50%;
+    transform: translateX(-50%);
+    border-radius: 2rem;
+    font-size: 1.5rem;
     letter-spacing: 0.1rem;
     border-style: none;
+    white-space: nowrap;
 }
 
 .CPG-background {
-    position: fixed; /* or absolute */
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -40%);
-    background: linear-gradient(rgba(90, 189, 136, 0.9), rgba(191, 255, 89, 0.3), rgba(222, 255, 89, 0));
-    background-repeat: no-repeat;
-    background-size: cover;
-    border-radius: 3vh;
-    width: 95vw;
-    height: 78vh;
-    display: flex; /* Add this if you want to center content horizontally */
-    flex-direction: column;
-    justify-content: center; /* Add this if you want to center content horizontally */
-    align-items: center; /* Add this if you want to center content vertically */
-}
-
-.CPG-base {
-    position: fixed; /* or absolute */
+    position: fixed;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
+    background: linear-gradient(rgba(90, 189, 136, 0.9), rgba(191, 255, 89, 0.3), rgba(222, 255, 89, 0));
+    background-repeat: no-repeat;
+    background-size: cover;
+    border-radius: 1rem;
+    width: 95%;
+    max-height: 80%; /* Limit height for scrolling */
+    overflow-y: auto; /* Enable vertical scrolling */
+    padding: 1rem; /* Optional: Add padding */
+}
+
+.CPG-base {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
     background: rgb(33, 33, 33);
     background-repeat: no-repeat;
     background-size: cover;
-    width: 100vw;
-    height: 100vh;
-    display: flex; /* Add this if you want to center content horizontally */
+    display: flex;
     flex-direction: column;
-    justify-content: center; /* Add this if you want to center content horizontally */
-    align-items: center; /* Add this if you want to center content vertically */
+    justify-content: center;
+    align-items: center;
 }
 
 .genres {
-    font-size: 2.3vh;
+    font-size: 0.9rem;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); /* Responsive columns */
+    gap: 0.5rem;
+    width: 100%;
+    padding: 1rem;
+    justify-content: center; /* Center items */
 }
 
-.checkboxes {
-    margin-right: 1.5vh;
-    cursor: pointer;
+.genres td {
+    display: flex;
+    align-items: center; /* Center items vertically */
+    justify-content: center; /* Center items horizontally */
+    flex-direction: column; /* Stack checkbox and label */
 }
 
-.slider_checkboxes {
-    margin-right: 1vh;
-    margin-left: 2vh;
+.checkboxes, .slider_checkboxes {
+    margin: 0.5rem; /* Spacing around checkboxes */
     cursor: pointer;
 }
 
 .checkbox-label {
-    font-size: 2.3vh;
+    font-size: 0.9rem;
     letter-spacing: 0.05rem;
     color: rgba(223, 240, 203, 1);
 }
 
 .CPG-create-playlist-button {
     background-color: rgb(192, 231, 179);
-    padding: 1vh 4vw;
-    position: absolute;
-    border-radius: 10vh;
+    padding: 0.5rem 1rem;
+    border-radius: 2rem;
     font-size: var(--body-font-size);
     letter-spacing: 0.1rem;
     border-style: none;
     display: block;
-    margin: auto;
-    transform: translateY(22vh);
-    z-index: 1;
+    margin: 1rem auto;
+    transition: transform 0.3s ease;
 }
 
 .CPG-create-playlist-button:hover {
-    transform: scale(1.1) translateY(20vh);
+    transform: scale(1.1);
+}
+
+.home-button, .back-button {
+    background-color: rgb(90, 189, 136);
+    padding: 0.5rem;
+    border-radius: 50%;
+    font-size: var(--body-font-size);
+    letter-spacing: 0.1rem;
+    border-style: none;
+    width: 3rem;
+    height: 3rem;
+    position: fixed;
+    bottom: 1rem;
+    transition: transform 0.3s ease;
 }
 
 .home-button {
-    transform: translate(44vw, -40vh);
-    background-color: rgb(90, 189, 136);
-    position: absolute;
-    padding: 1vh 3vh;
-    border-radius: 10vh;
-    font-size: var(--body-font-size);
-    letter-spacing: 0.1rem;
-    border-style: none;
-    width: 7vw;
-    height: 8vh;
-}
-
-.home-button:hover {
-    transform: scale(1.1) translate(40vw, -36.5vh);
+    right: 1rem;
 }
 
 .back-button {
-    transform: translate(-44vw, -40vh);
-    background-color: rgb(90, 189, 136);
-    position: absolute;
-    padding: 1vh 3vh;
-    border-radius: 10vh;
-    font-size: var(--body-font-size);
-    letter-spacing: 0.1rem;
-    border-style: none;
-    width: 7vw;
-    height: 8vh;
+    left: 1rem;
 }
 
-.back-button:hover {
-    transform: scale(1.1) translate(-40vw, -36.5vh);
+.home-button:hover, .back-button:hover {
+    transform: scale(1.1);
 }
 
 .next-button {
     background-color: rgb(192, 231, 179);
-    padding: 0.5vh 4vh;
-    margin-top: 2vh;
-    border-radius: 10vh;
+    padding: 0.5rem 1rem;
+    margin-top: 1rem;
+    border-radius: 2rem;
     font-size: var(--body-font-size);
     letter-spacing: 0.1rem;
     border-style: none;
     font-weight: bold;
+    transition: transform 0.3s ease;
 }
 
 .more-options-button {
@@ -147,8 +144,8 @@ body {
     font-size: var(--body-font-size);
     letter-spacing: 0.1rem;
     color: rgb(192, 231, 179);
-    margin-left: 4vw;
-    margin-top: 3vh;
+    margin-top: 1rem;
+    transition: transform 0.3s ease;
 }
 
 .next-button:hover, .more-options-button:hover {
@@ -157,65 +154,59 @@ body {
 
 .more-options-background {
     background-color: rgba(212, 241, 176, 0.25);
-    border-radius: 3vh;
+    border-radius: 1rem;
     margin: 0.5% auto;
     width: 97%;
-    height: 19%;
-    position: relative;
+    padding: 1rem;
 }
 
-.create-playlist-button, .home-button, .back-button, .next-button, .more-options-button {
+.CPG-create-playlist-button, .home-button, .back-button, .next-button, .more-options-button {
     cursor: pointer;
-}
-
-td {
-    padding: 0.1vh 0 0.1vh 0;
-    width: 13vw;
-    letter-spacing: 0.05rem;
-    color: rgba(223, 240, 203, 1);
 }
 
 .slider-container {
     width: 90%;
-    margin: 4vh auto 4vh auto;
+    margin: 1rem auto;
 }
 
 .slider-label {
-    margin-bottom: 2vh;
-    margin-top: 2vh;
-    font-size: 3vh;
+    margin-bottom: 0.5rem;
+    font-size: 1rem;
     color: rgba(223, 240, 203, 0.9);
     letter-spacing: 0.1em;
 }
 
 .slider-background {
     background-color: rgba(212, 241, 176, 0.25);
-    border-radius: 3vh;
+    border-radius: 1rem;
     width: 97%;
-    height: 75%;
-    position: relative;
-    margin-bottom: 0;
+    padding: 1rem;
+    margin-bottom: 1rem;
 }
 
 .embed-playlist {
-    width: 90%;
+    width: 100%;
     height: 90%;
+    max-width: 800px;
+    margin: 0 auto;
 }
 
 .button-image {
-    width: 80%;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
 }
 
 .all-slider-container {
     max-height: 85%;
     width: 90%;
-    overflow-y: scroll;
+    overflow-y: auto; /* Ensure this is scrollable if needed */
     scrollbar-color: rgba(223, 240, 203, 1) transparent;
-    margin-top: 10vh;
+    margin-top: 2rem;
+    padding: 1rem;
 }
 
-/********** Range Input Styles **********/
-/*Range Reset*/
+/* Range Input Styles */
 input[type="range"] {
     -webkit-appearance: none;
     appearance: none;
@@ -224,30 +215,23 @@ input[type="range"] {
     width: 100%;
 }
 
-/* Removes default focus */
 input[type="range"]:focus {
     outline: none;
 }
 
-/***** Chrome, Safari, Opera and Edge Chromium styles *****/
-/* slider track */
 input[type="range"]::-webkit-slider-runnable-track {
     background-color: rgba(212, 241, 176, 0.7);
-    margin-top: 4vh;
-    height: 0.3vh;
+    height: 0.3rem;
 }
 
-/* slider thumb */
 input[type="range"]::-webkit-slider-thumb {
-    -webkit-appearance: none; /* Override default look */
+    -webkit-appearance: none;
     appearance: none;
-    margin-top: -2.5vh; /* Centers thumb on the track */
-
-    /*custom styles*/
+    margin-top: -0.35rem;
     background-color: rgb(218, 239, 211);
-    height: 5vh;
-    width: 1.2vw;
-    border-radius: 0.3vw;
+    height: 1rem;
+    width: 1rem;
+    border-radius: 50%;
 }
 
 input[type="range"]:focus::-webkit-slider-thumb {
@@ -256,28 +240,75 @@ input[type="range"]:focus::-webkit-slider-thumb {
     outline-offset: 0.125rem;
 }
 
-/******** Firefox styles ********/
-/* slider track */
 input[type="range"]::-moz-range-track {
     background-color: rgba(212, 241, 176, 0.7);
-    height: 0.3vh;
+    height: 0.3rem;
 }
 
-/* slider thumb */
 input[type="range"]::-moz-range-thumb {
-    -webkit-appearance: none; /* Override default look */
-    appearance: none;
-    margin-top: -2.5vh; /* Centers thumb on the track */
-
-    /*custom styles*/
+    border: none;
+    border-radius: 50%;
     background-color: rgb(218, 239, 211);
-    height: 5vh;
-    width: 1.2vw;
-    border-radius: 0.3vw;
+    height: 1rem;
+    width: 1rem;
 }
 
 input[type="range"]:focus::-moz-range-thumb {
     border: 1px solid #000305;
     outline: 3px solid #05090c;
     outline-offset: 0.125rem;
+}
+
+@media (max-width: 768px) {
+    :root {
+        --body-font-size: 14px;
+    }
+
+    .CPG-header {
+        font-size: 1.2rem;
+    }
+
+    .genres {
+        grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+    }
+
+    .CPG-background {
+        width: 98%;
+        height: 85%;
+    }
+
+    .home-button, .back-button {
+        width: 2.5rem;
+        height: 2.5rem;
+    }
+}
+
+@media (max-width: 480px) {
+    :root {
+        --body-font-size: 12px;
+    }
+
+    .CPG-header {
+        font-size: 1rem;
+        padding: 0.3rem 0.8rem;
+    }
+
+    .genres {
+        grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+    }
+
+    .CPG-background {
+        width: 100%;
+        height: 90%;
+        border-radius: 0;
+    }
+
+    .home-button, .back-button {
+        width: 2rem;
+        height: 2rem;
+    }
+
+    .slider-container {
+        width: 95%;
+    }
 }
