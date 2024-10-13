@@ -102,7 +102,7 @@ export class CustomPlaylist extends Component<CustomPlaylistProps, CustomPlaylis
         slider_render.push(
           <div key={i} className="slider-container">
             <label htmlFor={curr_attribute} className="slider-label">{curr_attribute}</label>
-            <input className="slider_checkboxes" type="checkbox" onChange={this.doIncludeClick} id={curr_attribute + "_include"} name={curr_attribute} value={curr_attribute} />
+            <input className="slider_checkboxes" type="checkbox" onChange={this.doIncludeClick} id={curr_attribute + "_include"} name={curr_attribute} value={curr_attribute} checked={this.state.include.has(curr_attribute)}/>
             <label htmlFor={curr_attribute + "_include"} className="checkbox-label">include</label> <br />
             <input type="range" min="1" max="11" step="0.01" id={curr_attribute} onChange={this.doAttributeChange} defaultValue={this.state.attributes.get(curr_attribute)}></input>
           </div>
@@ -111,7 +111,7 @@ export class CustomPlaylist extends Component<CustomPlaylistProps, CustomPlaylis
         slider_render.push(
           <div key={i} className="slider-container">
             <label htmlFor={curr_attribute} className="slider-label">{curr_attribute}</label>
-            <input className="slider_checkboxes" type="checkbox" onChange={this.doIncludeClick} id={curr_attribute + "_include"} name={curr_attribute} value={curr_attribute} />
+            <input className="slider_checkboxes" type="checkbox" onChange={this.doIncludeClick} id={curr_attribute + "_include"} name={curr_attribute} value={curr_attribute} checked={this.state.include.has(curr_attribute)}/>
             <label htmlFor={curr_attribute + "_include"} className="checkbox-label">include</label> <br />
             <input type="range" min="1" max="100" step="0.01" id={curr_attribute} onChange={this.doAttributeChange} defaultValue={this.state.attributes.get(curr_attribute)}></input>
           </div>
@@ -120,7 +120,7 @@ export class CustomPlaylist extends Component<CustomPlaylistProps, CustomPlaylis
         slider_render.push(
           <div key={i} className="slider-container">
             <label htmlFor={curr_attribute} className="slider-label">{curr_attribute}</label>
-            <input className="slider_checkboxes" type="checkbox" onChange={this.doIncludeClick} id={curr_attribute + "_include"} name={curr_attribute} value={curr_attribute}/>
+            <input className="slider_checkboxes" type="checkbox" onChange={this.doIncludeClick} id={curr_attribute + "_include"} name={curr_attribute} value={curr_attribute} checked={this.state.include.has(curr_attribute)}/>
             <label htmlFor={curr_attribute + "_include"} className="checkbox-label">include</label> <br />
             <input type="range" min="0" max="1" step="0.01" id={curr_attribute} onChange={this.doAttributeChange} defaultValue={this.state.attributes.get(curr_attribute)}></input>
           </div>
@@ -186,7 +186,7 @@ export class CustomPlaylist extends Component<CustomPlaylistProps, CustomPlaylis
     return this.props.onHome();
   };
 
-  // Returns to sliders
+  // Returns to genres
   doBackClick = () : void => {
     this.state.include.clear();
     this.setState({page: {kind: "genres"}});
