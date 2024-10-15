@@ -203,6 +203,15 @@ body {
     margin-bottom: 1rem;
 }
 
+/* CSS for the value displayed above each slider */
+.slider-value {
+    font-size: 14px;
+    margin-bottom: 5px;
+    color: #fff; /* Ensure it's visible */
+    text-align: center;
+  }
+  
+
 .embed-playlist {
     margin-top: 0;
 }
@@ -386,3 +395,42 @@ input[type="range"]:focus::-moz-range-thumb {
         font-size: 1.1rem;
     }
 }
+
+/* Modal container */
+.modal {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+  }
+  
+  .modal-content {
+    background-color: #fff;
+    color: #333; /* Ensure text is visible with a contrasting color */
+    padding: 20px;
+    border-radius: 10px;
+    width: 300px;
+    text-align: center;
+    font-size: 16px; /* Adjust font size if needed */
+  }
+  
+  
+  /* Close button */
+  .close-button {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+  }
+  
+  .close-button:hover {
+    color: black;
+  }
+  
