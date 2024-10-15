@@ -13,6 +13,7 @@ type CustomPlaylistState = {
   genres: Set<string>;
   tracks: Array<any>;
   playlist_url: string;
+  showModal: boolean;
 };
 
 type CustomPlaylistProps = {
@@ -28,7 +29,7 @@ const playlist_size : bigint = 25n;
 export class CustomPlaylist extends Component<CustomPlaylistProps, CustomPlaylistState> {
   constructor(props: CustomPlaylistProps) {
     super(props);
-    this.state = {page: {kind: "genres"}, attributes: new Map<string, number>(), include: new Set<string>(), genres: new Set<string>(), tracks: [], playlist_url: ""};
+    this.state = {page: {kind: "genres"}, attributes: new Map<string, number>(), include: new Set<string>(), genres: new Set<string>(), tracks: [], playlist_url: "", showModal: false};
     for (let i = 0; i < all_attributes.length; i++) {
       this.state.attributes.set(all_attributes[i], 0.5);
     }
@@ -46,6 +47,17 @@ export class CustomPlaylist extends Component<CustomPlaylistProps, CustomPlaylis
           <button className="next-button" type="button" onClick={this.doBasicSlidersClick}>next</button>
         </div>
         <button className="home-button" type="button" onClick={this.doHomeClick}><img className="button-image" alt="home" src={home_button} /></button>
+        {/* Modal for "Must select at least 1 seed genre" */}
+        {this.state.showModal && (
+          <div className="modal">
+            <div className="modal-content">
+              <span className="close-button" onClick={this.closeModal}>
+                &times;
+              </span>
+              <p>Must select at least 1 seed genre!</p>
+            </div>
+          </div>
+        )}
       </div>;
     }
     if (this.state.page.kind === "basic_sliders") {
@@ -86,51 +98,110 @@ export class CustomPlaylist extends Component<CustomPlaylistProps, CustomPlaylis
     }
   };
 
-  renderSliders = () : JSX.Element[] => {
-    let num_sliders : bigint = 0n;
+  renderSliders = (): JSX.Element[] => {
+    let num_sliders: bigint = 0n;
     if (this.state.page.kind === "basic_sliders") {
       num_sliders = 4n;
     } else {
       num_sliders = BigInt(all_attributes.length);
     }
-
-    const slider_render : JSX.Element[] = [];
+  
+    const slider_render: JSX.Element[] = [];
     for (let i = 0; i < num_sliders; i++) {
       const curr_attribute = all_attributes[i];
-
+      const currentValue = this.state.attributes.get(curr_attribute); // Get current value of the attribute
+  
       if (curr_attribute === "time signature" || curr_attribute === "key") {
         slider_render.push(
           <div key={i} className="slider-container">
             <label htmlFor={curr_attribute} className="slider-label">{curr_attribute}</label>
-            <input className="slider_checkboxes" type="checkbox" onChange={this.doIncludeClick} id={curr_attribute + "_include"} name={curr_attribute} value={curr_attribute} checked={this.state.include.has(curr_attribute)}/>
-            <label htmlFor={curr_attribute + "_include"} className="checkbox-label">include</label> <br />
-            <input type="range" min="1" max="11" step="0.01" id={curr_attribute} onChange={this.doAttributeChange} defaultValue={this.state.attributes.get(curr_attribute)}></input>
+            <input 
+              className="slider_checkboxes" 
+              type="checkbox" 
+              onChange={this.doIncludeClick} 
+              id={curr_attribute + "_include"} 
+              name={curr_attribute} 
+              value={curr_attribute} 
+              checked={this.state.include.has(curr_attribute)}
+            />
+            <label htmlFor={curr_attribute + "_include"} className="checkbox-label">include</label> 
+            <br />
+            {/* Display current value above the slider */}
+            <div className="slider-value">{currentValue}</div>
+            <input 
+              type="range" 
+              min="1" 
+              max="11" 
+              step="0.01" 
+              id={curr_attribute} 
+              onChange={this.doAttributeChange} 
+              value={currentValue} // Ensure value syncs with state
+            />
           </div>
-        )
+        );
       } else if (curr_attribute === "popularity") {
         console.log(this.state.include.has(curr_attribute) + " " + curr_attribute);
         slider_render.push(
           <div key={i} className="slider-container">
             <label htmlFor={curr_attribute} className="slider-label">{curr_attribute}</label>
-            <input className="slider_checkboxes" type="checkbox" onChange={this.doIncludeClick} id={curr_attribute + "_include"} name={curr_attribute} value={curr_attribute} checked={this.state.include.has(curr_attribute)}/>
-            <label htmlFor={curr_attribute + "_include"} className="checkbox-label">include</label> <br />
-            <input type="range" min="1" max="100" step="0.01" id={curr_attribute} onChange={this.doAttributeChange} defaultValue={this.state.attributes.get(curr_attribute)}></input>
+            <input 
+              className="slider_checkboxes" 
+              type="checkbox" 
+              onChange={this.doIncludeClick} 
+              id={curr_attribute + "_include"} 
+              name={curr_attribute} 
+              value={curr_attribute} 
+              checked={this.state.include.has(curr_attribute)}
+            />
+            <label htmlFor={curr_attribute + "_include"} className="checkbox-label">include</label> 
+            <br />
+            {/* Display current value above the slider */}
+            <div className="slider-value">{currentValue}</div>
+            <input 
+              type="range" 
+              min="1" 
+              max="100" 
+              step="0.01" 
+              id={curr_attribute} 
+              onChange={this.doAttributeChange} 
+              value={currentValue} // Ensure value syncs with state
+            />
           </div>
-        )
+        );
       } else {
         slider_render.push(
           <div key={i} className="slider-container">
             <label htmlFor={curr_attribute} className="slider-label">{curr_attribute}</label>
-            <input className="slider_checkboxes" type="checkbox" onChange={this.doIncludeClick} id={curr_attribute + "_include"} name={curr_attribute} value={curr_attribute} checked={this.state.include.has(curr_attribute)}/>
-            <label htmlFor={curr_attribute + "_include"} className="checkbox-label">include</label> <br />
-            <input type="range" min="0" max="1" step="0.01" id={curr_attribute} onChange={this.doAttributeChange} defaultValue={this.state.attributes.get(curr_attribute)}></input>
+            <input 
+              className="slider_checkboxes" 
+              type="checkbox" 
+              onChange={this.doIncludeClick} 
+              id={curr_attribute + "_include"} 
+              name={curr_attribute} 
+              value={curr_attribute} 
+              checked={this.state.include.has(curr_attribute)}
+            />
+            <label htmlFor={curr_attribute + "_include"} className="checkbox-label">include</label> 
+            <br />
+            {/* Display current value above the slider */}
+            <div className="slider-value">{currentValue}</div>
+            <input 
+              type="range" 
+              min="0" 
+              max="1" 
+              step="0.01" 
+              id={curr_attribute} 
+              onChange={this.doAttributeChange} 
+              value={currentValue} // Ensure value syncs with state
+            />
           </div>
-        )
+        );
       }
     }
-
+  
     return slider_render;
-  }
+  };
+  
 
   renderGenres = () : JSX.Element => {
     return (
@@ -200,10 +271,14 @@ export class CustomPlaylist extends Component<CustomPlaylistProps, CustomPlaylis
     //this.doPreserveChecksClick();
   }
 
+  closeModal = () => {
+    this.setState({ showModal: false });
+  };
+
   // Shows only basic sliders
   doBasicSlidersClick = () : void => {
     if (this.state.genres.size === 0) {
-      alert("Must select at least 1 seed genre.");
+      this.setState({ showModal: true });;
     } else {
       this.setState({page: {kind: "basic_sliders"}});
       //this.doPreserveChecksClick();
