@@ -122,7 +122,7 @@ export class SongMatch extends Component<SongMatchProps, SongMatchState> {
 
             console.log(this.state.finalPlaylistLINK)
             return <div className="SM-base">
-                <h1 className="SM-header">your song match playlist</h1>
+                <h1 className="SM-header">your new playlist</h1>
                 <div className="SM-background">
                     <iframe className="embed-playlist" title="SM-result" src={this.state.finalPlaylistLINK}
                         width="100%"
@@ -330,7 +330,7 @@ export class SongMatch extends Component<SongMatchProps, SongMatchState> {
         var songID = await fetch('https://api.spotify.com/v1/search?q=' + this.state.currentSearch + '&type=track&limit=8', searchParameters)
             .then(response => response.json())
             // .then(data => console.log(data))  // FOR QUERY TESTING
-            .then(data => {this.setState({songResults: data.tracks.items})})
+            .then(data => {this.setState({songResults: data.tracks?.items === undefined ? [] :data.tracks.items })})
         
     }
 

@@ -85,7 +85,7 @@ export class CustomPlaylist extends Component<CustomPlaylistProps, CustomPlaylis
       </div>;
     } else {
       return <div className="CPG-base">
-        <h1 className="CPG-header">your custom playlist</h1>
+        <h1 className="CPG-header">your new playlist</h1>
         <div className="CPG-background">
           <iframe className="embed-playlist" title="CPG-result" src={this.state.playlist_url}
             width="100%"
