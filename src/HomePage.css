@@ -22,6 +22,7 @@
   font-size: large;
   cursor: pointer;
   text-transform: uppercase;
+  transition: transform 0.3s ease;
 }
 
 .login-button {
@@ -89,6 +90,7 @@
   box-shadow: 1px 1px 1px 1px black;
   cursor: pointer;
   min-width: 375px;
+  transition: transform 0.3s ease;
 }
 
 .cp-bg {
@@ -97,6 +99,10 @@
 
 .sm-bg {
   background-image: linear-gradient(#79A4E4, #C7794C);
+}
+
+.cp-bg:hover, .sm-bg:hover {
+  transform: scale(1.01);
 }
 
 /* Media query for smaller screens */
@@ -215,8 +221,9 @@ iframe {
   width: 100%;
   text-align: center;
   z-index: 1;
-  transition: background-color 0.3s ease-in-out;
+  transition: transform 0.3s ease;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15); /* Soft shadow for a floating effect */
+  
 }
 
 .styled-select:hover{
