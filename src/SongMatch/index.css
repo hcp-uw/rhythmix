@@ -108,6 +108,7 @@ body {
     border-radius: 30px;
     margin-top: 2rem;
     /* max-height: 100px; */
+    animation: fade-in .5s;
 }
 
 .song-recommendation-container {
@@ -126,6 +127,7 @@ body {
     display: flex; /* Align items in a row */
     align-items: center; /* Vertically centers the items */
     flex-direction: column; /* Stacks children vertically */
+    animation: fade-in .5s;
 }
 
 .spotify-container > .Spotify {
@@ -194,6 +196,7 @@ flex: 1; /* Allows the Spotify component to take up remaining space */
         font-weight: bold;
         color: white;
         border-radius: 20px;
+        animation: fade-in .5s;
     }
 
     .album-card img, .album-card-match-pool img {
@@ -342,7 +345,7 @@ flex: 1; /* Allows the Spotify component to take up remaining space */
 
 @media (max-width: 600px) {
     .SM-header {
-        font-size: 2.75vh; 
+        font-size: 2.6vh; 
         padding: 1vh 3vh; 
         height: 6vh; 
         top: 1%; 
