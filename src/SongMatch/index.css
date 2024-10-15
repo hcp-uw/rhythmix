@@ -344,6 +344,7 @@ flex: 1; /* Allows the Spotify component to take up remaining space */
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    animation: animateMounting 1s;
 }
 
 .button-image {

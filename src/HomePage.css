@@ -2,6 +2,16 @@
   display: flex;
   flex-direction: column;
   min-height: 100vh;
+  animation: fade-in .5s;
+}
+
+@keyframes fade-in {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
 }
 
 /* Login page styling */
@@ -204,6 +214,7 @@ iframe {
   border: none;
   border-radius: 20px;
   overflow: auto;
+  animation: fade-in 1.5s;
 }
 
 /* Style the select dropdown to look like a button */
