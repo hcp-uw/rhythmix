@@ -2,12 +2,10 @@ import React, { Component, ChangeEvent, MouseEvent } from "react";
 import { Container, InputGroup, FormControl, Button, Row, Col, Card } from 'react-bootstrap';
 import { Spotify } from "react-spotify-embed";
 import { accessTokenGLOBAL } from "../HomePage.tsx"
-import { Root } from "react-dom/client";
 import back_button from './back-button.png';
 import home_button from './home-button.png';
 import remove_button from './remove-button.png';
 import './index.css';
-import SearchBar from "./SearchBar";
 
 // Specific Songs seedArtist, seedTrack, and seedGenre
 type recommendationSeed = {
@@ -174,8 +172,7 @@ export class SongMatch extends Component<SongMatchProps, SongMatchState> {
               })}
             </Container>
 
-            
-            <div className="selected-text"> Selected Songs: </div>
+            <div className="selected-text"> Selected Songs </div>
             <div className="song-match-pool-container">
                 {this.state.songMatchList.map( (song, i) => {
                     return (
@@ -217,7 +214,7 @@ export class SongMatch extends Component<SongMatchProps, SongMatchState> {
             })}
             </Container>
             
-            <div className="selected-text-recs"> Selected Songs: </div>
+            <div className="selected-text-recs"> Selected Songs </div>
             <div className="song-match-pool-container-recs">
                 {this.state.songMatchList.map( (song, i) => {
                     return (

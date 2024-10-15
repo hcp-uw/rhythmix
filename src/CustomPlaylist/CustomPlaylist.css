@@ -291,7 +291,7 @@ input[type="range"]:focus::-moz-range-thumb {
 
 @media (max-width: 600px) {
     .CPG-header {
-        font-size: 3vh; 
+        font-size: 2.75vh; 
         padding: 1vh 3vh; 
         height: 6vh; 
         top: 1%; 

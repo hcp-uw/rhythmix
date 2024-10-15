@@ -67,7 +67,6 @@ body {
     background-color: rgb(43, 73, 95); /* Button color */
     color: white;
     position: relative;
-    bottom: 200px;
     border-radius: 20px;
     padding: 0.75rem 1.5rem; /* Padding for button */
     font-size: 1rem; /* Font size */
@@ -102,15 +101,13 @@ body {
 /* Middle section for song results */
 .song-container-search {
     position: relative;
-    flex-grow: 1; /* Prevents it from growing to fill the remaining space */
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
     padding: 20px;
     border-radius: 30px;
-    margin-top: 5vh;
-    margin-bottom: 300px;
-    max-height: 100px;
+    margin-top: 2rem;
+    /* max-height: 100px; */
 }
 
 .song-recommendation-container {
@@ -118,14 +115,14 @@ body {
     display: flex; /* Enables Flexbox for horizontal alignment */
     justify-content: center; /* Centers the items horizontally */
     gap: 20px; /* Adds space between items */
-    padding: 10px;
+    padding: 1rem;
     top: 2vh;
   }
 
 .spotify-container {
     width: (100% / 3);
-    height: 50vh;
-    margin-bottom: 40px;
+    height: 40vh;
+    /* margin-bottom: 40px; */
     display: flex; /* Align items in a row */
     align-items: center; /* Vertically centers the items */
     flex-direction: column; /* Stacks children vertically */
@@ -143,29 +140,20 @@ flex: 1; /* Allows the Spotify component to take up remaining space */
   }
 
 .song-match-pool-container, .song-match-pool-container-recs {
-    /* position: absolute; */
     display: flex;
-    justify-content: center; /* Centers items horizontally */
-    align-items: center; /* Centers items vertically */
-    flex-direction: row; /* Aligns items in a horizontal row */
-    bottom: 9vh;
-}
-
-.song-match-pool-container-recs {
-    bottom: 4vh;
+    align-items: center;
+    flex-direction: row;
 }
 
 .selected-text, .selected-text-recs {
-    /* position: absolute; */
-    font-size: 25px;
+    background-color: rgb(43, 73, 95); /* Button color */
     color: white;
-    font-weight: bold;
-    bottom: 30vh;
-    margin-top: -50px;
-}
-
-.selected-text-recs {
-    bottom: 25vh;
+    font-family: 'Arial', sans-serif;
+    font-size: 1.5em;
+    padding: 15px 20px;
+    border-radius: 2rem;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    text-align: center;
 }
 
 /* .recs-button {
@@ -197,9 +185,7 @@ flex: 1; /* Allows the Spotify component to take up remaining space */
         margin: 10px; /* Space around each card */
         padding: 20px;
         width: calc((100% / 8) - 20px);
-        max-width: 200px;
-        max-height: 210px;
-        padding-bottom: 150px;
+        height: auto;
         box-sizing: border-box; /* Includes padding and border in the element's total width and height */
         position: relative;
         border-radius: 10px;
@@ -236,7 +222,7 @@ flex: 1; /* Allows the Spotify component to take up remaining space */
 
 .album-card-match-pool {
     width: 150px;
-    height: 115px;
+    height: auto;
     cursor: default;
 }
 
@@ -329,6 +315,7 @@ flex: 1; /* Allows the Spotify component to take up remaining space */
     align-items: center;
     overflow-y: auto;
     padding: 1rem;
+    /* gap: 2rem; */
 }
 
 .SM-base {
@@ -355,7 +342,7 @@ flex: 1; /* Allows the Spotify component to take up remaining space */
 
 @media (max-width: 600px) {
     .SM-header {
-        font-size: 3vh; 
+        font-size: 2.75vh; 
         padding: 1vh 3vh; 
         height: 6vh; 
         top: 1%; 
@@ -397,6 +384,10 @@ flex: 1; /* Allows the Spotify component to take up remaining space */
         padding: 0;
         height: auto; 
         top: 20px;
+    }
+
+    .song-match-pool-container, .song-match-pool-container-recs, .song-recommendation-container {
+        flex-direction: column;
     }
 }
 
