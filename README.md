@@ -16,6 +16,6 @@ Receive a curated playlist grown from your desired pool of songs.
 
     NOTE: App is currently in development mode. Certain features are restricted to authorized users.
 
-## 11/27/2024 Update
+## 11/27/2024 Update 🚨
 
 As of November 27, 2024, Spotify has revoked access to various APIs Rhythmix utilizes such as "Recommendations". This has rendered features such as Custom Playlist Generator and Song Match inoperative as they relied on generating recommendations. Notes from Spotify can be found here: https://developer.spotify.com/blog/2024-11-27-changes-to-the-web-api
