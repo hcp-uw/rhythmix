@@ -137,7 +137,7 @@ export class HomePage extends Component<null, HomePageState> {
             <button className="logout-button" onClick={this.doLogoutSpotify}> Logout </button>
             <p> © 2024 rhythmix. All rights reserved.  | <a href="/privacy-policy" className="privacy-link" target="_blank">Privacy Policy</a> | <a href="mailto:spotiblend.dev@gmail.com">Contact Us</a>
             </p>
-          </header>
+            <p className="note-text">Note: As of November 27, 2024, Spotify has revoked access to several API endpoints used by Rhythmix, making many features inoperative. We are working on a fix. More details from Spotify can be found <a className="text-blue" target="_blank" href="https://developer.spotify.com/blog/2024-11-27-changes-to-the-web-api"> here</a></p> </header>
         </div>
       );
     } else if (this.state.page === "song_match") {

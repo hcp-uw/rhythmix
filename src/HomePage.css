@@ -340,3 +340,12 @@ iframe {
   flex-direction: column; /* Stack items vertically */
   gap: 20px; /* Add vertical spacing between items */
 }
+
+.note-text {
+  color: red
+}
+
+.note-text a {
+  color: rgb(255, 255, 255);
+  text-decoration: underline;
+}
